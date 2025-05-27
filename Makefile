@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-
 # === Colors ===
+
 COLOR_RESET := \033[0m
 COLOR_GREEN := \033[1;32m
 COLOR_BLUE  := \033[1;34m
@@ -48,6 +48,7 @@ DIR_OBJS     := objs
 
 SRCS_CORE    :=				\
 	$(DIR_CORE)/minishell.c
+
 SRCS_PARSING :=				\
 	$(DIR_PARSING)/quotes.c
 
