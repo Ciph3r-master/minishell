@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/05/27 22:28:37 by thibaud          ###   ########.fr        #
+#    Updated: 2025/05/27 22:44:04 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ else
 	READLINE_LIB :=
 endif
 
-CFLAGS       := -Wall -Wextra -Werror -MMD -MP -I./includes $(READLINE_INC)
+CFLAGS       := -Wall -Wextra -Werror -MMD -MP -I./includes -I./libft $(READLINE_INC)
 LDFLAGS      := $(READLINE_LIB) -lreadline
 
 # === Libraries ===

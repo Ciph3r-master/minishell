@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 22:04:08 by thibaud           #+#    #+#              #
-#    Updated: 2025/05/27 22:24:59 by thibaud          ###   ########.fr        #
+#    Updated: 2025/05/27 22:42:50 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS		:= 			\
 	ft_putstr_fd.c		\
 	ft_split.c			\
 	ft_strchr.c			\
+	ft_strcmp.c			\
 	ft_strdup.c			\
 	ft_striteri.c		\
 	ft_strjoin.c		\
