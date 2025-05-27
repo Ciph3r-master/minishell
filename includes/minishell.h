@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-05-27 13:20:45 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-05-27 13:20:45 by thmaitre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 enum e_type
 {
@@ -8,10 +20,36 @@ enum e_type
 	REDIRECT_OUT,
 	APPEND,
 	HEREDOC,
-	CMD,
-	ARGS,
+	EXTERN,
+	BUILTIN,
 };
 
+typedef struct s_data
+{
+	char	**env;
+	char	*pwd;
+	char	*old_pwd;
+}	t_data;
+
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	**args;
+}	t_cmd;
+
+typedef struct s_ast_node	t_ast_node;
+
+typedef struct s_ast_node
+{
+	int			type;
+	char		*filename;
+	t_cmd		cmd;
+	t_ast_node	*parent;
+	t_ast_node	*right;
+	t_ast_node	*left;
+}	t_ast_node;
+
+//	srcs/parsing/quotes.c
 int	is_open_quotes(char *line, char quote);
 
 #endif

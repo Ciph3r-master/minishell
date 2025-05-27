@@ -26,7 +26,7 @@ int	main(void)
 		if (is_open_quotes(line, '"') || is_open_quotes(line, '\''))
 		{
 			printf("Open quote\n");
-			continue;
+			continue ;
 		}
 	}
 	rl_clear_history();
