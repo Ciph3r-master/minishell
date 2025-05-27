@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 16:55:25 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/05/28 01:01:01 by thibaud          ###   ########.fr       */
+/*   Created: 2025/05/27 23:25:26 by thibaud           #+#    #+#             */
+/*   Updated: 2025/05/28 00:58:03 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include "minishell.h"
 
-int	builtin_pwd(void)
+int	builtin_cd(int argc, char **argv)
 {
-	char *cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
+	(void)argc;
+	(void)argv;
+	if (-1 == chdir(".."))
 	{
-		perror("pwd");
-		return (1);
+		perror("cd");
 	}
-	printf("%s\n", cwd);
-	free(cwd);
+	builtin_pwd();
 	return (0);
 }
 
-// int	main(void)
-// {
-// 	builtin_pwd();
-// 	return (0);
-// }
+int	main(int argc, char **argv)
+{
+	builtin_cd(argc, argv);
+	return (0);
+}

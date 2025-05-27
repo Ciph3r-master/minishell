@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-05-27 13:20:45 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/05/28 01:00:51 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,8 @@ typedef struct s_ast_node
 
 //	srcs/parsing/quotes.c
 int	is_open_quotes(char *line, char quote);
+
+// srcs/builtins/pwd.c
+int	builtin_pwd(void);
 
 #endif
