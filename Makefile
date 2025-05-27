@@ -42,7 +42,7 @@ LDFLAGS      := $(READLINE_LIB) -lreadline
 DIR_SRCS     := srcs
 DIR_CORE     := $(DIR_SRCS)/core
 DIR_PARSING  := $(DIR_SRCS)/parsing
-DIR_OBJS     := objs
+DIR_OBJS     := .objs
 
 # === Source Files ===
 

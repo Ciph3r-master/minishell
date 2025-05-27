@@ -42,7 +42,11 @@ typedef struct s_ast_node	t_ast_node;
 typedef struct s_ast_node
 {
 	int			type;
-	char		*filename;
+	int			fd_in;
+	int			fd_out;
+	char		*filename_in;
+	char		*filename_out;
+	int			error_code;
 	t_cmd		cmd;
 	t_ast_node	*parent;
 	t_ast_node	*right;

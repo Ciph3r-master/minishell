@@ -1,0 +1,44 @@
+# Fichiers binaires
+*.out
+*.o
+*.a
+*.so
+*.exe
+minishell
+
+# Dossiers de compilation
+/build
+/bin
+/.objs
+
+# Core dumps
+core
+*.core
+
+# Fichiers temporaires
+*~
+*.swp
+*.tmp
+
+# Fichiers générés par Make
+Makefile~
+.deps/
+*.d
+
+# Éditeurs
+.vscode/
+.idea/
+*.code-workspace
+
+# OS spécifiques
+.DS_Store         # macOS
+Thumbs.db         # Windows
+
+# Logs
+*.log
+
+# CTags
+tags
+
+# Autres
+*.bak
