@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 22:04:08 by thibaud           #+#    #+#              #
-#    Updated: 2025/05/27 22:04:09 by thibaud          ###   ########.fr        #
+#    Updated: 2025/05/27 22:24:59 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 %.o: %.c $(HDRS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(HDRS) -c -o $@ $<
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 bonus: $(OBJS) $(OBJS_BONUS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS) $(OBJS_BONUS) $(TOUCH)

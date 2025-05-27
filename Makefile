@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/05/26 19:31:07 by thibaud          ###   ########.fr        #
+#    Updated: 2025/05/27 22:28:37 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,11 @@ endif
 CFLAGS       := -Wall -Wextra -Werror -MMD -MP -I./includes $(READLINE_INC)
 LDFLAGS      := $(READLINE_LIB) -lreadline
 
+# === Libraries ===
+
+DIR_LIBFT = ./libft
+A_LIBFT = ./libft/libft.a
+
 # === Directories ===
 
 DIR_SRCS     := srcs
@@ -65,13 +70,13 @@ OBJS         := $(OBJS_CORE) $(OBJS_PARSING)
 DEPS         := $(OBJS:.o=.d)
 
 # === Rules ===
-all:
+all: lib
 	@echo "$(COLOR_GREEN)==> Compilation de $(NAME)...$(COLOR_RESET)"
 	$(MAKE) $(NAME)
 
-$(NAME): $(OBJS)
-	@echo "$(COLOR_BLUE)→ Linking $(NAME)$(COLOR_RESET)"
-	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+lib:
+	@echo "$(COLOR_GREEN)==> Compilation de libft...$(COLOR_RESET)"
+	$(MAKE) -C $(DIR_LIBFT)
 
 $(DIR_OBJS)/%.o: $(DIR_CORE)/%.c
 	@mkdir -p $(dir $@)
@@ -83,14 +88,20 @@ $(DIR_OBJS)/%.o: $(DIR_PARSING)/%.c
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(NAME): $(OBJS) $(A_LIBFT)
+	@echo "$(COLOR_BLUE)→ Linking $(NAME)$(COLOR_RESET)"
+	$(CC) $(OBJS) $(A_LIBFT) -o $(NAME) $(LDFLAGS)
+
 -include $(DEPS)
 
 clean:
 	@echo "$(COLOR_BLUE)→ Cleaning objects$(COLOR_RESET)"
+	$(MAKE) clean -C $(DIR_LIBFT)
 	rm -rf $(DIR_OBJS)
 
 fclean: clean
 	@echo "$(COLOR_BLUE)→ Removing executable$(COLOR_RESET)"
+	rm -rf $(A_LIBFT)
 	rm -f $(NAME)
 
 re:
