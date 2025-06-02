@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	*free_char_tab(char **split, int k)
+void	*free_char_tab_set(char **split, int k)
 {
 	while (k >= 0)
 	{

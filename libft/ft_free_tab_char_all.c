@@ -12,15 +12,11 @@
 
 #include "libft.h"
 
-	#include <stdio.h>
-
 void	*free_char_tab_all(char **split)
 {
 	int	i;
 
 	i = 0;
-
-	printf("pproaweijpawjfaweif\n");
 	while (split[i])
 	{
 		free(split[i]);
