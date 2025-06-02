@@ -147,7 +147,7 @@ int	main(int argc, char **argv, char **env)
 		exit(1);
 	}
 	printf("pathname:%s\n", pathname);
-	execute_in_child_process(pathname, argv, env);
+	execute_cmd_in_child_process(pathname, argv, env);
 	free(pathname);
 	return (0);
 }

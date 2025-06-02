@@ -9,6 +9,9 @@ minishell
 #executable
 *.out
 
+#test_file
+*.test
+
 # Dossiers de compilation
 /build
 /bin
