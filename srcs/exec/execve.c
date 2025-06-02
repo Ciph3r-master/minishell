@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/wait.h>
 #include "minishell.h"
 #include "libft.h"
 
@@ -45,6 +46,7 @@ int	add_string_to_strings(char **strings, char *string)
 		new_str = ft_strjoin(strings[i], string);
 		if (new_str == NULL)
 		{
+			printf("strjoin: failed\n");
 			free_char_tab_all(strings);
 			exit(1);
 		}
@@ -55,10 +57,7 @@ int	add_string_to_strings(char **strings, char *string)
 	return (0);
 }
 
-// utilise les paths en boucle sur access pour voir si
-// la commande entre par l'utilisateur correspond
-// avec une commande qui existe dans les path
-int	find_path_with_acces(char **paths, char *pathname)
+int	find_path_with_access(char **paths, char **pathname)
 {
 	int	i;
 
@@ -67,7 +66,13 @@ int	find_path_with_acces(char **paths, char *pathname)
 	{
 		if (0 == access(paths[i], X_OK))
 		{
-			pathname = ft_strdup(paths[i]);
+			*pathname = ft_strdup(paths[i]);
+			if (NULL == *pathname)
+			{
+				printf("ft_strdup: failed\n");
+				free_char_tab_all(paths);
+				exit (1);
+			}
 			return (0);
 		}
 		i++;
@@ -75,21 +80,11 @@ int	find_path_with_acces(char **paths, char *pathname)
 	return (1);
 }
 
-//utiliser access avec X_OK
-// prend le PATH
-// le split sur : avec split_set
-// concatene la commande donne en argv avec les path
-// "splitted_path"+"/cmd"
-// parcour tous les split pour trouver si
-// on a un path et un nom d'executable qui correspond a
-// la commande donne en argv[1]
-int	get_cmd_path_name(char *pathname, char **argv)
+int	get_cmd_path_name(char **pathname, char **argv)
 {
 	char	*path;
 	char	**paths;
 
-	(void)pathname;
-	(void)argv;
 	path = getenv("PATH");
 	if (NULL == path)
 	{
@@ -108,13 +103,36 @@ int	get_cmd_path_name(char *pathname, char **argv)
 	return (0);
 }
 
-//faire un programme avec execve qui cree un enfant
-//execute et tue l'enfant
-int	main(int argc, char **argv, char **env)
+int	execute_cmd_in_child_process(char *pathname, char **argv, char **env)
 {
 	int		pid;
 	int		status;
-	int		loop;
+
+	pid = fork();
+	if (-1 == pid)
+	{
+		perror("fork");
+		return (0);
+	}
+	if (0 == pid)
+	{
+		if (-1 != execve(pathname, &argv[1], env))
+		{
+			perror("execve");
+			exit(1);
+		}
+	}
+	else
+	{
+		wait(&status);
+		printf("Exit status : %d\n", WEXITSTATUS(status));
+	}
+	return (0);
+}
+
+// find input shell command in argv, and execute in child process
+int	main(int argc, char **argv, char **env)
+{
 	char	*pathname;
 
 	pathname = NULL;
@@ -123,36 +141,13 @@ int	main(int argc, char **argv, char **env)
 		printf("Usage: use shell command with arg");
 		exit(1);
 	}
-	if (1 == get_cmd_path_name(pathname, argv))
+	if (1 == get_cmd_path_name(&pathname, argv))
 	{
 		printf("Error: enter valid cmd");
 		exit(1);
 	}
-	printf("pathname : %s\n", pathname);
-
-
-
-	// pid = fork();
-	// loop = 1;
-	// if (-1 == pid)
-	// {
-	// 	perror("fork");
-	// 	return (0);
-	// }
-	// if (0 == pid)
-	// {
-	// 	while (loop)
-	// 	{
-	// 		if (-1 != execve(""))
-	// 			loop = 0;
-	// 	}
-	// 	perror("execve");
-	// 	exit(1);
-	// }
-	// else
-	// {
-	// 	wait(status);
-	// 	printf("status : %s\n", status);
-	// }
+	printf("pathname:%s\n", pathname);
+	execute_in_child_process(pathname, argv, env);
+	free(pathname);
 	return (0);
 }
