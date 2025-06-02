@@ -30,6 +30,11 @@ int	print_char_tab(char **argv)
 }
 
 //utiliser access avec X_OK
+// prend le PATH
+// le split sur : avec split_set
+// parcour tous les split pour trouver si
+// on a un path et un nom d'executable qui correspond a
+// la commande donne en argv[1]
 int	get_cmd_path_name(char *pathname, char **argv)
 {
 	char	*path;
@@ -59,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 		printf("Usage: use shell command with arg");
 		exit(1);
 	}
-	if (1 == get_cmd_path_name(&pathname, argv))
+	if (1 == get_cmd_path_name(pathname, argv))
 	{
 		printf("Error: enter valid cmd");
 		exit(1);

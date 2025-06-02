@@ -6,6 +6,9 @@
 *.exe
 minishell
 
+#executable
+*.out
+
 # Dossiers de compilation
 /build
 /bin

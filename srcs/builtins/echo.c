@@ -42,7 +42,7 @@ int	echo_n_arg(char **argv)
 	int	i;
 
 	i = 2;
-	while(argv[i])
+	while (argv[i])
 	{
 		printf("%s", argv[i]);
 		if (argv[i + 1])
@@ -57,7 +57,7 @@ int	echo_simple(char **argv)
 	int	i;
 
 	i = 2;
-	while(argv[i])
+	while (argv[i])
 	{
 		printf("%s", argv[i]);
 		if (argv[i + 1])
