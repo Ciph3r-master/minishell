@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_in.c                                      :+:      :+:    :+:   */
+/*   redirect_in_append.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-02 18:39:46 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-02 18:39:46 by thmaitre         ###   ########.fr       */
+/*   Created: 2025-06-02 20:03:53 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-06-02 20:03:53 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int	redirect_in(int fd, char *filename)
 {
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	dup2(fd, STDOUT_FILENO);
 	return (0);
 }
