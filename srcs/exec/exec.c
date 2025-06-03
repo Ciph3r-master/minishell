@@ -40,12 +40,17 @@ t_cmd_node	*init_cmd_node(void)
 	return (cmd_node);
 }
 
-int	redirect_in(void)
+int	redirect_in(t_cmd_node *cmd_node)
 {
 	int		fd_in;
-	char	*filename;
 
-	fd_in = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd_in = open(cmd_node->filename_in, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (-1 == fd_in)
+	{
+		perror("fd_in:");
+		return (1);
+	}
+	cmd_node->fd_in = fd_in;
 	if (-1 == dup2(fd_in, STDOUT_FILENO))
 	{
 		perror("dup2:");
@@ -54,16 +59,45 @@ int	redirect_in(void)
 	return (0);
 }
 
+int	execute_cmd_in_child_process(t_cmd_node *cmd_node, char **env)
+{
+	int		pid;
+	int		status;
+
+	pid = fork();
+	if (-1 == pid)
+	{
+		perror("fork");
+		return (0);
+	}
+	if (0 == pid)
+	{
+		if (-1 != execve(cmd_node->cmd.path, cmd_node->cmd.args, env))
+		{
+			perror("execve");
+			exit(1);
+		}
+	}
+	else
+	{
+		wait(&status);
+		printf("Exit status : %d\n", WEXITSTATUS(status));
+	}
+	return (0);
+}
+
 // check les valeurs initialise dans la
 // structure et execute en fonction
-//
 int	exec(t_cmd_node *cmd_node, char **env)
 {
+	int	return_code;
+
 	if (cmd_node->filename_in)
-		redirect_in();
-	exec_cmd();
+		redirect_in(cmd_node);
+	return_code = execute_cmd_in_child_process(cmd_node, env);
 	if (cmd_node->filename_in)
 		close(cmd_node->fd_in);
+	return (return_code);
 }
 
 // le main remplace la partie parsing
