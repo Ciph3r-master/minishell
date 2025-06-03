@@ -42,12 +42,10 @@ typedef struct s_cmd_node	t_cmd_node;
 
 typedef struct s_cmd_node
 {
-	int			value;
 	int			type;
 	int			fd_in;
 	int			fd_out;
 	int			error_code;
-	char		*filename;
 	char		*filename_in;
 	char		*filename_out;
 	t_cmd		cmd;
