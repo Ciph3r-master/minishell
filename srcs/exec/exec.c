@@ -99,13 +99,26 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, char **env)
 int	exec(t_cmd_node *cmd_node, char **env)
 {
 	int	return_code;
+	int	saved_stdout;
 
+	saved_stdout = dup(STDOUT_FILENO);
+	if (-1 == saved_stdout)
+	{
+		perror("dup");
+		exit(EXIT_FAILURE);
+	}
 	if (cmd_node->filename_out)
 		redirect_out(cmd_node);
 	return_code = execute_cmd_in_child_process(cmd_node, env);
-	printf("return_code:%d\n", return_code);
 	if (cmd_node->filename_out)
+	{
+		if (-1 == dup2(saved_stdout, STDOUT_FILENO))
+		{
+			perror("dup2:");
+			return (1);
+		}
 		close(cmd_node->fd_out);
+	}
 	return (return_code);
 }
 
@@ -119,5 +132,6 @@ int	main(int argc, char **argv, char **env)
 
 	cmd_node = init_cmd_node();
 	exec(cmd_node, env);
+	printf("return_code:%d\n", return_code);
 	return (0);
 }

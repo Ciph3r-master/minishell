@@ -1,9 +1,0 @@
-a.out
-exec.c
-execve.c
-fork.c
-pipe.c
-redirect_out_append.c
-redirect_out.c
-test.txt
-return_code:0
