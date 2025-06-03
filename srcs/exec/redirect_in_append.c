@@ -20,6 +20,7 @@ int	redirect_in(int fd, char *filename)
 {
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	dup2(fd, STDOUT_FILENO);
+	// securiser dup2
 	return (0);
 }
 

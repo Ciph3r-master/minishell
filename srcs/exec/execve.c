@@ -14,6 +14,9 @@
 // make libft
 // cc execve.c ./../../libft/libft.a -I./../../includes/ -I./../../libft/
 
+//pas les permission retour erreur = 126
+// fichier inexistant = 127
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -71,7 +74,7 @@ int	find_path_with_access(char **paths, char **pathname)
 			{
 				printf("ft_strdup: failed\n");
 				free_char_tab_all(paths);
-				exit (1);
+				exit (EXIT_FAILURE);
 			}
 			return (0);
 		}

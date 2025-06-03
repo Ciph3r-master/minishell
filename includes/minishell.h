@@ -35,23 +35,25 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
+	char	*path;
 }	t_cmd;
 
-typedef struct s_ast_node	t_ast_node;
+typedef struct s_cmd_node	t_cmd_node;
 
-typedef struct s_ast_node
+typedef struct s_cmd_node
 {
+	int			value;
 	int			type;
 	int			fd_in;
 	int			fd_out;
+	int			error_code;
+	char		*filename;
 	char		*filename_in;
 	char		*filename_out;
-	int			error_code;
 	t_cmd		cmd;
-	t_ast_node	*parent;
-	t_ast_node	*right;
-	t_ast_node	*left;
-}	t_ast_node;
+	t_cmd_node	*prev;
+	t_cmd_node	*next;
+}	t_cmd_node;
 
 //	srcs/parsing/quotes.c
 int	is_open_quotes(char *line, char quote);
