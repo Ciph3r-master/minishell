@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-05-27 13:20:45 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/03 21:09:11 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#include <stdio.h>
 
 enum e_type
 {
@@ -55,5 +57,6 @@ typedef struct s_ast_node
 
 //	srcs/parsing/quotes.c
 int	is_open_quotes(char *line, char quote);
+char	*get_token(char *line);
 
 #endif
