@@ -48,7 +48,7 @@ typedef struct s_cmd_node
 	int			error_code;
 	char		*filename_in;
 	char		*filename_out;
-	t_cmd		cmd;
+	t_cmd		*cmd;
 	t_cmd_node	*prev;
 	t_cmd_node	*next;
 }	t_cmd_node;

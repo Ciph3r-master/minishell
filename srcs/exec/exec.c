@@ -15,43 +15,52 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 t_cmd_node	*init_cmd_node(void)
 {
 	t_cmd_node	*cmd_node;
-	t_cmd		cmd;
-
-	cmd.cmd = "cat";
-	cmd.args[0] = "cat";
-	cmd.path = "usr/bin/cat";
 
 	cmd_node = malloc(sizeof(t_cmd_node));
 	if (!cmd_node)
 		exit (EXIT_FAILURE);
+
+	cmd_node->cmd = malloc(sizeof(t_cmd));
+	if (!cmd_node)
+	{
+		free(cmd_node);
+		exit (EXIT_FAILURE);
+	}
+	cmd_node->cmd->args = malloc(sizeof(char *) * 2);
+
+	cmd_node->cmd->cmd = "ls";
+	cmd_node->cmd->args[0] = "ls";
+	cmd_node->cmd->args[1] = NULL;
+	cmd_node->cmd->path = "/usr/bin/ls";
+
 	cmd_node->type = EXTERN;
 	cmd_node->fd_in = -1;
 	cmd_node->fd_out = -1;
 	cmd_node->error_code = 0;
-	cmd_node->filename_in = "test.txt";
-	cmd_node->filename_out = NULL;
-	cmd_node->cmd = cmd;
+	cmd_node->filename_in = NULL;
+	cmd_node->filename_out = "test.txt";
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
 	return (cmd_node);
 }
 
-int	redirect_in(t_cmd_node *cmd_node)
+int	redirect_out(t_cmd_node *cmd_node)
 {
-	int		fd_in;
+	int		fd_out;
 
-	fd_in = open(cmd_node->filename_in, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (-1 == fd_in)
+	fd_out = open(cmd_node->filename_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (-1 == fd_out)
 	{
 		perror("fd_in:");
 		return (1);
 	}
-	cmd_node->fd_in = fd_in;
-	if (-1 == dup2(fd_in, STDOUT_FILENO))
+	cmd_node->fd_out = fd_out;
+	if (-1 == dup2(fd_out, STDOUT_FILENO))
 	{
 		perror("dup2:");
 		return (1);
@@ -72,16 +81,15 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, char **env)
 	}
 	if (0 == pid)
 	{
-		if (-1 != execve(cmd_node->cmd.path, cmd_node->cmd.args, env))
+		if (-1 != execve(cmd_node->cmd->path, cmd_node->cmd->args, env))
 		{
-			perror("execve");
-			exit(1);
+			perror("execve:");
+			exit(EXIT_FAILURE);
 		}
 	}
 	else
 	{
 		wait(&status);
-		printf("Exit status : %d\n", WEXITSTATUS(status));
 	}
 	return (0);
 }
@@ -92,11 +100,12 @@ int	exec(t_cmd_node *cmd_node, char **env)
 {
 	int	return_code;
 
-	if (cmd_node->filename_in)
-		redirect_in(cmd_node);
+	if (cmd_node->filename_out)
+		redirect_out(cmd_node);
 	return_code = execute_cmd_in_child_process(cmd_node, env);
-	if (cmd_node->filename_in)
-		close(cmd_node->fd_in);
+	printf("return_code:%d\n", return_code);
+	if (cmd_node->filename_out)
+		close(cmd_node->fd_out);
 	return (return_code);
 }
 
@@ -109,12 +118,6 @@ int	main(int argc, char **argv, char **env)
 	int			return_code;
 
 	cmd_node = init_cmd_node();
-	printf("filename_in:%s\n", cmd_node->filename_in);
-	printf("filename_in:%s\n", cmd_node->cmd.cmd);
-	printf("filename_in:%s\n", cmd_node->cmd.args[0]);
-	printf("filename_in:%s\n", cmd_node->cmd.path);
-
-	return_code = exec(cmd_node, env);
-	printf("return_code :%s\n", return_code);
+	exec(cmd_node, env);
 	return (0);
 }

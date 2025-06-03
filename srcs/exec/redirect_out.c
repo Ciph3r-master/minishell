@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	redirect_in(int fd, char *filename)
+int	redirect_out(int fd, char *filename)
 {
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	dup2(fd, STDOUT_FILENO);

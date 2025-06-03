@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	redirect_in(int fd, char *filename)
+int	redirect_out_append(int fd, char *filename)
 {
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	dup2(fd, STDOUT_FILENO);
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 		printf("Usage: ./a.out <filename>");
 		exit(1);
 	}
-	redirect_in(fd, argv[1]);
+	redirect_out_append(fd, argv[1]);
 
 	printf("hello\n");
 
