@@ -13,7 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
+# include <stdio.h>
 
 enum e_type
 {
@@ -50,14 +50,15 @@ typedef struct s_cmd_node
 	int			error_code;
 	char		**filename_in;
 	char		**filename_out;
+	char		*limiter;
 	t_cmd		*cmd;
 	t_cmd_node	*prev;
 	t_cmd_node	*next;
 }	t_cmd_node;
 
 //	srcs/parsing/quotes.c
-int	is_open_quotes(char *line, char quote);
-char *get_token(char *line, int *pos);
-int init_tokens(char *line);
+int		is_open_quotes(char *line, char quote);
+char	*get_token(char *line, int *pos);
+int		init_tokens(char *line);
 
 #endif
