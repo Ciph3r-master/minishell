@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/04 01:29:19 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/04 23:30:00 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ static char	*ft_strndup(const char *src, int size)
 	return (dup);
 }
 
-char	*get_token(char	*line, int	*pos)
+t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl)
 {
-	char	*token;
 	char	in_quote;
 	int		start;
 	int		len;
@@ -71,11 +70,8 @@ char	*get_token(char	*line, int	*pos)
 	if (is_operator(&line[start]))
 	{
 		len = is_operator(&line[start]);
-		token = ft_strndup(&line[start], len);
-		if (!token)
-			return (NULL);
 		*pos = start + len;
-		return (token);
+		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TOPERATOR));
 	}
 	if (line[start] == '"' || line[start] == '\'')
 	{
@@ -87,10 +83,8 @@ char	*get_token(char	*line, int	*pos)
 				break;
 			len++;
 		}
-		token = ft_strndup(&line[start + 1], len - 1);
-		if (!token)
-			return (NULL);
 		*pos = start + len + 1;
+		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TDQUOTES));
 	}
 	else
 	{
@@ -100,26 +94,23 @@ char	*get_token(char	*line, int	*pos)
 				break;
 			len++;
 		}
-		token = ft_strndup(&line[start], len);
-		// ATTENTION RETOUR D'ERREUR
-		if (!token)
-			return (NULL);
+		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TWORD));
 		*pos = start + len;
 	}
-	return (token);
 }
 
 int	init_tokens(char *line)
 {
 	int		pos;
-	char	*token;
+	t_tokenlist	*tl;
 
 	pos = 0;
-	token = get_token(line, &pos);
-	while (token)
+	tl = NULL;
+	get_token(line, &pos, tl);
+	while (tl)
 	{
-		printf("token: [%s]\n", token);
-		token = get_token(line, &pos);
+		get_token(line, &pos, tl);
 	}
+	print_dlist(tl, true);
 	return (0);
 }

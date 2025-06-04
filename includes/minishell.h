@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/04 18:17:52 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/04 23:24:20 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 #include <stdio.h>
+#include <stdbool.h>
 
 enum e_type
 {
@@ -25,6 +26,29 @@ enum e_type
 	EXTERN			= 1 << 5,
 	BUILTIN			= 1 << 6,
 };
+
+typedef enum e_tokentype
+{
+	TOPERATOR,
+	TWORD,
+	TDQUOTES,
+	TQUOTES,
+	TRD_IN,
+	TRD_OUT,
+	THD,
+	TARG,
+	TEXTERN,
+	TBUILTIN
+}	t_tokentype;
+
+typedef struct s_tokenlist
+{
+	char				*token;
+	t_tokentype			type;
+	struct	s_tokenlist	*next;
+	struct	s_tokenlist	*prev;
+}	t_tokenlist;
+
 
 typedef struct s_data
 {
@@ -57,7 +81,12 @@ typedef struct s_cmd_node
 
 //	srcs/parsing/quotes.c
 int	is_open_quotes(char *line, char quote);
-char *get_token(char *line, int *pos);
+t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl);
 int init_tokens(char *line);
 
+//DLIST
+t_tokenlist	*dlist_create_node(void	*content, t_tokentype type);
+t_tokenlist	*dlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
+void	print_dlist(t_tokenlist *tokenlist, bool reverse);
+t_tokenlist	*dlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type);
 #endif

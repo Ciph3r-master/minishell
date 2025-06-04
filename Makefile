@@ -6,7 +6,7 @@
 #    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/03 18:50:14 by qutruche         ###   ########.fr        #
+#    Updated: 2025/06/04 23:32:14 by qutruche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ else
 	READLINE_LIB :=
 endif
 
-CFLAGS       := -Wall -Wextra -Werror -MMD -MP -I./includes -I./libft $(READLINE_INC)
+CFLAGS       := -g3 -Wall -Wextra -Werror -MMD -MP -I./includes -I./libft $(READLINE_INC)
 LDFLAGS      := $(READLINE_LIB) -lreadline
 
 # === Libraries ===
@@ -44,10 +44,11 @@ A_LIBFT = ./libft/libft.a
 
 # === Directories ===
 
-DIR_SRCS     := srcs
-DIR_CORE     := $(DIR_SRCS)/core
-DIR_PARSING  := $(DIR_SRCS)/parsing
-DIR_OBJS     := .objs
+DIR_SRCS			:= srcs
+DIR_CORE			:= $(DIR_SRCS)/core
+DIR_PARSING  		:= $(DIR_SRCS)/parsing
+DIR_PARSING_UTILS	:= $(DIR_SRCS)/parsing_utils
+DIR_OBJS			:= .objs
 
 # === Source Files ===
 
@@ -58,20 +59,24 @@ SRCS_PARSING :=				\
 	$(DIR_PARSING)/quotes.c \
 	$(DIR_PARSING)/token.c
 
-SRCS         := $(SRCS_CORE) $(SRCS_PARSING)
+SRCS_PARSING_UTILS :=				\
+	$(DIR_PARSING_UTILS)/dlist_utils.c
+
+SRCS         := $(SRCS_CORE) $(SRCS_PARSING) $(SRCS_PARSING_UTILS)
 
 # === Object Files ===
 
-OBJS_CORE    := $(SRCS_CORE:$(DIR_CORE)/%.c=$(DIR_OBJS)/%.o)
-OBJS_PARSING := $(SRCS_PARSING:$(DIR_PARSING)/%.c=$(DIR_OBJS)/%.o)
-OBJS         := $(OBJS_CORE) $(OBJS_PARSING)
+OBJS_CORE			:= $(SRCS_CORE:$(DIR_CORE)/%.c=$(DIR_OBJS)/%.o)
+OBJS_PARSING 		:= $(SRCS_PARSING:$(DIR_PARSING)/%.c=$(DIR_OBJS)/%.o)
+OBJS_PARSING_UTILS	:= $(SRCS_PARSING_UTILS:$(DIR_PARSING_UTILS)/%.c=$(DIR_OBJS)/%.o)
+OBJS				:= $(OBJS_CORE) $(OBJS_PARSING) $(OBJS_PARSING_UTILS)
 
 # === Dependencies ===
 
 DEPS         := $(OBJS:.o=.d)
 
 # === Rules ===
-all: lib
+all: lib Makefile
 	@echo "$(COLOR_GREEN)==> Compilation de $(NAME)...$(COLOR_RESET)"
 	$(MAKE) $(NAME)
 
@@ -85,6 +90,11 @@ $(DIR_OBJS)/%.o: $(DIR_CORE)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(DIR_OBJS)/%.o: $(DIR_PARSING)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(DIR_OBJS)/%.o: $(DIR_PARSING_UTILS)/%.c
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
