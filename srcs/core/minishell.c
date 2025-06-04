@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/05/26 19:08:54 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/04 01:06:56 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(void)
 	{
 		line = readline("minishell> ");
 		add_history(line);
+		init_tokens(line);
 		if (is_open_quotes(line, '"') || is_open_quotes(line, '\''))
 		{
 			printf("Open quote\n");

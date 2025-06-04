@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
+#    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/05/27 22:44:04 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/03 18:50:14 by qutruche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ SRCS_CORE    :=				\
 	$(DIR_CORE)/minishell.c
 
 SRCS_PARSING :=				\
-	$(DIR_PARSING)/quotes.c
+	$(DIR_PARSING)/quotes.c \
+	$(DIR_PARSING)/token.c
 
 SRCS         := $(SRCS_CORE) $(SRCS_PARSING)
 
