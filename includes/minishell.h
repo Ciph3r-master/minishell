@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/04 01:06:38 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/04 18:17:52 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 
 enum e_type
 {
-	PIPE,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	APPEND,
-	HEREDOC,
-	EXTERN,
-	BUILTIN,
+	PIPE			= 1 << 0,
+	REDIRECT_IN		= 1 << 1,
+	REDIRECT_OUT	= 1 << 2,
+	APPEND			= 1 << 3,
+	HEREDOC			= 1 << 4,
+	EXTERN			= 1 << 5,
+	BUILTIN			= 1 << 6,
 };
 
 typedef struct s_data
@@ -37,26 +37,27 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
+	char	*path;
 }	t_cmd;
 
-typedef struct s_ast_node	t_ast_node;
+typedef struct s_cmd_node	t_cmd_node;
 
-typedef struct s_ast_node
+typedef struct s_cmd_node
 {
 	int			type;
 	int			fd_in;
 	int			fd_out;
+	int			error_code;
 	char		*filename_in;
 	char		*filename_out;
-	int			error_code;
-	t_cmd		cmd;
-	t_ast_node	*parent;
-	t_ast_node	*right;
-	t_ast_node	*left;
-}	t_ast_node;
+	t_cmd		*cmd;
+	t_cmd_node	*prev;
+	t_cmd_node	*next;
+}	t_cmd_node;
 
 //	srcs/parsing/quotes.c
 int	is_open_quotes(char *line, char quote);
 char *get_token(char *line, int *pos);
 int init_tokens(char *line);
+
 #endif

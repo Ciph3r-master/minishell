@@ -1,37 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 16:55:25 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/05/28 01:01:01 by thibaud          ###   ########.fr       */
+/*   Created: 2025-05-28 12:27:34 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-05-28 12:27:34 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include "minishell.h"
+#include <sys/wait.h>
 
-int	builtin_pwd(void)
+int	main(void)
 {
-	char	*cwd;
+	int	pid;
 
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
+	pid = fork();
+	if (-1 == pid)
 	{
-		perror("pwd");
-		return (1);
+		perror("fork");
+		return (0);
 	}
-	printf("%s\n", cwd);
-	free(cwd);
+	if (0 == pid)
+	{
+		sleep(15);
+		write(1, "enfant\n", 7);
+	}
+	else
+	{
+		sleep(10);
+		write(1, "parent\n", 7);
+	}
+	wait(NULL);
 	return (0);
 }
-
-// int	main(void)
-// {
-// 	builtin_pwd();
-// 	return (0);
-// }
