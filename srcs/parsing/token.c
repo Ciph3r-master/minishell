@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/04 23:30:00 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/05 23:36:33 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,29 @@ static int	is_operator(char *line)
 	return (0);
 }
 
+static int	is_builtin(char *word)
+{
+	const char	*builtin[8];
+	int			i;
+
+	i = 0;
+	builtin[0] = "echo";
+	builtin[1] = "cd";
+	builtin[2] = "pwd";
+	builtin[3] = "export";
+	builtin[4] = "unset";
+	builtin[5] = "env";
+	builtin[6] = "exit";
+	builtin[7] = NULL;
+	while (builtin[i])
+	{
+		if (ft_strcmp(word, builtin[i]) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 static char	*ft_strndup(const char *src, int size)
 {
 	char	*dup;
@@ -52,6 +75,56 @@ static char	*ft_strndup(const char *src, int size)
 	}
 	dup[i] = 0;
 	return (dup);
+}
+
+void	set_operator(t_tokenlist *tl)
+{
+	t_tokenlist *current;
+
+	current = tl;
+	while(current)
+	{
+		if (current->type == TOPERATOR)
+		{
+			if (!current->token)
+				return ;
+			if (current->token[0] == '|')
+				current->type = TPIPE;
+			if (current->token[0] == '<')
+			{
+				if (current->token[1] == '<')
+					current->type = THD;
+				else
+					current->type = TRD_IN;
+			}
+			if (current->token[0] == '>')
+			{
+				if (current->token[1] == '>')
+					current->type = TAPPEND;
+				else
+					current->type = TRD_OUT;
+			}
+		}
+		current = current->next;
+	}
+}
+
+void	set_builtin(t_tokenlist *tl)
+{
+	t_tokenlist *current;
+
+	current = tl;
+	while(current)
+	{
+		if (current->type == TWORD)
+		{
+			if (!current->token)
+				return ;
+			if (is_builtin(current->token))
+				current->type = TBUILTIN;
+		}
+		current = current->next;
+	}
 }
 
 t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl)
@@ -77,14 +150,16 @@ t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl)
 	{
 		len = 1;
 		in_quote = line[start];
+		start++;
+		if (line[start] == in_quote)
+			return (tl);
 		while (line[start + len] && line[start + len] != in_quote)
-		{
-			if (is_operator(&line[start + len]))
-				break;
 			len++;
-		}
 		*pos = start + len + 1;
-		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TDQUOTES));
+		if (in_quote == '"')
+			return (dlist_push_back(&tl, ft_strndup(&line[start], len), TDQUOTES));
+		else
+			return (dlist_push_back(&tl, ft_strndup(&line[start], len), TQUOTES));
 	}
 	else
 	{
@@ -94,8 +169,8 @@ t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl)
 				break;
 			len++;
 		}
-		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TWORD));
 		*pos = start + len;
+		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TWORD));
 	}
 }
 
@@ -103,14 +178,20 @@ int	init_tokens(char *line)
 {
 	int		pos;
 	t_tokenlist	*tl;
-
+	t_tokenlist *tmp;
+	
 	pos = 0;
 	tl = NULL;
-	get_token(line, &pos, tl);
-	while (tl)
+	while (line[pos])
 	{
-		get_token(line, &pos, tl);
+		tmp = get_token(line, &pos, tl);
+		if (!tmp)
+			break;
+		tl = tmp;
 	}
-	print_dlist(tl, true);
+	//print_dlist(tl, false);
+	set_operator(tl);
+	set_builtin(tl);
+	print_dlist(tl, false);
 	return (0);
 }

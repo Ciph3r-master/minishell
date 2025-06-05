@@ -1,6 +1,35 @@
 #include "minishell.h"
 #include <stdlib.h>
 
+static char	*get_tokentype_name(t_tokentype type)
+{
+	if (type == TARG)
+		return "ARG";
+	if (type == TBUILTIN)
+		return "\e[1;91mBUILTIN\e[0m";
+	if (type == TDQUOTES)
+		return "DQUOTES";
+	if (type == TQUOTES)
+		return "QUOTES";
+	if (type == TEXTERN)
+		return "EXTERN";
+	if (type == TWORD)
+		return "WORD";
+	if (type == TRD_IN)
+		return "\e[1;92mREDIRECT IN\e[0m";
+	if (type == TRD_OUT)
+		return "\e[1;92mREDIRECT OUT\e[0m";
+	if (type == TOPERATOR)
+		return "\e[1;92mOPERATOR\e[0m";
+	if (type == THD)
+		return "\e[1;92mHEREDOC\e[0m";
+	if (type == TPIPE)
+		return "\e[1;92mPIPE\e[0m";
+	if (type == TAPPEND)
+		return "\e[1;92mAPPEND\e[0m";
+	return "UNKNOWN";
+}
+
 t_tokenlist	*dlist_create_node(void	*content, t_tokentype type)
 {
 	t_tokenlist	*node;
@@ -67,20 +96,21 @@ void	print_dlist(t_tokenlist *tokenlist, bool reverse)
 	current = tokenlist;
 	if (!reverse)
 	{
-		printf("IN CORRECT ORDER\n");
 		while (current)
 		{
-			printf("%s [%u]\n", current->token, current->type);
+			printf("[%s]-[%s] -> ", current->token, get_tokentype_name(current->type));
 			current = current->next;
 		}
+		printf("\n");
 		return ;
 	}
 	while (current->next)
 		current = current->next;
-	printf("REVERSE ORDER\n");
+	printf("REVERSE\n");
 	while (current)
 	{
-		printf("%s [%u]\n", current->token, current->type);
+		printf("%s [%s] -> ", current->token, get_tokentype_name(current->type));
 		current = current->prev;
 	}
+	printf("\n");
 }
