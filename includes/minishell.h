@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/06 20:19:10 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:40:42 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ typedef	enum e_cmdtype
 {
 	PIPE			= 1 << 0,
 	REDIRECT_IN		= 1 << 1,
-	REDIRECT_OUT	= 1 << 2,
-	APPEND			= 1 << 3,
-	HEREDOC			= 1 << 4,
+	HEREDOC			= 1 << 2,
+	REDIRECT_OUT	= 1 << 3,
+	APPEND			= 1 << 4,
 	EXTERN			= 1 << 5,
 	BUILTIN			= 1 << 6,
 } t_cmdtype;
@@ -76,8 +76,9 @@ typedef struct s_cmd_node
 	int			fd_in;
 	int			fd_out;
 	int			error_code;
-	char		*filename_in;
-	char		*filename_out;
+	char		**filename_in;
+	char		**filename_out;
+	char		*delimiter;
 	t_cmd		*cmd;
 	t_cmd_node	*prev;
 	t_cmd_node	*next;
