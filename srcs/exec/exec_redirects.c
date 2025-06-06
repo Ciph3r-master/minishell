@@ -55,7 +55,8 @@ t_cmd_node	*init_cmd_node(void)
 //in, out, append,.
 int	exec(t_cmd_node *cmd_node, char **env)
 {
-	if ()
+	if (1)
+		;
 }
 
 int	main(int argc, char **argv, char **env)

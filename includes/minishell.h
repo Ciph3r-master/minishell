@@ -19,9 +19,9 @@ enum e_type
 {
 	PIPE			= 1 << 0,
 	REDIRECT_IN		= 1 << 1,
-	REDIRECT_OUT	= 1 << 2,
-	APPEND			= 1 << 3,
-	HEREDOC			= 1 << 4,
+	HEREDOC			= 1 << 2,
+	REDIRECT_OUT	= 1 << 3,
+	APPEND			= 1 << 4,
 	EXTERN			= 1 << 5,
 	BUILTIN			= 1 << 6,
 };
@@ -50,7 +50,7 @@ typedef struct s_cmd_node
 	int			error_code;
 	char		**filename_in;
 	char		**filename_out;
-	char		*limiter;
+	char		*delimiter;
 	t_cmd		*cmd;
 	t_cmd_node	*prev;
 	t_cmd_node	*next;

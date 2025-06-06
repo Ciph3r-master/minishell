@@ -31,9 +31,9 @@ int	main(void)
 	}
 	else
 	{
+		wait(NULL);
 		sleep(10);
 		write(1, "parent\n", 7);
 	}
-	wait(NULL);
 	return (0);
 }

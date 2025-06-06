@@ -83,6 +83,29 @@ int	find_path_with_access(char **paths, char **pathname)
 	return (1);
 }
 
+int	find_path_with_access(char **paths, char **pathname)
+{
+	int	i;
+
+	i = 0;
+	while (paths[i])
+	{
+		if (0 == access(paths[i], X_OK))
+		{
+			*pathname = ft_strdup(paths[i]);
+			if (NULL == *pathname)
+			{
+				printf("ft_strdup: failed\n");
+				free_char_tab_all(paths);
+				exit (EXIT_FAILURE);
+			}
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int	get_cmd_path_name(char **pathname, char **argv)
 {
 	char	*path;
