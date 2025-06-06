@@ -4,15 +4,15 @@
 static char	*get_tokentype_name(t_tokentype type)
 {
 	if (type == TARG)
-		return "ARG";
+		return "\e[1;95mARG\e[0m";
 	if (type == TBUILTIN)
 		return "\e[1;91mBUILTIN\e[0m";
 	if (type == TDQUOTES)
-		return "DQUOTES";
+		return "\e[1;96mDQUOTES\e[0m";
 	if (type == TQUOTES)
-		return "QUOTES";
+		return "\e[1;96mQUOTES\e[0m";
 	if (type == TEXTERN)
-		return "EXTERN";
+		return "\e[1;91mEXTERN\e[0m";
 	if (type == TWORD)
 		return "WORD";
 	if (type == TRD_IN)
@@ -27,6 +27,10 @@ static char	*get_tokentype_name(t_tokentype type)
 		return "\e[1;92mPIPE\e[0m";
 	if (type == TAPPEND)
 		return "\e[1;92mAPPEND\e[0m";
+	if (type == TFILE)
+		return "\e[1;93mFILE\e[0m";
+	if (type == TLIMITER)
+		return "\e[1;94mLIMITER\e[0m";
 	return "UNKNOWN";
 }
 

@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/05 21:29:48 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/06 20:19:10 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-enum e_type
+typedef	enum e_cmdtype
 {
 	PIPE			= 1 << 0,
 	REDIRECT_IN		= 1 << 1,
@@ -25,7 +25,7 @@ enum e_type
 	HEREDOC			= 1 << 4,
 	EXTERN			= 1 << 5,
 	BUILTIN			= 1 << 6,
-};
+} t_cmdtype;
 
 typedef enum e_tokentype
 {
@@ -38,8 +38,10 @@ typedef enum e_tokentype
 	TPIPE,
 	TAPPEND,
 	THD,
+	TFILE,
 	TARG,
 	TEXTERN,
+	TLIMITER,
 	TBUILTIN
 }	t_tokentype;
 
