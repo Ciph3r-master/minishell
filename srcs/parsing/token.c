@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/06 22:14:02 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:12:28 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,49 +126,7 @@ int	get_cmd_path_name(char **pathname, char *cmd)
 	return (1);
 }
 
-static int	is_operator(char *line)
-{
-	if (!line)
-		return (0);
-	if (line[0] == '|')
-		return (1);
-	if (line[0] == '<')
-	{
-		if (line[1] == '<')
-			return (2);
-		return (1);
-	}
-	if (line[0] == '>')
-	{
-		if (line[1] == '>')
-			return (2);
-		return (1);
-	}
-	return (0);
-}
 
-static int	is_builtin(char *word)
-{
-	const char	*builtin[8];
-	int			i;
-
-	i = 0;
-	builtin[0] = "echo";
-	builtin[1] = "cd";
-	builtin[2] = "pwd";
-	builtin[3] = "export";
-	builtin[4] = "unset";
-	builtin[5] = "env";
-	builtin[6] = "exit";
-	builtin[7] = NULL;
-	while (builtin[i])
-	{
-		if (ft_strcmp(word, builtin[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 static char	*ft_strndup(const char *src, int size)
 {
@@ -192,10 +150,10 @@ static char	*ft_strndup(const char *src, int size)
 
 void	set_operator(t_tokenlist *tl)
 {
-	t_tokenlist *current;
+	t_tokenlist	*current;
 
 	current = tl;
-	while(current)
+	while (current)
 	{
 		if (current->type == TOPERATOR)
 		{
@@ -224,10 +182,10 @@ void	set_operator(t_tokenlist *tl)
 
 void	set_builtin(t_tokenlist *tl)
 {
-	t_tokenlist *current;
+	t_tokenlist	*current;
 
 	current = tl;
-	while(current)
+	while (current)
 	{
 		if (current->type == TWORD)
 		{
@@ -242,10 +200,10 @@ void	set_builtin(t_tokenlist *tl)
 //TODO GERER AUSSI LES COMMANDES IN QUOTES arg ...
 void	set_cmd(t_tokenlist *tl)
 {
-	t_tokenlist *current;
+	t_tokenlist	*current;
 
 	current = tl;
-	while(current)
+	while (current)
 	{
 		if (current->type)
 		{
@@ -260,14 +218,19 @@ void	set_cmd(t_tokenlist *tl)
 
 void	set_file(t_tokenlist *tl)
 {
-	t_tokenlist *current;
+	t_tokenlist	*current;
 	t_tokentype	type;
 
 	current = tl;
-	while(current)
+	while (current)
 	{
 		type = current->type;
-		if (current->next != NULL && (type == TRD_IN || type == TRD_OUT || type == TAPPEND))
+		if (current->next != NULL
+			&& current->next->type != TRD_IN
+			&& current->next->type != TAPPEND
+			&& current->next->type != TRD_OUT
+			&& current->next->type != THD
+			&& (type == TRD_IN || type == TRD_OUT || type == TAPPEND))
 			current->next->type = TFILE;
 		current = current->next;
 	}
@@ -275,14 +238,14 @@ void	set_file(t_tokenlist *tl)
 
 void	set_limiter(t_tokenlist *tl)
 {
-	t_tokenlist *current;
+	t_tokenlist	*current;
 	t_tokentype	type;
 
 	current = tl;
 	while(current)
 	{
 		type = current->type;
-		if (type == THD)
+		if (type == THD && current->next != NULL)
 			current->next->type = TLIMITER;
 		current = current->next;
 	}
@@ -290,22 +253,23 @@ void	set_limiter(t_tokenlist *tl)
 
 void	set_args(t_tokenlist *tl)
 {
-	t_tokenlist *current;
+	t_tokenlist	*current;
 	t_tokentype	type;
 
 	current = tl;
-	while(current)
+	while (current)
 	{
 		type = current->type;
 		if (type == TWORD)
 			current->type = TARG;
 		if ((type == TEXTERN || type == TBUILTIN)
 			&& current->next != NULL
-			&& current->next->type != TRD_IN 
+			&& current->next->type != TRD_IN
 			&& current->next->type != TRD_OUT
 			&& current->next->type != TRD_IN
 			&& current->next->type != TAPPEND
-			&& current->next->type != THD)
+			&& current->next->type != THD
+			&& current->next->type != TPIPE)
 			current->next->type = TARG;
 		current = current->next;
 	}
@@ -327,7 +291,7 @@ int	count_args(t_tokenlist *tl)
 	return (ac);
 }
 
-void print_cmd(t_cmd *cmd)
+void	print_cmd(t_cmd *cmd)
 {
 	int i = 0;
 
@@ -335,7 +299,6 @@ void print_cmd(t_cmd *cmd)
 		return ;
 	if (cmd->cmd)
 		printf("Commande : %s\n", cmd->cmd);
-
 	printf("Arguments :\n");
 	if (cmd->args)
 	{
@@ -391,54 +354,72 @@ void	*create_cmd_node(t_tokenlist *tl)
 	return (node);
 }
 
-t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl)
+static	t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos)
 {
+	int			len;
+	t_tokenlist	*ntl;
+
+	len = is_operator(&line[*pos]);
+	ntl = dlist_push_back(&tl, ft_strndup(&line[*pos], len), TOPERATOR);
+	*pos += len;
+	return (ntl);
+}
+
+static	t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos)
+{
+	int		len;
 	char	in_quote;
 	int		start;
-	int		len;
-	
-	in_quote = 0;
+
+	len = 1;
+	in_quote = line[*pos];
+	(*pos)++;
+	start = *pos;
+	if (line[start] == in_quote)
+	{
+		(*pos)++;
+		return (dlist_push_back(&tl, ft_strndup("", 1), TDQUOTES));
+	}
+	while (line[start + len] && line[start + len] != in_quote)
+		len++;
+	*pos = start + len + 1;
+	if (in_quote == '"')
+		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TDQUOTES));
+	else
+		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TQUOTES));
+}
+
+static	t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos)
+{
+	int	start;
+	int	len;
+
 	start = *pos;
 	len = 0;
-	while (line[start] && ft_is_white_space(line[start]))
-		start++;
-	if (!line[start])
+	while (line[start + len]
+		&& !ft_is_white_space(line[start + len])
+		&& line[start + len] != '"' && line[start + len] != '\'')
+	{
+		if (is_operator(&line[start + len]))
+			break ;
+		len++;
+	}
+	*pos = start + len;
+	return (dlist_push_back(&tl, ft_strndup(&line[start], len), TWORD));
+}
+
+t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
+{
+	while (line[*pos] && ft_is_white_space(line[*pos]))
+		(*pos)++;
+	if (!line[*pos])
 		return (NULL);
-	if (is_operator(&line[start]))
-	{
-		len = is_operator(&line[start]);
-		*pos = start + len;
-		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TOPERATOR));
-	}
-	if (line[start] == '"' || line[start] == '\'')
-	{
-		len = 1;
-		in_quote = line[start];
-		start++;
-		if (line[start] == in_quote)
-		{
-			*pos = start + len;
-			return (tl);
-		}
-		while (line[start + len] && line[start + len] != in_quote)
-			len++;
-		*pos = start + len + 1;
-		if (in_quote == '"')
-			return (dlist_push_back(&tl, ft_strndup(&line[start], len), TDQUOTES));
-		else
-			return (dlist_push_back(&tl, ft_strndup(&line[start], len), TQUOTES));
-	}
+	if (is_operator(&line[*pos]))
+		return (extract_operator(tl, line, pos));
+	if (line[*pos] == '"' || line[*pos] == '\'')
+		return (extract_quotes(tl, line, pos));
 	else
-	{
-		while (line[start + len] && !ft_is_white_space(line[start + len]) && line[start + len] != '"' && line[start + len] != '\'')
-		{
-			if (is_operator(&line[start + len]))
-				break;
-			len++;
-		}
-		*pos = start + len;
-		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TWORD));
-	}
+		return (extract_word(tl, line, pos));
 }
 
 int	init_tokens(char *line)
@@ -446,14 +427,14 @@ int	init_tokens(char *line)
 	int		pos;
 	t_tokenlist	*tl;
 	t_tokenlist *tmp;
-	
+
 	pos = 0;
 	tl = NULL;
 	while (line[pos])
 	{
 		tmp = get_token(line, &pos, tl);
 		if (!tmp)
-			break;
+			break ;
 		tl = tmp;
 	}
 	//print_dlist(tl, false);

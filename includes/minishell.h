@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/06 22:40:42 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:05:56 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,12 @@ int	is_open_quotes(char *line, char quote);
 t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl);
 int init_tokens(char *line);
 
+//token utils
+int	is_builtin(char *word);
+int	is_operator(char *line);
 //DLIST
 t_tokenlist	*dlist_create_node(void	*content, t_tokentype type);
 t_tokenlist	*dlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
-void	print_dlist(t_tokenlist *tokenlist, bool reverse);
+void		print_dlist(t_tokenlist *tokenlist, bool reverse);
 t_tokenlist	*dlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type);
 #endif
