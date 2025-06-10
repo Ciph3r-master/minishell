@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/10 13:10:33 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/10 15:36:13 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,32 +316,18 @@ void	print_cmd(t_cmd *cmd)
 	printf("Chemin : %s\n", cmd->path);
 }
 
-int count_files(t_tokenlist *tl)
-{
-	t_tokenlist	*current;
-	int			count;
-
-	count = 0;
-	current = tl;
-	while (current && current->type != TPIPE)
-	{
-		if (current->type == TFILE)
-			count++;
-		current = current->next;
-	}
-	return (count);
-}
-
 void *create_cmd_node(t_tokenlist *tl)
 {
 	t_tokenlist	*current;
 	t_cmd		*cmd;
 	t_cmd_node	*node;
+	t_filelist	*filein;
+	t_filelist	*fileout;
 	int			ac;
 	char		**args;
-	int			cf;
 
-	cf = count_files(tl);
+	filein = NULL;
+	fileout = NULL;
 	node = malloc(sizeof(t_cmd_node));
 	if (!node)
 		return (NULL);
@@ -366,11 +352,31 @@ void *create_cmd_node(t_tokenlist *tl)
 			args[ac] = current->token;
 			ac++;
 		}
+		if (current->prev && current->type == TLIMITER)
+		{
+			filelist_push_back(&filein, "tmp name", FILE_HD);
+			filelist_getlast(filein)->limiter = current->token;
+		}
+		if (current->type == TFILE)
+		{
+			if (current->prev && current->prev->type == TRD_IN)
+				filelist_push_back(&filein, current->token, FILE_IN);
+			if (current->prev && (current->prev->type == TRD_OUT || current->prev->type == TAPPEND))
+			{
+				if (current->prev->type == TRD_OUT)
+					filelist_push_back(&fileout, current->token, FILE_OUT);
+				else
+					filelist_push_back(&fileout, current->token, FILE_APPEND);
+
+			}
+		}
 		current = current->next;
 	}
 	args[ac] = NULL;
 	cmd->args = args;
 	get_cmd_path_name(&cmd->path, cmd->cmd);
+	print_filelist(filein, false);
+	print_filelist(fileout, false);
 	print_cmd(cmd);
 	return (node);
 }
@@ -381,7 +387,7 @@ static	t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos)
 	t_tokenlist	*ntl;
 
 	len = is_operator(&line[*pos]);
-	ntl = dlist_push_back(&tl, ft_strndup(&line[*pos], len), TOPERATOR);
+	ntl = tokenlist_push_back(&tl, ft_strndup(&line[*pos], len), TOPERATOR);
 	*pos += len;
 	return (ntl);
 }
@@ -399,15 +405,15 @@ static	t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos)
 	if (line[start] == in_quote)
 	{
 		(*pos)++;
-		return (dlist_push_back(&tl, ft_strndup("", 1), TDQUOTES));
+		return (tokenlist_push_back(&tl, ft_strndup("", 1), TDQUOTES));
 	}
 	while (line[start + len] && line[start + len] != in_quote)
 		len++;
 	*pos = start + len + 1;
 	if (in_quote == '"')
-		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TDQUOTES));
+		return (tokenlist_push_back(&tl, ft_strndup(&line[start], len), TDQUOTES));
 	else
-		return (dlist_push_back(&tl, ft_strndup(&line[start], len), TQUOTES));
+		return (tokenlist_push_back(&tl, ft_strndup(&line[start], len), TQUOTES));
 }
 
 static	t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos)
@@ -426,7 +432,7 @@ static	t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos)
 		len++;
 	}
 	*pos = start + len;
-	return (dlist_push_back(&tl, ft_strndup(&line[start], len), TWORD));
+	return (tokenlist_push_back(&tl, ft_strndup(&line[start], len), TWORD));
 }
 
 t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
@@ -465,7 +471,7 @@ int	init_tokens(char *line)
 	set_file(tl);
 	set_limiter(tl);
 	set_args(tl);
-	print_dlist(tl, false);
+	print_tokenlist(tl, false);
 	create_cmd_node(tl);
 	return (0);
 }

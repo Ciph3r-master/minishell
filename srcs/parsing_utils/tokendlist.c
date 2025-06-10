@@ -34,7 +34,7 @@ static char	*get_tokentype_name(t_tokentype type)
 	return "UNKNOWN";
 }
 
-t_tokenlist	*dlist_create_node(void	*content, t_tokentype type)
+t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type)
 {
 	t_tokenlist	*node;
 
@@ -48,14 +48,14 @@ t_tokenlist	*dlist_create_node(void	*content, t_tokentype type)
 	return (node);
 }
 
-t_tokenlist	*dlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type)
+t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type)
 {
 	t_tokenlist *tmp;
 	t_tokenlist	*new_node;
 
 	if (!tokenlist)
 		return (NULL);
-	new_node = dlist_create_node(content, type);
+	new_node = tokenlist_create_node(content, type);
 	if (!new_node)
 		return (NULL);
 	if (!*tokenlist)
@@ -70,14 +70,14 @@ t_tokenlist	*dlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentyp
 	return (*tokenlist);
 }
 
-t_tokenlist	*dlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type)
+t_tokenlist	*tokenlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type)
 {
 	t_tokenlist	*new_node;
 	t_tokenlist	*current;
 
 	if (!tokenlist)
 		return (NULL);
-	new_node = dlist_create_node(content, type);
+	new_node = tokenlist_create_node(content, type);
 	if (!new_node)
 		return (NULL);
 	if (*tokenlist == NULL)
@@ -93,7 +93,7 @@ t_tokenlist	*dlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype
 	return (*tokenlist);
 }
 
-void	print_dlist(t_tokenlist *tokenlist, bool reverse)
+void	print_tokenlist(t_tokenlist *tokenlist, bool reverse)
 {
 	t_tokenlist	*current;
 	

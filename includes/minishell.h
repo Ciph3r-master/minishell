@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/09 19:53:28 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/10 15:33:44 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ typedef enum e_tokentype
 	TBUILTIN
 }	t_tokentype;
 
+typedef enum e_filetype
+{
+	FILE_IN,
+	FILE_OUT,
+	FILE_APPEND,
+	FILE_HD
+}	t_filetype;
+
 typedef struct s_tokenlist
 {
 	char				*token;
@@ -68,11 +76,18 @@ typedef struct s_cmd
 	char	*path;
 }	t_cmd;
 
-typedef struct t_file
+
+typedef struct s_filelist	t_filelist;
+
+typedef struct s_filelist
 {
-	char		*filename;
-	t_tokentype	type;
-}	t_file;
+	int					fd;
+	char				*filename;
+	char				*limiter;
+	t_filetype			type;
+	t_filelist			*next;
+	t_filelist			*prev;
+}	t_filelist;
 
 typedef struct s_cmd_node	t_cmd_node;
 
@@ -82,8 +97,8 @@ typedef struct s_cmd_node
 	int			fd_in;
 	int			fd_out;
 	int			error_code;
-	t_file 		*file_in;
-	t_file		*file_out;
+	t_filelist	*file_in;
+	t_filelist	*file_out;
 	char		*delimiter;
 	t_cmd		*cmd;
 	t_cmd_node	*prev;
@@ -99,8 +114,15 @@ int init_tokens(char *line);
 int	is_builtin(char *word);
 int	is_operator(char *line);
 //DLIST
-t_tokenlist	*dlist_create_node(void	*content, t_tokentype type);
-t_tokenlist	*dlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
-void		print_dlist(t_tokenlist *tokenlist, bool reverse);
-t_tokenlist	*dlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type);
+t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type);
+t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
+void		print_tokenlist(t_tokenlist *tokenlist, bool reverse);
+t_tokenlist	*tokenlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type);
+
+t_filelist	*filelist_create_node(void	*content, t_filetype type);
+t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype type);
+void		print_filelist(t_filelist *filelist, bool reverse);
+t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type);
+t_filelist	*filelist_getlast(t_filelist *filelist);
+
 #endif

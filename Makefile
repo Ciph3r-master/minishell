@@ -6,7 +6,7 @@
 #    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/07 21:04:53 by qutruche         ###   ########.fr        #
+#    Updated: 2025/06/10 14:28:07 by qutruche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,8 +60,9 @@ SRCS_PARSING :=				\
 	$(DIR_PARSING)/token.c  \
 	$(DIR_PARSING)/token_utils.c
 
-SRCS_PARSING_UTILS :=				\
-	$(DIR_PARSING_UTILS)/dlist_utils.c
+SRCS_PARSING_UTILS :=				  \
+	$(DIR_PARSING_UTILS)/tokendlist.c \
+	$(DIR_PARSING_UTILS)/filedlist.c
 
 SRCS         := $(SRCS_CORE) $(SRCS_PARSING) $(SRCS_PARSING_UTILS)
 
