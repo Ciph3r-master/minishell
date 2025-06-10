@@ -17,7 +17,7 @@
 # include <limits.h>
 # include <stdbool.h>
 
-typedef	enum e_cmdtype
+typedef enum e_cmdtype
 {
 	PIPE			= 1 << 0,
 	REDIRECT_IN		= 1 << 1,
@@ -26,7 +26,7 @@ typedef	enum e_cmdtype
 	APPEND			= 1 << 4,
 	EXTERN			= 1 << 5,
 	BUILTIN			= 1 << 6,
-} t_cmdtype;
+}	t_cmdtype;
 
 typedef enum e_tokentype
 {
@@ -58,17 +58,9 @@ typedef struct s_tokenlist
 {
 	char				*token;
 	t_tokentype			type;
-	struct	s_tokenlist	*next;
-	struct	s_tokenlist	*prev;
+	struct s_tokenlist	*next;
+	struct s_tokenlist	*prev;
 }	t_tokenlist;
-
-
-typedef struct s_data
-{
-	char	**env;
-	char	*pwd;
-	char	*old_pwd;
-}	t_data;
 
 typedef struct s_cmd
 {
@@ -76,7 +68,6 @@ typedef struct s_cmd
 	char	**args;
 	char	*path;
 }	t_cmd;
-
 
 typedef struct s_filelist	t_filelist;
 
@@ -89,6 +80,15 @@ typedef struct s_filelist
 	t_filelist			*next;
 	t_filelist			*prev;
 }	t_filelist;
+
+typedef struct s_env_list	t_env_list;
+
+typedef struct s_env_list
+{
+	char		*key;
+	char		*value;
+	t_env_list	*next;
+}	t_env_list;
 
 typedef struct s_cmd_node	t_cmd_node;
 
@@ -106,14 +106,23 @@ typedef struct s_cmd_node
 	t_cmd_node	*next;
 }	t_cmd_node;
 
+typedef struct s_data
+{
+	char		*pwd;
+	char		*old_pwd;
+	char		**env_copy;
+	t_env_list	*env_list;
+	t_cmd_node	*cmd_node;
+}	t_data;
+
 //	srcs/parsing/quotes.c
-int	is_open_quotes(char *line, char quote);
-t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl);
-int init_tokens(char *line);
+int			is_open_quotes(char *line, char quote);
+t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl);
+int 		init_tokens(char *line);
 
 //token utils
-int	is_builtin(char *word);
-int	is_operator(char *line);
+int			is_builtin(char *word);
+int			is_operator(char *line);
 //DLIST
 t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type);
 t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
@@ -125,5 +134,18 @@ t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype
 void		print_filelist(t_filelist *filelist, bool reverse);
 t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type);
 t_filelist	*filelist_getlast(t_filelist *filelist);
+
+// data/
+	//init_data.c
+int			init_data(t_data *data, char **env);
+
+// env_copy/
+	// env_list.c
+t_env_list	*new_node_env_list(char *key, char *value);
+void		push_back_env_list(t_env_list **env_list, t_env_list *new_node);
+	// get_env.c
+char		*get_env_key(char *env_line);
+char		*get_env_value(char *env_line);
+void		print_env_list(t_env_list **env_list);
 
 #endif
