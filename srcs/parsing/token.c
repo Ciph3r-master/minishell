@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/07 21:12:28 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:10:33 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	find_path_with_access(char **paths, char **pathname)
 	i = 0;
 	while (paths[i])
 	{
-		if (0 == access(paths[i], X_OK))
+		if (access(paths[i], X_OK) == 0)
 		{
 			*pathname = ft_strdup(paths[i]);
 			if (NULL == *pathname)
@@ -81,7 +81,7 @@ int	is_command(char *word)
 	path = getenv("PATH");
 	if (access(word, X_OK) == 0)
 		return (1);
-	if (NULL == path)
+	if (path == NULL)
 	{
 		printf("getenv: can't get $PATH");
 		exit(1);
@@ -89,7 +89,7 @@ int	is_command(char *word)
 	paths = ft_split_set(path, ":");
 	add_string_to_strings(paths, "/");
 	add_string_to_strings(paths, word);
-	if (0 == check_path_with_access(paths))
+	if (check_path_with_access(paths) == 0)
 	{
 		free_char_tab_all(paths);
 		return (0);
@@ -117,7 +117,7 @@ int	get_cmd_path_name(char **pathname, char *cmd)
 	paths = ft_split_set(path, ":");
 	add_string_to_strings(paths, "/");
 	add_string_to_strings(paths, cmd);
-	if (0 == find_path_with_access(paths, pathname))
+	if (find_path_with_access(paths, pathname) == 0)
 	{
 		free_char_tab_all(paths);
 		return (0);
@@ -316,18 +316,39 @@ void	print_cmd(t_cmd *cmd)
 	printf("Chemin : %s\n", cmd->path);
 }
 
-void	*create_cmd_node(t_tokenlist *tl)
+int count_files(t_tokenlist *tl)
 {
 	t_tokenlist	*current;
-	t_cmd		cmd;
+	int			count;
+
+	count = 0;
+	current = tl;
+	while (current && current->type != TPIPE)
+	{
+		if (current->type == TFILE)
+			count++;
+		current = current->next;
+	}
+	return (count);
+}
+
+void *create_cmd_node(t_tokenlist *tl)
+{
+	t_tokenlist	*current;
+	t_cmd		*cmd;
 	t_cmd_node	*node;
 	int			ac;
 	char		**args;
+	int			cf;
 
+	cf = count_files(tl);
 	node = malloc(sizeof(t_cmd_node));
 	if (!node)
 		return (NULL);
-	node->cmd = &cmd;
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	node->cmd = cmd;
 	args = malloc(sizeof(char *) * (count_args(tl) + 2));
 	if (!args)
 		return (NULL);
@@ -338,7 +359,7 @@ void	*create_cmd_node(t_tokenlist *tl)
 		if (current->type == TEXTERN || current->type == TBUILTIN)
 		{
 			args[0] = current->token;
-			cmd.cmd = current->token;
+			cmd->cmd = current->token;
 		}
 		if (current->type == TARG)
 		{
@@ -348,9 +369,9 @@ void	*create_cmd_node(t_tokenlist *tl)
 		current = current->next;
 	}
 	args[ac] = NULL;
-	cmd.args = args;
-	get_cmd_path_name(&cmd.path, cmd.cmd);
-	print_cmd(&cmd);
+	cmd->args = args;
+	get_cmd_path_name(&cmd->path, cmd->cmd);
+	print_cmd(cmd);
 	return (node);
 }
 
@@ -445,6 +466,6 @@ int	init_tokens(char *line)
 	set_limiter(tl);
 	set_args(tl);
 	print_dlist(tl, false);
-	//create_cmd_node(tl);
+	create_cmd_node(tl);
 	return (0);
 }

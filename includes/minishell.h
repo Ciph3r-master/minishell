@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/07 21:05:56 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:53:28 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ typedef struct s_cmd
 	char	*path;
 }	t_cmd;
 
+typedef struct t_file
+{
+	char		*filename;
+	t_tokentype	type;
+}	t_file;
+
 typedef struct s_cmd_node	t_cmd_node;
 
 typedef struct s_cmd_node
@@ -76,8 +82,8 @@ typedef struct s_cmd_node
 	int			fd_in;
 	int			fd_out;
 	int			error_code;
-	char		**filename_in;
-	char		**filename_out;
+	t_file 		*file_in;
+	t_file		*file_out;
 	char		*delimiter;
 	t_cmd		*cmd;
 	t_cmd_node	*prev;
