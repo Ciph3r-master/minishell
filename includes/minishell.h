@@ -48,6 +48,7 @@ typedef struct s_cmd_node
 	int			fd_in;
 	int			fd_out;
 	int			error_code;
+	int			first_cmd;
 	char		**filename_in;
 	char		**filename_out;
 	char		*delimiter;

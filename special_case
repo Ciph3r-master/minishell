@@ -1,0 +1,21 @@
+$ cat << "E""O""F"
+> EOF
+$
+
+$ cat << "E"OF
+> EOF
+$
+
+$ cat << "E"O"F"
+> EOF
+$
+
+$ cat << "EOF"
+> EOF
+$
+
+$ cat << "E" OF
+> EOF
+> E
+cat: OF: No such file or directory
+$
