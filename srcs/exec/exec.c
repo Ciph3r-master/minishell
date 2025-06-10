@@ -5,133 +5,99 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-03 16:49:42 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-03 16:49:42 by thmaitre         ###   ########.fr       */
+/*   Created: 2025-06-10 11:58:30 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-06-10 11:58:30 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/wait.h>
 
-t_cmd_node	*init_cmd_node(void)
+// ########## INIT CMD_NODE ##############################
+
+// fonction servant a imiter le pasring en creant des fausse
+// donne en liste chainee qui vont etre envoyé a ma fonction exec
+// comme si le parsing avais envoyé ces données
+t_cmd_node	*cmd_node_list(t_cmd_node *cmd_node)
 {
-	t_cmd_node	*cmd_node;
-
-	cmd_node = malloc(sizeof(t_cmd_node));
-	if (!cmd_node)
-		exit (EXIT_FAILURE);
-
-	cmd_node->cmd = malloc(sizeof(t_cmd));
-	if (!cmd_node)
-	{
-		free(cmd_node);
-		exit (EXIT_FAILURE);
-	}
-	cmd_node->cmd->args = malloc(sizeof(char *) * 2);
-
-	cmd_node->cmd->cmd = "ls";
-	cmd_node->cmd->args[0] = "ls";
-	cmd_node->cmd->args[1] = NULL;
-	cmd_node->cmd->path = "/usr/bin/ls";
-
-	cmd_node->type = EXTERN;
-	cmd_node->fd_in = -1;
-	cmd_node->fd_out = -1;
-	cmd_node->error_code = 0;
-	cmd_node->filename_in = NULL;
-	cmd_node->filename_out = "test.txt";
-	cmd_node->prev = NULL;
-	cmd_node->next = NULL;
 	return (cmd_node);
 }
 
-int	redirect_out(t_cmd_node *cmd_node)
-{
-	int		fd_out;
+// ########## EXEC HEREDOC ##############################
 
-	fd_out = open(cmd_node->filename_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (-1 == fd_out)
-	{
-		perror("fd_in:");
-		return (1);
-	}
-	cmd_node->fd_out = fd_out;
-	if (-1 == dup2(fd_out, STDOUT_FILENO))
-	{
-		perror("dup2:");
-		return (1);
-	}
-	return (0);
+int	exec_heredoc(t_cmd_node *cmd_node)
+{
+
 }
 
-int	execute_cmd_in_child_process(t_cmd_node *cmd_node, char **env)
-{
-	int		pid;
-	int		status;
+// ########## EXEC ##############################
 
-	pid = fork();
-	if (-1 == pid)
+// ma fonction principale de mon execution
+// va executer les heredoc
+// executer une commmande simple dans un enfant ou non si un builtin
+// -> executer les redir_in a l'interieur de la commande
+// -> executer les redir_out a l'interieur de la commande
+// executer les pipe si il y en a, et donc creer des fork pour chaque pipe, avec un old et new_pipe
+// -> a l'interieur de chaque cmd executer les redir_in a l'interieur
+// -> a l'interieur de chaque cmd executer les redir_out a l'interieur
+int	exec(t_cmd_node *cmd_node)
+{
+	int	node_type;
+
+	node_type = INT_MIN;
+	// cette fonction va parcourir tous les node
+	// pour verifier si il on des heredoc, si oui on les cree
+	// puis on les execute, avec la gestion des signaux
+	// donc ouvrir un readline qui attend le oef present dans la structure
+	// on les execute un a un jusqu'a que la file_list soit vide
+	exec_heredoc(cmd_node);
+	if (!cmd_node->next)
 	{
-		perror("fork");
-		return (0);
+		if (BUILTIN & node_type)
+			// va permettre d'executer une commande en builtin
+			// donc on va juste aller chercher la commande
+			// dans un dossier builtin et l'executer
+			// a l'interieur on va aussi executer
+			// les redir_in puis les redir_out
+			// ??? apres l'execution on dois rendre les sortie classique ???
+			exec_simple_cmd_builtin(cmd_node);
+		if (EXTERN & node_type)
+			// va permettre d'executer une commande en extern
+			// on va creer un fork simple pour simplement executer
+			// avant d'executer on va faire les redir_in, puis les redir_out
+			exec_simple_cmd_extern(cmd_node);
 	}
-	if (0 == pid)
+	else if (cmd_node->next)
 	{
-		if (-1 != execve(cmd_node->cmd->path, cmd_node->cmd->args, env))
-		{
-			perror("execve:");
-			exit(EXIT_FAILURE);
-		}
+		// on va dans une boucle, executer chaque commande suivi d'un pipe
+		// on va faire les redirection des pipe avant celle
+		// des redir_in et de redir_out, pour chaque commande
+		// puis on fait les redir_in et out, ainsi on a les redir qui prennent
+		// la priorité sur les pipes
+		execute_pipe(cmd_node);
 	}
-	else
-	{
-		wait(&status);
-	}
-	return (0);
 }
 
-// check les valeurs initialise dans la
-// structure et execute en fonction
-int	exec(t_cmd_node *cmd_node, char **env)
-{
-	int	return_code;
-	int	saved_stdout;
-
-	saved_stdout = dup(STDOUT_FILENO);
-	if (-1 == saved_stdout)
-	{
-		perror("dup");
-		exit(EXIT_FAILURE);
-	}
-	if (cmd_node->filename_out)
-		redirect_out(cmd_node);
-	return_code = execute_cmd_in_child_process(cmd_node, env);
-	if (cmd_node->filename_out)
-	{
-		if (-1 == dup2(saved_stdout, STDOUT_FILENO))
-		{
-			perror("dup2:");
-			return (1);
-		}
-		close(cmd_node->fd_out);
-	}
-	return (return_code);
-}
-
-// le main remplace la partie parsing
-// et envoi a la fonction exec, une structure ou
-// une liste chaine de structure, qui vas etre execute
+// fonction servant a imiter le pasring en creant des fausse
+// donne en liste chainee qui vont etre envoyé a ma fonction exec
+// comme si le parsing avais envoyé ces données
+// puis va appeler mon exec
+// cette fonction simule aussi le comportement des signaux
+// pour pouvoir implementer les cas sprciaux dans les heredoc
+// : ce qui signifie
+// 		quand on lance les commande on doit rendre le comportement normal des signaux
+//		pendant l'exec, (alors les fonction externe vont le faire nativement mais les fonction
+//		builtin vont devoir recuperer les signaux classique ???)
+// 			dans les heredoc les gerer comme dans bash,
+//				ctrl \ : fait rien
+//				ctrl C : ecrit ^C quitte EOF, free, et rend le prompt noeuf, ne fait
+//					pas la suite des commandes
+//				ctrl D : - bash: warning: here-document at line 133 delimited by end-of-file (wanted `EOF') --------> printf(%s) le delimiter
+//		 - on ferme le fichier temp
+//		 - on execute la suite
 int	main(int argc, char **argv, char **env)
 {
 	t_cmd_node	*cmd_node;
-	int			return_code;
 
-	cmd_node = init_cmd_node();
-	exec(cmd_node, env);
-	printf("return_code:%d\n", return_code);
-	return (0);
+	cmd_node = init_cmd_node_list(cmd_node);
+	exec(cmd_node);
 }
