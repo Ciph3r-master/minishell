@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include "libft.h"
 #include "minishell.h"
 
 void	get_key_size(int *key_size, char *env_line)
@@ -65,7 +67,7 @@ void	get_value_size(int *value_size, char *env_line)
 	j = i;
 	while (env_line[j])
 		j++;
-	*value_size = (j - i) - 1;
+	*value_size = j - i;
 	return ;
 }
 
@@ -74,6 +76,7 @@ char	*get_env_value(char *env_line)
 	char	*value;
 	int		value_size;
 	int		i;
+	int		j;
 
 	get_value_size(&value_size, env_line);
 	if (value_size == 0)
@@ -82,11 +85,14 @@ char	*get_env_value(char *env_line)
 	if (!value)
 		return (NULL);
 	env_line = ft_strchr(env_line, '=');
-	i = 0;
+	i = 1;
+	j = 0;
 	while (env_line[i])
 	{
-		value[i] = env_line[i];
+		value[j] = env_line[i];
 		i++;
+		j++;
 	}
+	value[j] = '\0';
 	return (value);
 }

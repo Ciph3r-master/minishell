@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+# include <stdlib.h>
+#include "libft.h"
 #include "minishell.h"
 
 //faire la gestion des erreur

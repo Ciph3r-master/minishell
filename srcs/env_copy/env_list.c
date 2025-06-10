@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <stdlib.h>
+#include "minishell.h"
 
 t_env_list	*new_node_env_list(char *key, char *value)
 {
@@ -18,7 +19,7 @@ t_env_list	*new_node_env_list(char *key, char *value)
 
 	new_node = malloc(sizeof(t_env_list));
 	if (!new_node)
-		return (error());
+		return (NULL);
 	new_node->key = key;
 	new_node->value = value;
 	new_node->next = NULL;
