@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/04 18:17:52 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:33:44 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include <stdio.h>
 # include <limits.h>
+# include <stdbool.h>
 
-enum e_type
+typedef	enum e_cmdtype
 {
 	PIPE			= 1 << 0,
 	REDIRECT_IN		= 1 << 1,
@@ -25,7 +26,42 @@ enum e_type
 	APPEND			= 1 << 4,
 	EXTERN			= 1 << 5,
 	BUILTIN			= 1 << 6,
-};
+} t_cmdtype;
+
+typedef enum e_tokentype
+{
+	TOPERATOR,
+	TWORD,
+	TDQUOTES,
+	TQUOTES,
+	TRD_IN,
+	TRD_OUT,
+	TPIPE,
+	TAPPEND,
+	THD,
+	TFILE,
+	TARG,
+	TEXTERN,
+	TLIMITER,
+	TBUILTIN
+}	t_tokentype;
+
+typedef enum e_filetype
+{
+	FILE_IN,
+	FILE_OUT,
+	FILE_APPEND,
+	FILE_HD
+}	t_filetype;
+
+typedef struct s_tokenlist
+{
+	char				*token;
+	t_tokentype			type;
+	struct	s_tokenlist	*next;
+	struct	s_tokenlist	*prev;
+}	t_tokenlist;
+
 
 typedef struct s_data
 {
@@ -41,6 +77,19 @@ typedef struct s_cmd
 	char	*path;
 }	t_cmd;
 
+
+typedef struct s_filelist	t_filelist;
+
+typedef struct s_filelist
+{
+	int					fd;
+	char				*filename;
+	char				*limiter;
+	t_filetype			type;
+	t_filelist			*next;
+	t_filelist			*prev;
+}	t_filelist;
+
 typedef struct s_cmd_node	t_cmd_node;
 
 typedef struct s_cmd_node
@@ -49,9 +98,8 @@ typedef struct s_cmd_node
 	int			fd_in;
 	int			fd_out;
 	int			error_code;
-	int			first_cmd;
-	char		**filename_in;
-	char		**filename_out;
+	t_filelist	*file_in;
+	t_filelist	*file_out;
 	char		*delimiter;
 	t_cmd		*cmd;
 	t_cmd_node	*prev;
@@ -59,8 +107,23 @@ typedef struct s_cmd_node
 }	t_cmd_node;
 
 //	srcs/parsing/quotes.c
-int		is_open_quotes(char *line, char quote);
-char	*get_token(char *line, int *pos);
-int		init_tokens(char *line);
+int	is_open_quotes(char *line, char quote);
+t_tokenlist *get_token(char	*line, int	*pos, t_tokenlist *tl);
+int init_tokens(char *line);
+
+//token utils
+int	is_builtin(char *word);
+int	is_operator(char *line);
+//DLIST
+t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type);
+t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
+void		print_tokenlist(t_tokenlist *tokenlist, bool reverse);
+t_tokenlist	*tokenlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type);
+
+t_filelist	*filelist_create_node(void	*content, t_filetype type);
+t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype type);
+void		print_filelist(t_filelist *filelist, bool reverse);
+t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type);
+t_filelist	*filelist_getlast(t_filelist *filelist);
 
 #endif
