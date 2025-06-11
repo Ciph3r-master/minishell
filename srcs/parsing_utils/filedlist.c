@@ -4,11 +4,11 @@
 static char	*get_filetype_name(t_filetype type)
 {
 	if (type == FILE_IN)
-		return "\e[1;92mIN\e[0m";
+		return "\e[1;94mIN\e[0m";
 	if (type == FILE_OUT)
 		return "\e[1;92mOUT\e[0m";
 	if (type == FILE_HD)
-		return "\e[1;92mHEREDOC\e[0m";
+		return "\e[1;94mHEREDOC\e[0m";
 	if (type == FILE_APPEND)
 		return "\e[1;92mAPPEND\e[0m";
 	return "UNKNOWN";

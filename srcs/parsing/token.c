@@ -6,129 +6,101 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/10 15:36:13 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/10 22:02:20 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-static int	add_string_to_strings(char **strings, char *string)
-{
-	int		i;
-	char	*new_str;
+// static int	add_string_to_strings(char **strings, char *string)
+// {
+// 	int		i;
+// 	char	*new_str;
 
-	i = 0;
-	new_str = NULL;
-	while (strings[i])
-	{
-		new_str = ft_strjoin(strings[i], string);
-		if (new_str == NULL)
-		{
-			printf("strjoin: failed\n");
-			free_char_tab_all(strings);
-			exit(1);
-		}
-		free(strings[i]);
-		strings[i] = new_str;
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	new_str = NULL;
+// 	while (strings[i])
+// 	{
+// 		new_str = ft_strjoin(strings[i], string);
+// 		if (new_str == NULL)
+// 		{
+// 			printf("strjoin: failed\n");
+// 			free_char_tab_all(strings);
+// 			exit(1);
+// 		}
+// 		free(strings[i]);
+// 		strings[i] = new_str;
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
-static int	check_path_with_access(char **paths)
-{
-	int	i;
+// static int	check_path_with_access(char **paths)
+// {
+// 	int	i;
 
-	i = 0;
-	while (paths[i])
-	{
-		if (0 == access(paths[i], X_OK))
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (paths[i])
+// 	{
+// 		if (0 == access(paths[i], X_OK))
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+// int	get_cmd_path_name(char **pathname, char *cmd)
+// {
+// 	char	*path;
+// 	char	**paths;
 
-int	find_path_with_access(char **paths, char **pathname)
-{
-	int	i;
+// 	if (access(cmd, X_OK) == 0)
+// 	{
+// 		*pathname = cmd;
+// 		return (1);
+// 	}
+// 	path = getenv("PATH");
+// 	if (NULL == path)
+// 	{
+// 		printf("getenv: can't get $PATH");
+// 		exit(1);
+// 	}
+// 	paths = ft_split_set(path, ":");
+// 	add_string_to_strings(paths, "/");
+// 	add_string_to_strings(paths, cmd);
+// 	if (find_path_with_access(paths, pathname) == 0)
+// 	{
+// 		free_char_tab_all(paths);
+// 		return (0);
+// 	}
+// 	free_char_tab_all(paths);
+// 	return (1);
+// }
 
-	i = 0;
-	while (paths[i])
-	{
-		if (access(paths[i], X_OK) == 0)
-		{
-			*pathname = ft_strdup(paths[i]);
-			if (NULL == *pathname)
-			{
-				printf("ft_strdup: failed\n");
-				free_char_tab_all(paths);
-				exit (EXIT_FAILURE);
-			}
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
+// int	find_path_with_access(char **paths, char **pathname)
+// {
+// 	int	i;
 
-int	is_command(char *word)
-{
-	char	*path;
-	char	**paths;
+// 	i = 0;
+// 	while (paths[i])
+// 	{
+// 		if (access(paths[i], X_OK) == 0)
+// 		{
+// 			*pathname = ft_strdup(paths[i]);
+// 			if (NULL == *pathname)
+// 			{
+// 				printf("ft_strdup: failed\n");
+// 				free_char_tab_all(paths);
+// 				exit (EXIT_FAILURE);
+// 			}
+// 			return (1);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
-	path = getenv("PATH");
-	if (access(word, X_OK) == 0)
-		return (1);
-	if (path == NULL)
-	{
-		printf("getenv: can't get $PATH");
-		exit(1);
-	}
-	paths = ft_split_set(path, ":");
-	add_string_to_strings(paths, "/");
-	add_string_to_strings(paths, word);
-	if (check_path_with_access(paths) == 0)
-	{
-		free_char_tab_all(paths);
-		return (0);
-	}
-	free_char_tab_all(paths);
-	return (1);
-}
-
-int	get_cmd_path_name(char **pathname, char *cmd)
-{
-	char	*path;
-	char	**paths;
-
-	if (access(cmd, X_OK) == 0)
-	{
-		*pathname = cmd;
-		return (1);
-	}
-	path = getenv("PATH");
-	if (NULL == path)
-	{
-		printf("getenv: can't get $PATH");
-		exit(1);
-	}
-	paths = ft_split_set(path, ":");
-	add_string_to_strings(paths, "/");
-	add_string_to_strings(paths, cmd);
-	if (find_path_with_access(paths, pathname) == 0)
-	{
-		free_char_tab_all(paths);
-		return (0);
-	}
-	free_char_tab_all(paths);
-	return (1);
-}
-
-
-
-static char	*ft_strndup(const char *src, int size)
+static	char	*ft_strndup(const char *src, int size)
 {
 	char	*dup;
 	int		i;
@@ -205,14 +177,19 @@ void	set_cmd(t_tokenlist *tl)
 	current = tl;
 	while (current)
 	{
-		if (current->type)
+		if (current->type == TRD_IN
+		|| current->type == TRD_OUT
+		|| current->type == TAPPEND
+		|| current->type == THD
+		|| current->type == TFILE
+		|| current->type == TLIMITER
+		|| current->type == TSPACE)
 		{
-			if (!current->token)
-				return ;
-			if (!is_builtin(current->token) && is_command(current->token))
-				current->type = TEXTERN;
+			current = current->next;
+			continue;
 		}
-		current = current->next;
+		current->type = TEXTERN;
+		break;
 	}
 }
 
@@ -231,7 +208,11 @@ void	set_file(t_tokenlist *tl)
 			&& current->next->type != TRD_OUT
 			&& current->next->type != THD
 			&& (type == TRD_IN || type == TRD_OUT || type == TAPPEND))
+		{
+			if (current->next->type == TSPACE)
+				current = current->next;
 			current->next->type = TFILE;
+		}
 		current = current->next;
 	}
 }
@@ -245,8 +226,13 @@ void	set_limiter(t_tokenlist *tl)
 	while(current)
 	{
 		type = current->type;
-		if (type == THD && current->next != NULL)
+		if (type == THD 
+			&& current->next != NULL)
+		{
+			if (current->next->type == TSPACE)
+				current = current->next;
 			current->next->type = TLIMITER;
+		}
 		current = current->next;
 	}
 }
@@ -260,7 +246,7 @@ void	set_args(t_tokenlist *tl)
 	while (current)
 	{
 		type = current->type;
-		if (type == TWORD)
+		if (type == TWORD || type == TDQUOTES || type == TQUOTES)
 			current->type = TARG;
 		if ((type == TEXTERN || type == TBUILTIN)
 			&& current->next != NULL
@@ -269,7 +255,8 @@ void	set_args(t_tokenlist *tl)
 			&& current->next->type != TRD_IN
 			&& current->next->type != TAPPEND
 			&& current->next->type != THD
-			&& current->next->type != TPIPE)
+			&& current->next->type != TPIPE
+			&& current->next->type != TSPACE)
 			current->next->type = TARG;
 		current = current->next;
 	}
@@ -323,6 +310,7 @@ void *create_cmd_node(t_tokenlist *tl)
 	t_cmd_node	*node;
 	t_filelist	*filein;
 	t_filelist	*fileout;
+	t_tokenlist	*prev;
 	int			ac;
 	char		**args;
 
@@ -351,34 +339,54 @@ void *create_cmd_node(t_tokenlist *tl)
 		{
 			args[ac] = current->token;
 			ac++;
+
 		}
-		if (current->prev && current->type == TLIMITER)
+			
+		if (current->type == TLIMITER)
 		{
 			filelist_push_back(&filein, "tmp name", FILE_HD);
 			filelist_getlast(filein)->limiter = current->token;
-		}
+		}	
 		if (current->type == TFILE)
 		{
-			if (current->prev && current->prev->type == TRD_IN)
+			prev = current->prev;
+			if (current->prev && current->prev->type == TSPACE)
+				prev = current->prev->prev;
+			if (prev && prev->type == TRD_IN)
 				filelist_push_back(&filein, current->token, FILE_IN);
-			if (current->prev && (current->prev->type == TRD_OUT || current->prev->type == TAPPEND))
+			if (prev && (prev->type == TRD_OUT || prev->type == TAPPEND))
 			{
-				if (current->prev->type == TRD_OUT)
+				if (prev->type == TRD_OUT)
 					filelist_push_back(&fileout, current->token, FILE_OUT);
 				else
 					filelist_push_back(&fileout, current->token, FILE_APPEND);
-
 			}
 		}
 		current = current->next;
 	}
 	args[ac] = NULL;
 	cmd->args = args;
-	get_cmd_path_name(&cmd->path, cmd->cmd);
-	print_filelist(filein, false);
-	print_filelist(fileout, false);
+	node->file_in = filein;
+	node->file_out = fileout;
+	// get_cmd_path_name(&cmd->path, cmd->cmd);
+	printf("\nREDIRECTIONS\n");
+	print_filelist(node->file_in, false);
+	print_filelist(node->file_out, false);
 	print_cmd(cmd);
 	return (node);
+}
+
+static	t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos)
+{
+	int			len;
+
+	len = 0;
+	while (line[*pos + len] && ft_is_white_space(line[*pos + len]))
+		len++;
+	*pos += len;
+	if (len > 0)
+		return (tokenlist_push_back(&tl, ft_strndup("", 1), TSPACE));
+	return (tl);
 }
 
 static	t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos)
@@ -437,10 +445,12 @@ static	t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos)
 
 t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
 {
-	while (line[*pos] && ft_is_white_space(line[*pos]))
-		(*pos)++;
+	// if (ft_is_white_space(line[*pos]))
+	// 	tokenlist_push_back(&tl, ft_strndup("", 1), TSPACE);
+	extract_space(tl, line, pos);
 	if (!line[*pos])
 		return (NULL);
+	
 	if (is_operator(&line[*pos]))
 		return (extract_operator(tl, line, pos));
 	if (line[*pos] == '"' || line[*pos] == '\'')
@@ -467,9 +477,9 @@ int	init_tokens(char *line)
 	//print_dlist(tl, false);
 	set_operator(tl);
 	set_builtin(tl);
-	set_cmd(tl);
 	set_file(tl);
 	set_limiter(tl);
+	set_cmd(tl);
 	set_args(tl);
 	print_tokenlist(tl, false);
 	create_cmd_node(tl);

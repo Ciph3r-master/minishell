@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/10 15:33:44 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:40:51 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef enum e_tokentype
 	TAPPEND,
 	THD,
 	TFILE,
+	TSPACE,
 	TARG,
 	TEXTERN,
 	TLIMITER,

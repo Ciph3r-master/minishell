@@ -31,6 +31,8 @@ static char	*get_tokentype_name(t_tokentype type)
 		return "\e[1;93mFILE\e[0m";
 	if (type == TLIMITER)
 		return "\e[1;94mLIMITER\e[0m";
+	if (type == TSPACE)
+		return "\e[1;94mSPACE\e[0m";
 	return "UNKNOWN";
 }
 
