@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   free_env_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-10 15:44:17 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-10 15:44:17 by thmaitre         ###   ########.fr       */
+/*   Created: 2025-06-11 14:38:46 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-06-11 14:38:46 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
 #include "minishell.h"
 
-//faire la gestion des erreur
-int	init_data(t_data *data, char **env)
+void	free_env_list(t_env_list *env_list)
 {
-	data->env_list = get_env_list(data, env);
-	print_env_list(&data->env_list);
-	data->env_copy = get_env_copy(data->env_list);
-	print_env_copy(data->env_copy);
-	free_env_list(data->env_list);
-	free_env_copy(data->env_copy);
-	return (0);
+	t_env_list	*current;
+	t_env_list	*next;
+
+	current = env_list;
+	if (env_list == NULL)
+		return ;
+	while (current->next)
+	{
+		next = current->next;
+		if (current->key)
+			free(current->key);
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = next;
+	}
+	if (next->key)
+		free(current->key);
+	if (next->value)
+		free(current->value);
+	free(next);
+	return ;
 }

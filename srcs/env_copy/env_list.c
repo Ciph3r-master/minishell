@@ -62,3 +62,18 @@ void	print_env_list(t_env_list **env_list)
 	}
 	return ;
 }
+
+int	get_env_list_size(t_env_list *env_list)
+{
+	int			env_list_size;
+	t_env_list	*current;
+
+	env_list_size = 0;
+	current = env_list;
+	while (current->next)
+	{
+		current = current->next;
+		env_list_size++;
+	}
+	return (env_list_size);
+}

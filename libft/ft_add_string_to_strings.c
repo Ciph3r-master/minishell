@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   ft_add_string_strings.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-10 15:44:17 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-10 15:44:17 by thmaitre         ###   ########.fr       */
+/*   Created: 2025-06-11 13:56:13 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-06-11 13:56:13 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
-#include "minishell.h"
 
-//faire la gestion des erreur
-int	init_data(t_data *data, char **env)
+int	ft_add_string_to_strings(char **strings, char *string)
 {
-	data->env_list = get_env_list(data, env);
-	print_env_list(&data->env_list);
-	data->env_copy = get_env_copy(data->env_list);
-	print_env_copy(data->env_copy);
-	free_env_list(data->env_list);
-	free_env_copy(data->env_copy);
+	int		i;
+	char	*new_str;
+
+	i = 0;
+	new_str = NULL;
+	while (strings[i])
+	{
+		new_str = ft_strjoin(strings[i], string);
+		if (new_str == NULL)
+			free_char_tab_all(strings);
+		free(strings[i]);
+		strings[i] = new_str;
+		i++;
+	}
 	return (0);
 }

@@ -96,3 +96,23 @@ char	*get_env_value(char *env_line)
 	value[j] = '\0';
 	return (value);
 }
+
+t_env_list	*get_env_list(t_data *data, char **env)
+{
+	int			i;
+	char		*key;
+	char		*value;
+	t_env_list	*new_node;
+
+	data->env_list = NULL;
+	i = 0;
+	while (env[i])
+	{
+		key = get_env_key(env[i]);
+		value = get_env_value(env[i]);
+		new_node = new_node_env_list(key, value);
+		push_back_env_list(&data->env_list, new_node);
+		i++;
+	}
+	return (data->env_list);
+}

@@ -12,7 +12,6 @@
 
 #include "libft.h"
 
-//retourne une chane alloué avec malloc, s1 + s2 + '\0'
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*join;

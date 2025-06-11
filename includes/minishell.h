@@ -143,9 +143,18 @@ int			init_data(t_data *data, char **env);
 	// env_list.c
 t_env_list	*new_node_env_list(char *key, char *value);
 void		push_back_env_list(t_env_list **env_list, t_env_list *new_node);
-	// get_env.c
+void		print_env_list(t_env_list **env_list);
+int			get_env_list_size(t_env_list *env_list);
+	// get_env_list.c
 char		*get_env_key(char *env_line);
 char		*get_env_value(char *env_line);
-void		print_env_list(t_env_list **env_list);
+t_env_list	*get_env_list(t_data *data, char **env);
+	// get_env_copy.c
+char		**get_env_copy(t_env_list *env_list);
+void		print_env_copy(char **env_copy);
+
+// memory/
+void		free_env_list(t_env_list *env_list);
+void		free_env_copy(char **env_copy);
 
 #endif
