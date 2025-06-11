@@ -30,5 +30,6 @@ int	main(int argc, char **argv, char **env)
 	// 	init_tokens(line);
 	// }
 	// rl_clear_history();
+	free_all(&data);
 	return (0);
 }

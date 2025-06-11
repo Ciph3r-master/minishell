@@ -54,7 +54,7 @@ void	print_env_list(t_env_list **env_list)
 	}
 	cur = *env_list;
 	i = 0;
-	while (cur->next)
+	while (cur)
 	{
 		printf("env_list[%d]->key : %s, value : %s\n", i, cur->key, cur->value);
 		cur = cur->next;
@@ -70,7 +70,7 @@ int	get_env_list_size(t_env_list *env_list)
 
 	env_list_size = 0;
 	current = env_list;
-	while (current->next)
+	while (current)
 	{
 		current = current->next;
 		env_list_size++;

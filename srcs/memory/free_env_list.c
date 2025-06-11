@@ -32,9 +32,9 @@ void	free_env_list(t_env_list *env_list)
 		current = next;
 	}
 	if (next->key)
-		free(current->key);
+		free(next->key);
 	if (next->value)
-		free(current->value);
+		free(next->value);
 	free(next);
 	return ;
 }

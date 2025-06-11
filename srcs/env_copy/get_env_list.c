@@ -71,6 +71,9 @@ void	get_value_size(int *value_size, char *env_line)
 	return ;
 }
 
+//a voir avec quentin
+// est ce que je doit initialiser un "\0"
+// sinon je vais free_and_exit
 char	*get_env_value(char *env_line)
 {
 	char	*value;
@@ -79,12 +82,12 @@ char	*get_env_value(char *env_line)
 	int		j;
 
 	get_value_size(&value_size, env_line);
-	if (value_size == 0)
-		return (NULL);
 	value = malloc(sizeof(char) * (value_size + 1));
 	if (!value)
 		return (NULL);
 	env_line = ft_strchr(env_line, '=');
+	if (!env_line)
+		return (NULL);
 	i = 1;
 	j = 0;
 	while (env_line[i])
@@ -109,8 +112,14 @@ t_env_list	*get_env_list(t_data *data, char **env)
 	while (env[i])
 	{
 		key = get_env_key(env[i]);
+		if (!key)
+			free_and_exit(data);
 		value = get_env_value(env[i]);
+		if (!value)
+			free_and_exit(data);
 		new_node = new_node_env_list(key, value);
+		if (!new_node)
+			free_and_exit(data);
 		push_back_env_list(&data->env_list, new_node);
 		i++;
 	}

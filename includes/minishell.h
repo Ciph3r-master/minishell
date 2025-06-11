@@ -153,7 +153,11 @@ t_env_list	*get_env_list(t_data *data, char **env);
 char		**get_env_copy(t_env_list *env_list);
 void		print_env_copy(char **env_copy);
 
+// error
+void		free_and_exit(t_data *data);
+
 // memory/
+void		free_all(t_data *data);
 void		free_env_list(t_env_list *env_list);
 void		free_env_copy(char **env_copy);
 

@@ -71,6 +71,7 @@ SRCS_ERROR	:=						\
 	$(DIR_ERROR)/error.c			\
 
 SRCS_MEMORY	:=						\
+	$(DIR_MEMORY)/free_all.c	\
 	$(DIR_MEMORY)/free_env_list.c	\
 	$(DIR_MEMORY)/free_env_copy.c	\
 
@@ -83,12 +84,12 @@ SRCS_PARSING_UTILS :=				  \
 	$(DIR_PARSING_UTILS)/tokendlist.c \
 	$(DIR_PARSING_UTILS)/filedlist.c
 
-SRCS := $(SRCS_CORE) \
-        $(SRCS_DATA) \
-        $(SRCS_ENV_COPY) \
-        $(SRCS_ERROR) \
-        $(SRCS_MEMORY) \
-        $(SRCS_PARSING) \
+SRCS := $(SRCS_CORE) 			\
+        $(SRCS_DATA)			\
+        $(SRCS_ENV_COPY)		\
+        $(SRCS_ERROR) 			\
+        $(SRCS_MEMORY) 			\
+        $(SRCS_PARSING) 		\
         $(SRCS_PARSING_UTILS)
 
 
