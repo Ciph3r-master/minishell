@@ -6,7 +6,7 @@
 #    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/10 14:28:07 by qutruche         ###   ########.fr        #
+#    Updated: 2025/06/11 15:50:00 by qutruche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,8 @@ SRCS_ENV_COPY	:=				\
 SRCS_PARSING :=						\
 	$(DIR_PARSING)/quotes.c 		\
 	$(DIR_PARSING)/token.c  		\
-	$(DIR_PARSING)/token_utils.c
+	$(DIR_PARSING)/token_utils.c	\
+	$(DIR_PARSING)/expand.c
 
 SRCS_PARSING_UTILS :=				  \
 	$(DIR_PARSING_UTILS)/tokendlist.c \

@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/10 22:02:20 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:58:12 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,8 @@ void	set_cmd(t_tokenlist *tl)
 		|| current->type == THD
 		|| current->type == TFILE
 		|| current->type == TLIMITER
-		|| current->type == TSPACE)
+		|| current->type == TSPACE
+		|| current->type == TPIPE)
 		{
 			current = current->next;
 			continue;
@@ -209,9 +210,10 @@ void	set_file(t_tokenlist *tl)
 			&& current->next->type != THD
 			&& (type == TRD_IN || type == TRD_OUT || type == TAPPEND))
 		{
-			if (current->next->type == TSPACE)
+			if (current->next && current->next->type == TSPACE)
 				current = current->next;
-			current->next->type = TFILE;
+			if (current->next)
+				current->next->type = TFILE;
 		}
 		current = current->next;
 	}
@@ -300,7 +302,8 @@ void	print_cmd(t_cmd *cmd)
 		printf("  Aucun argument.\n");
 	}
 
-	printf("Chemin : %s\n", cmd->path);
+	if (cmd && cmd->path)
+		printf("Chemin : %s\n", cmd->path);
 }
 
 void *create_cmd_node(t_tokenlist *tl)
@@ -459,7 +462,7 @@ t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
 		return (extract_word(tl, line, pos));
 }
 
-int	init_tokens(char *line)
+int	init_tokens(char *line, t_env_list *env)
 {
 	int		pos;
 	t_tokenlist	*tl;
@@ -475,6 +478,7 @@ int	init_tokens(char *line)
 		tl = tmp;
 	}
 	//print_dlist(tl, false);
+	find_expand(tl, env);
 	set_operator(tl);
 	set_builtin(tl);
 	set_file(tl);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42.fr>          #+#  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-12 07:06:01 by thmaitre          #+#    #+#             */
-/*   Updated: 2024-11-12 07:06:01 by thmaitre         ###   ########.fr       */
+/*   Created: 2024/11/12 07:06:01 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/11 20:36:14 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*ft_substr_support(char *sub, char const *s,
 	return (sub);
 }
 
-//retourne une chaine depuis une autre avec un indice de start et une len
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char		*sub;
