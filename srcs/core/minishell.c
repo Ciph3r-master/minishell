@@ -15,21 +15,20 @@
 #include <readline/history.h>
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
-	char	*line;
+	// char		*line;
+	t_data		data;
 
-	while (1)
-	{
-		line = readline("minishell> ");
-		add_history(line);
-		init_tokens(line);
-		// if (is_open_quotes(line, '"') || is_open_quotes(line, '\''))
-		// {
-		// 	printf("Open quote\n");
-		// 	continue ;
-		// }
-	}
-	rl_clear_history();
+	init_data(&data, env);
+	(void)argc;
+	(void)argv;
+	// while (1)
+	// {
+	// 	line = readline("minishell> ");
+	// 	add_history(line);
+	// 	init_tokens(line);
+	// }
+	// rl_clear_history();
 	return (0);
 }
