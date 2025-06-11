@@ -162,4 +162,8 @@ void		free_all(t_data *data);
 void		free_env_list(t_env_list *env_list);
 void		free_env_copy(char **env_copy);
 
+// signals/
+void		disable_ctrl_c_char(void);
+void		init_signals(void);
+
 #endif

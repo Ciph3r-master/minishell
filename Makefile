@@ -52,6 +52,7 @@ DIR_ERROR			:= $(DIR_SRCS)/error
 DIR_MEMORY			:= $(DIR_SRCS)/memory
 DIR_PARSING  		:= $(DIR_SRCS)/parsing
 DIR_PARSING_UTILS	:= $(DIR_SRCS)/parsing_utils
+DIR_SIGNALS			:= $(DIR_SRCS)/signals
 DIR_OBJS			:= .objs
 
 # === Source Files ===
@@ -84,13 +85,18 @@ SRCS_PARSING_UTILS :=				  \
 	$(DIR_PARSING_UTILS)/tokendlist.c \
 	$(DIR_PARSING_UTILS)/filedlist.c
 
+SRCS_SIGNALS :=				  				\
+	$(DIR_SIGNALS)/init_signals.c			\
+	$(DIR_SIGNALS)/disable_ctrl_c_char.c
+
 SRCS := $(SRCS_CORE) 			\
         $(SRCS_DATA)			\
         $(SRCS_ENV_COPY)		\
         $(SRCS_ERROR) 			\
         $(SRCS_MEMORY) 			\
         $(SRCS_PARSING) 		\
-        $(SRCS_PARSING_UTILS)
+        $(SRCS_PARSING_UTILS)	\
+        $(SRCS_SIGNALS)
 
 
 # === Object Files ===
@@ -102,6 +108,7 @@ OBJS_ERROR			:= $(SRCS_ERROR:$(DIR_ERROR)/%.c=$(DIR_OBJS)/%.o)
 OBJS_MEMORY			:= $(SRCS_MEMORY:$(DIR_MEMORY)/%.c=$(DIR_OBJS)/%.o)
 OBJS_PARSING 		:= $(SRCS_PARSING:$(DIR_PARSING)/%.c=$(DIR_OBJS)/%.o)
 OBJS_PARSING_UTILS	:= $(SRCS_PARSING_UTILS:$(DIR_PARSING_UTILS)/%.c=$(DIR_OBJS)/%.o)
+OBJS_SIGNALS		:= $(SRCS_SIGNALS:$(DIR_SIGNALS)/%.c=$(DIR_OBJS)/%.o)
 
 OBJS := $(OBJS_CORE)			\
         $(OBJS_DATA)			\
@@ -109,7 +116,8 @@ OBJS := $(OBJS_CORE)			\
         $(OBJS_ERROR) 			\
         $(OBJS_MEMORY)			\
         $(OBJS_PARSING)			\
-        $(OBJS_PARSING_UTILS)
+        $(OBJS_PARSING_UTILS)	\
+        $(OBJS_SIGNALS)
 
 # === Dependencies ===
 
@@ -155,6 +163,11 @@ $(DIR_OBJS)/%.o: $(DIR_PARSING)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(DIR_OBJS)/%.o: $(DIR_PARSING_UTILS)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(DIR_OBJS)/%.o: $(DIR_SIGNALS)/%.c
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@

@@ -11,25 +11,33 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "minishell.h"
 
 int	main(int argc, char **argv, char **env)
 {
-	// char		*line;
+	char		*line;
 	t_data		data;
 
-	init_data(&data, env);
 	(void)argc;
 	(void)argv;
-	// while (1)
-	// {
-	// 	line = readline("minishell> ");
-	// 	add_history(line);
-	// 	init_tokens(line);
-	// }
-	// rl_clear_history();
+	disable_ctrl_c_char();
+	init_signals();
+	init_data(&data, env);
+	while (1)
+	{
+		line = readline("minishell> ");
+		if (!line)
+		{
+			write(1, "exit\n", 5);
+			free_and_exit(&data);
+		}
+		add_history(line);
+		init_tokens(line);
+	}
+	rl_clear_history();
 	free_all(&data);
 	return (0);
 }
