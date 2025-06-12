@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/10 17:40:51 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:07:36 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct s_data
 //	srcs/parsing/quotes.c
 int			is_open_quotes(char *line, char quote);
 t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl);
-int 		init_tokens(char *line);
+int			init_tokens(char *line, t_env_list *env);
 
 //token utils
 int			is_builtin(char *word);
@@ -135,6 +135,9 @@ t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype
 void		print_filelist(t_filelist *filelist, bool reverse);
 t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type);
 t_filelist	*filelist_getlast(t_filelist *filelist);
+
+//expand
+void	find_expand(t_tokenlist *tl, t_env_list *env);
 
 // data/
 	//init_data.c

@@ -19,7 +19,6 @@ minishell
 /.objs
 
 # Core dumps
-core
 *.core
 
 # Fichiers temporaires
