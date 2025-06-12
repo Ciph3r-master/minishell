@@ -468,7 +468,6 @@ int	init_tokens(t_data *data)
 	t_tokenlist	*tl;
 	t_tokenlist *tmp;
 
-	(void)env;
 	pos = 0;
 	tl = NULL;
 	while (data->line[pos])

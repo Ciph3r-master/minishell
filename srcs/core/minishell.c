@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		add_history(data.line);
 		init_tokens(&data);
+		printf("\n\n=== exec ===\n\n");
 		exec(&data);
 	}
 	rl_clear_history();

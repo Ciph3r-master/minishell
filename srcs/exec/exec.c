@@ -22,26 +22,6 @@ t_cmd_node	*cmd_node_list(t_cmd_node *cmd_node)
 	return (cmd_node);
 }
 
-// ########## EXEC HEREDOC ##############################
-
-// cette fonction va parcourir tous les node
-// pour verifier si il on des heredoc, si oui on les cree
-// puis on les execute, avec la gestion des signaux
-// donc ouvrir un readline qui attend le oef present dans la structure
-// on les execute un a un jusqu'a que la file_list soit vide
-int	exec_heredoc(t_cmd_node *cmd_node)
-{
-	t_cmd_node	*current;
-
-	current = cmd_node;
-	while(current)
-	{
-		if (cmd_node->type & HEREDOC);
-
-	}
-	return (0);
-}
-
 // ########## EXEC ##############################
 
 // ma fonction principale de mon execution
@@ -65,31 +45,32 @@ int	exec(t_data *data)
 	// donc ouvrir un readline qui attend le oef present dans la structure
 	// on les execute un a un jusqu'a que la file_list soit vide
 	exec_heredoc(cmd_node);
-	if (!cmd_node->next)
-	{
-		if (BUILTIN & node_type)
-			// va permettre d'executer une commande en builtin
-			// donc on va juste aller chercher la commande
-			// dans un dossier builtin et l'executer
-			// a l'interieur on va aussi executer
-			// les redir_in puis les redir_out
-			// ??? apres l'execution on dois rendre les sortie classique ???
-			exec_simple_cmd_builtin(cmd_node);
-		if (EXTERN & node_type)
-			// va permettre d'executer une commande en extern
-			// on va creer un fork simple pour simplement executer
-			// avant d'executer on va faire les redir_in, puis les redir_out
-			exec_simple_cmd_extern(cmd_node);
-	}
-	else if (cmd_node->next)
-	{
-		// on va dans une boucle, executer chaque commande suivi d'un pipe
-		// on va faire les redirection des pipe avant celle
-		// des redir_in et de redir_out, pour chaque commande
-		// puis on fait les redir_in et out, ainsi on a les redir qui prennent
-		// la priorité sur les pipes
-		execute_pipe(cmd_node);
-	}
+	// if (!cmd_node->next)
+	// {
+	// 	if (BUILTIN & node_type)
+	// 		// va permettre d'executer une commande en builtin
+	// 		// donc on va juste aller chercher la commande
+	// 		// dans un dossier builtin et l'executer
+	// 		// a l'interieur on va aussi executer
+	// 		// les redir_in puis les redir_out
+	// 		// ??? apres l'execution on dois rendre les sortie classique ???
+	// 		exec_simple_cmd_builtin(cmd_node);
+	// 	if (EXTERN & node_type)
+	// 		// va permettre d'executer une commande en extern
+	// 		// on va creer un fork simple pour simplement executer
+	// 		// avant d'executer on va faire les redir_in, puis les redir_out
+	// 		exec_simple_cmd_extern(cmd_node);
+	// }
+	// else if (cmd_node->next)
+	// {
+	// 	// on va dans une boucle, executer chaque commande suivi d'un pipe
+	// 	// on va faire les redirection des pipe avant celle
+	// 	// des redir_in et de redir_out, pour chaque commande
+	// 	// puis on fait les redir_in et out, ainsi on a les redir qui prennent
+	// 	// la priorité sur les pipes
+	// 	execute_pipe(cmd_node);
+	// }
+	return (0);
 }
 
 // fonction servant a imiter le pasring en creant des fausse

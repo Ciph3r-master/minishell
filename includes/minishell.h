@@ -161,6 +161,9 @@ void		print_env_copy(char **env_copy);
 // error
 void		free_and_exit(t_data *data);
 
+// exec
+int			exec(t_data *data);
+
 // memory/
 void		free_all(t_data *data);
 void		free_env_list(t_env_list *env_list);

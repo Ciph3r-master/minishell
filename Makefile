@@ -49,6 +49,7 @@ DIR_CORE			:= $(DIR_SRCS)/core
 DIR_DATA			:= $(DIR_SRCS)/data
 DIR_ENV_COPY		:= $(DIR_SRCS)/env_copy
 DIR_ERROR			:= $(DIR_SRCS)/error
+DIR_EXEC			:= $(DIR_SRCS)/exec
 DIR_MEMORY			:= $(DIR_SRCS)/memory
 DIR_PARSING  		:= $(DIR_SRCS)/parsing
 DIR_PARSING_UTILS	:= $(DIR_SRCS)/parsing_utils
@@ -69,7 +70,10 @@ SRCS_ENV_COPY	:=					\
 	$(DIR_ENV_COPY)/get_env_list.c
 
 SRCS_ERROR	:=						\
-	$(DIR_ERROR)/error.c			\
+	$(DIR_ERROR)/error.c
+
+SRCS_EXEC	:=						\
+	$(DIR_EXEC)/exec.c
 
 SRCS_MEMORY	:=						\
 	$(DIR_MEMORY)/free_all.c	\
@@ -93,6 +97,7 @@ SRCS := $(SRCS_CORE) 			\
         $(SRCS_DATA)			\
         $(SRCS_ENV_COPY)		\
         $(SRCS_ERROR) 			\
+        $(SRCS_EXEC) 			\
         $(SRCS_MEMORY) 			\
         $(SRCS_PARSING) 		\
         $(SRCS_PARSING_UTILS)	\
@@ -105,6 +110,7 @@ OBJS_CORE			:= $(SRCS_CORE:$(DIR_CORE)/%.c=$(DIR_OBJS)/%.o)
 OBJS_DATA			:= $(SRCS_DATA:$(DIR_DATA)/%.c=$(DIR_OBJS)/%.o)
 OBJS_ENV_COPY		:= $(SRCS_ENV_COPY:$(DIR_ENV_COPY)/%.c=$(DIR_OBJS)/%.o)
 OBJS_ERROR			:= $(SRCS_ERROR:$(DIR_ERROR)/%.c=$(DIR_OBJS)/%.o)
+OBJS_EXEC			:= $(SRCS_EXEC:$(DIR_EXEC)/%.c=$(DIR_OBJS)/%.o)
 OBJS_MEMORY			:= $(SRCS_MEMORY:$(DIR_MEMORY)/%.c=$(DIR_OBJS)/%.o)
 OBJS_PARSING 		:= $(SRCS_PARSING:$(DIR_PARSING)/%.c=$(DIR_OBJS)/%.o)
 OBJS_PARSING_UTILS	:= $(SRCS_PARSING_UTILS:$(DIR_PARSING_UTILS)/%.c=$(DIR_OBJS)/%.o)
@@ -114,6 +120,7 @@ OBJS := $(OBJS_CORE)			\
         $(OBJS_DATA)			\
         $(OBJS_ENV_COPY)		\
         $(OBJS_ERROR) 			\
+        $(OBJS_EXEC) 			\
         $(OBJS_MEMORY)			\
         $(OBJS_PARSING)			\
         $(OBJS_PARSING_UTILS)	\
@@ -148,6 +155,11 @@ $(DIR_OBJS)/%.o: $(DIR_ENV_COPY)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(DIR_OBJS)/%.o: $(DIR_ERROR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(DIR_OBJS)/%.o: $(DIR_EXEC)/%.c
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
