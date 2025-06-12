@@ -23,7 +23,6 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	disable_ctrl_c_char();
 	init_signals();
 	init_data(&data, env);
 	while (1)
