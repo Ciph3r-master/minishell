@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/11 21:08:18 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:17:17 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,14 @@ char	*find_value(char *var, t_env_list *envlist)
 
 void	replace_token(t_tokenlist *token, t_env_list *env)
 {
-	int		len;
-	char	*tmp;
 	int		start;
-	int		vlen;
-	char	*new_token;
-	char	*join;
+	int		len;
 
 	start = 0;
 	len = 0;
 	(void) env;
-	(void)vlen;
-	// printf("%zu - %d + %zu = %d\n", ft_strlen(token->token), varlen(var), ft_strlen(value), len);
-	while (token->token[len] && token->token[len] != '$')
+	while (token->token && token->token[len] != '$')
 		len++;
-	tmp = ft_substr(token->token, 0, (size_t)len);
-	join = ft_strdup("");
-	new_token = ft_strjoin(join, tmp);
-	free(join);
-	free(tmp);
-	
-	printf("REPLACE TOKEN [%s]\n", tmp);
-	
 	
 }
 

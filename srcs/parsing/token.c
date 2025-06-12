@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/11 17:58:12 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:16:44 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,7 +306,7 @@ void	print_cmd(t_cmd *cmd)
 		printf("Chemin : %s\n", cmd->path);
 }
 
-void *create_cmd_node(t_tokenlist *tl)
+void	create_cmd_node(t_tokenlist *tl, t_data *data)
 {
 	t_tokenlist	*current;
 	t_cmd		*cmd;
@@ -321,14 +321,14 @@ void *create_cmd_node(t_tokenlist *tl)
 	fileout = NULL;
 	node = malloc(sizeof(t_cmd_node));
 	if (!node)
-		return (NULL);
+		return ;
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
-		return (NULL);
+		return ;
 	node->cmd = cmd;
 	args = malloc(sizeof(char *) * (count_args(tl) + 2));
 	if (!args)
-		return (NULL);
+		return ;
 	ac = 1;
 	current = tl;
 	while (current && current->type != TPIPE)
@@ -376,7 +376,7 @@ void *create_cmd_node(t_tokenlist *tl)
 	print_filelist(node->file_in, false);
 	print_filelist(node->file_out, false);
 	print_cmd(cmd);
-	return (node);
+	data->cmd_node = node;
 }
 
 static	t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos)
@@ -462,7 +462,7 @@ t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
 		return (extract_word(tl, line, pos));
 }
 
-int	init_tokens(char *line, t_env_list *env)
+int	init_tokens(t_data *data)
 {
 	int			pos;
 	t_tokenlist	*tl;
@@ -471,15 +471,15 @@ int	init_tokens(char *line, t_env_list *env)
 	(void)env;
 	pos = 0;
 	tl = NULL;
-	while (line[pos])
+	while (data->line[pos])
 	{
-		tmp = get_token(line, &pos, tl);
+		tmp = get_token(data->line, &pos, tl);
 		if (!tmp)
 			break ;
 		tl = tmp;
 	}
 	//print_dlist(tl, false);
-	// find_expand(tl, env);
+	// find_expand(tl, data->env_list);
 	set_operator(tl);
 	set_builtin(tl);
 	set_file(tl);
@@ -487,6 +487,6 @@ int	init_tokens(char *line, t_env_list *env)
 	set_cmd(tl);
 	set_args(tl);
 	print_tokenlist(tl, false);
-	create_cmd_node(tl);
+	create_cmd_node(tl, data);
 	return (0);
 }
