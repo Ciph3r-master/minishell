@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-10 11:58:30 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/12 22:39:00 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	exec(t_data *data)
 	// puis on les execute, avec la gestion des signaux
 	// donc ouvrir un readline qui attend le oef present dans la structure
 	// on les execute un a un jusqu'a que la file_list soit vide
-	exec_heredoc(cmd_node);
+	if (-1 == exec_heredoc(cmd_node));
+		free_and_exit(data);
 	// if (!cmd_node->next)
 	// {
 	// 	if (BUILTIN & node_type)

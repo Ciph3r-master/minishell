@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-12 17:05:13 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/12 23:21:54 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 // au final c'est quoi un heredoc
 // c'est, on creer un fichier temporaire
 // il faudra le supprimer apres son execution dans
-// les execution des redir_in
+// les execution des redir_in avec unlink()
 // on utilise le nom du fichier temporaire
 // pour creer le fichier
+
+
+// fd = open("mon_fichier.txt", O_RDWR | O_CREAT, 0644);
+// if (fd == -1) {
 
 // on va ensuite ouvrir readline dans une boucle infinie
 // on va lire la ligne,
@@ -31,9 +35,23 @@
 // la ligne que j'ai ecrit dans ma line doit etre ecrite dans
 // le fd de mon fichier ouvert avec write(fd, , )
 //
-int	run_heredoc(t_cmd_node *cmd_node)
+int	run_heredoc(t_filelist *cur_file_in)
 {
+	create_temp_file(cur_file_in);
+}
 
+int	run_heredoc_in_file_in(t_filelist *cur_file_in)
+{
+	while (cur_file_in)
+	{
+		if (cur_file_in->type == FILE_HD)
+		{
+			if (run_heredoc(cur_file_in) == -1)
+				return (-1);
+		}
+		cur_file_in->next;
+	}
+	return (0);
 }
 
 // cette fonction va parcourir tous les node
@@ -43,19 +61,16 @@ int	run_heredoc(t_cmd_node *cmd_node)
 // on les execute un a un jusqu'a que la file_list soit vide
 int	exec_heredoc(t_cmd_node *cmd_node)
 {
-	t_cmd_node	*current;
+	t_cmd_node	*cur_cmd;
 
-	current = cmd_node;
-	while (current)
+	if (!cmd_node)
+		return (-1);
+	cur_cmd = cmd_node;
+	while (cur_cmd)
 	{
-		if (current->file_in->type == FILE_HD)
-		{
-			if (run_heredoc(current) == -1)
-				return (-1);
-			return (0);
-		}
-		current->next;
+		if (-1 == run_heredoc_in_file_in(cur_cmd->file_in));
+			return (-1);
+		cur_cmd->next;
 	}
 	return (1);
 }
-

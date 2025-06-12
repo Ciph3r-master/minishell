@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
+#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/11 15:50:00 by qutruche         ###   ########.fr        #
+#    Updated: 2025/06/12 22:23:19 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,8 @@ SRCS_ERROR	:=						\
 	$(DIR_ERROR)/error.c
 
 SRCS_EXEC	:=						\
-	$(DIR_EXEC)/exec.c
+	$(DIR_EXEC)/exec.c				\
+	$(DIR_EXEC)/heredoc.c
 
 SRCS_MEMORY	:=						\
 	$(DIR_MEMORY)/free_all.c	\

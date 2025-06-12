@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/12 18:16:11 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:22:26 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ void		free_and_exit(t_data *data);
 
 // exec
 int			exec(t_data *data);
+int			exec_heredoc(t_cmd_node *cmd_node);
+int			create_temp_file(t_filelist *cur_file_in);
 
 // memory/
 void		free_all(t_data *data);
