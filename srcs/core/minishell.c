@@ -16,6 +16,8 @@
 #include <readline/history.h>
 #include "minishell.h"
 
+	#include <stdio.h>
+
 int	main(int argc, char **argv, char **env)
 {
 	char		*line;
@@ -25,18 +27,20 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	init_signals();
 	init_data(&data, env);
-	while (1)
-	{
-		line = readline("minishell> ");
-		if (!line)
-		{
-			write(1, "exit\n", 5);
-			free_and_exit(&data);
-		}
-		add_history(line);
-		init_tokens(line, data.env_list);
-	}
-	rl_clear_history();
+	faker();
+	exec(&data);
+	// while (1)
+	// {
+	// 	line = readline("minishell> ");
+	// 	if (!line)
+	// 	{
+	// 		write(1, "exit\n", 5);
+	// 		free_and_exit(&data);
+	// 	}
+	// 	add_history(line);
+	// 	init_tokens(line, data.env_list);
+	// }
+	// rl_clear_history();
 	free_all(&data);
 	return (0);
 }

@@ -228,7 +228,7 @@ void	set_limiter(t_tokenlist *tl)
 	while(current)
 	{
 		type = current->type;
-		if (type == THD 
+		if (type == THD
 			&& current->next != NULL)
 		{
 			if (current->next->type == TSPACE)
@@ -344,12 +344,12 @@ void *create_cmd_node(t_tokenlist *tl)
 			ac++;
 
 		}
-			
+
 		if (current->type == TLIMITER)
 		{
 			filelist_push_back(&filein, "tmp name", FILE_HD);
 			filelist_getlast(filein)->limiter = current->token;
-		}	
+		}
 		if (current->type == TFILE)
 		{
 			prev = current->prev;
@@ -453,7 +453,7 @@ t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
 	extract_space(tl, line, pos);
 	if (!line[*pos])
 		return (NULL);
-	
+
 	if (is_operator(&line[*pos]))
 		return (extract_operator(tl, line, pos));
 	if (line[*pos] == '"' || line[*pos] == '\'')
@@ -464,10 +464,11 @@ t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
 
 int	init_tokens(char *line, t_env_list *env)
 {
-	int		pos;
+	int			pos;
 	t_tokenlist	*tl;
 	t_tokenlist *tmp;
 
+	(void)env;
 	pos = 0;
 	tl = NULL;
 	while (line[pos])
@@ -478,7 +479,7 @@ int	init_tokens(char *line, t_env_list *env)
 		tl = tmp;
 	}
 	//print_dlist(tl, false);
-	find_expand(tl, env);
+	// find_expand(tl, env);
 	set_operator(tl);
 	set_builtin(tl);
 	set_file(tl);

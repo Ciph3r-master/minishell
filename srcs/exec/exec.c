@@ -24,9 +24,22 @@ t_cmd_node	*cmd_node_list(t_cmd_node *cmd_node)
 
 // ########## EXEC HEREDOC ##############################
 
+// cette fonction va parcourir tous les node
+// pour verifier si il on des heredoc, si oui on les cree
+// puis on les execute, avec la gestion des signaux
+// donc ouvrir un readline qui attend le oef present dans la structure
+// on les execute un a un jusqu'a que la file_list soit vide
 int	exec_heredoc(t_cmd_node *cmd_node)
 {
+	t_cmd_node	*current;
 
+	current = cmd_node;
+	while(current)
+	{
+		if (cmd_node->type & HEREDOC);
+
+	}
+	return (0);
 }
 
 // ########## EXEC ##############################
@@ -39,11 +52,13 @@ int	exec_heredoc(t_cmd_node *cmd_node)
 // executer les pipe si il y en a, et donc creer des fork pour chaque pipe, avec un old et new_pipe
 // -> a l'interieur de chaque cmd executer les redir_in a l'interieur
 // -> a l'interieur de chaque cmd executer les redir_out a l'interieur
-int	exec(t_cmd_node *cmd_node)
+int	exec(t_data *data)
 {
-	int	node_type;
+	int			node_type;
+	t_cmd_node	*cmd_node;
 
 	node_type = INT_MIN;
+	cmd_node = data->cmd_node;
 	// cette fonction va parcourir tous les node
 	// pour verifier si il on des heredoc, si oui on les cree
 	// puis on les execute, avec la gestion des signaux
@@ -94,10 +109,10 @@ int	exec(t_cmd_node *cmd_node)
 //				ctrl D : - bash: warning: here-document at line 133 delimited by end-of-file (wanted `EOF') --------> printf(%s) le delimiter
 //		 - on ferme le fichier temp
 //		 - on execute la suite
-int	main(int argc, char **argv, char **env)
-{
-	t_cmd_node	*cmd_node;
+// int	main(int argc, char **argv, char **env)
+// {
+// 	t_cmd_node	*cmd_node;
 
-	cmd_node = init_cmd_node_list(cmd_node);
-	exec(cmd_node);
-}
+// 	cmd_node = init_cmd_node_list(cmd_node);
+// 	exec(cmd_node);
+// }
