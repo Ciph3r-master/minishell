@@ -17,8 +17,6 @@
 #include <unistd.h>
 #include "minishell.h"
 
-	#include <stdio.h>
-
 static void	handler(int sig)
 {
 	if (sig == SIGINT)

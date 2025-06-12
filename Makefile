@@ -87,8 +87,7 @@ SRCS_PARSING_UTILS :=				  \
 	$(DIR_PARSING_UTILS)/filedlist.c
 
 SRCS_SIGNALS :=				  				\
-	$(DIR_SIGNALS)/init_signals.c			\
-	$(DIR_SIGNALS)/disable_ctrl_c_char.c
+	$(DIR_SIGNALS)/init_signals.c
 
 SRCS := $(SRCS_CORE) 			\
         $(SRCS_DATA)			\
