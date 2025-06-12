@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/11 16:07:36 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:16:11 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_cmd_node
 typedef struct s_data
 {
 	char		*pwd;
+	char		*line;
 	char		*old_pwd;
 	char		**env_copy;
 	t_env_list	*env_list;
@@ -119,7 +120,7 @@ typedef struct s_data
 //	srcs/parsing/quotes.c
 int			is_open_quotes(char *line, char quote);
 t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl);
-int			init_tokens(char *line, t_env_list *env);
+int			init_tokens(t_data *data);
 
 //token utils
 int			is_builtin(char *word);

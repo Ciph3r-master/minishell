@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/12 17:23:35 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:14:21 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	char		*line;
 	t_data		data;
 
 	(void)argc;
@@ -27,14 +26,14 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	while (1)
 	{
-		line = readline("minishell> ");
-		if (!line)
+		data.line = readline("minishell> ");
+		if (!data.line)
 		{
 			write(1, "exit\n", 5);
 			free_and_exit(&data);
 		}
-		add_history(line);
-		init_tokens(line, data.env_list);
+		add_history(data.line);
+		init_tokens(&data);
 	}
 	rl_clear_history();
 	free_all(&data);
