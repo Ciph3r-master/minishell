@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/12 18:30:25 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:57:43 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -479,6 +479,7 @@ int	init_tokens(t_data *data)
 	}
 	//print_dlist(tl, false);
 	find_expand(tl, data->env_list);
+	print_tokenlist(tl, false);
 	set_operator(tl);
 	set_builtin(tl);
 	set_file(tl);
