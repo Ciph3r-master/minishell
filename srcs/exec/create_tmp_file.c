@@ -81,6 +81,9 @@ char	*create_path_and_filename(t_filelist *cur_file_in)
 	return (path_and_filename);
 }
 
+// ajouter path and file name a t_file_list
+// fonction de sortie free path and filename
+//fonction de sortie free filename
 int	create_tmp_file(t_filelist *cur_file_in)
 {
 	int		fd;
