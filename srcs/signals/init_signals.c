@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-11 18:53:04 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-11 18:53:04 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/11 18:53:04 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/13 01:23:51 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <unistd.h>
 #include "minishell.h"

@@ -1,25 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   delete_heredoc_tmp_files.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 15:38:08 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 01:55:10 by thibaud          ###   ########.fr       */
+/*   Created: 2025/06/13 01:55:53 by thibaud           #+#    #+#             */
+/*   Updated: 2025/06/13 01:55:54 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdlib.h>
-#include "minishell.h"
-
-void	free_and_exit(t_data *data)
-{
-	delete_heredoc_tmp_files();
-	if (data->env_copy)
-		free_env_copy(data->env_copy);
-	if (data->env_list)
-		free_env_list(data->env_list);
-	exit(EXIT_FAILURE);
-	return ;
-}

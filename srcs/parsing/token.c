@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/12 18:16:44 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/13 01:45:40 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,7 +347,7 @@ void	create_cmd_node(t_tokenlist *tl, t_data *data)
 
 		if (current->type == TLIMITER)
 		{
-			filelist_push_back(&filein, "tmp name", FILE_HD);
+			filelist_push_back(&filein, "heredoc_", FILE_HD);
 			filelist_getlast(filein)->limiter = current->token;
 		}
 		if (current->type == TFILE)

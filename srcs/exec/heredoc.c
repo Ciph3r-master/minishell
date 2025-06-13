@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/12 23:21:54 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 01:31:49 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@
 //
 int	run_heredoc(t_filelist *cur_file_in)
 {
-	create_temp_file(cur_file_in);
+	int	fd;
+
+	fd = create_temp_file(cur_file_in);
+	if (-1 == fd)
+		return (-1);
+	return (1);
 }
 
 int	run_heredoc_in_file_in(t_filelist *cur_file_in)
@@ -49,7 +54,7 @@ int	run_heredoc_in_file_in(t_filelist *cur_file_in)
 			if (run_heredoc(cur_file_in) == -1)
 				return (-1);
 		}
-		cur_file_in->next;
+		cur_file_in = cur_file_in->next;
 	}
 	return (0);
 }
@@ -68,9 +73,9 @@ int	exec_heredoc(t_cmd_node *cmd_node)
 	cur_cmd = cmd_node;
 	while (cur_cmd)
 	{
-		if (-1 == run_heredoc_in_file_in(cur_cmd->file_in));
+		if (-1 == run_heredoc_in_file_in(cur_cmd->file_in))
 			return (-1);
-		cur_cmd->next;
+		cur_cmd = cur_cmd->next;
 	}
 	return (1);
 }

@@ -1,0 +1,6 @@
+### HEREDOC ###
+
+securiser les nom de heredoc tmp file en demandans un autre si le fichier
+existe deja
+
+supprimer les heredoc tmp file a la fermeture du programme en reussite et echec

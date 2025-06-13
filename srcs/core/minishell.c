@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/12 22:16:14 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 01:34:39 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char **argv, char **env)
 			free_and_exit(&data);
 		}
 		add_history(data.line);
+		printf("\n\n=== pars ===\n\n");
 		init_tokens(&data);
 		printf("\n\n=== exec ===\n\n");
 		exec(&data);
