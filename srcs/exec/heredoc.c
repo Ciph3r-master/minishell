@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 01:31:49 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 02:30:40 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	run_heredoc(t_filelist *cur_file_in)
 {
 	int	fd;
 
-	fd = create_temp_file(cur_file_in);
+	fd = create_tmp_file(cur_file_in);
 	if (-1 == fd)
 		return (-1);
 	return (1);

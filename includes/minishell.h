@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 01:25:04 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 02:29:55 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,8 @@ void		free_and_exit(t_data *data);
 // exec
 int			exec(t_data *data);
 int			exec_heredoc(t_cmd_node *cmd_node);
-int			create_temp_file(t_filelist *cur_file_in);
+int			create_tmp_file(t_filelist *cur_file_in);
+void		delete_tmp_files(void);
 
 // memory/
 void		free_all(t_data *data);

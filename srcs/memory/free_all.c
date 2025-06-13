@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-11 17:03:29 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-11 17:03:29 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/11 17:03:29 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/13 02:27:18 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	free_all(t_data *data)
 {
+	delete_tmp_files();
 	if (data->env_copy)
 		free_env_copy(data->env_copy);
 	if (data->env_list)

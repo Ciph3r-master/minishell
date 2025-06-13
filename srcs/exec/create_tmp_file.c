@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_temp_file.c                                 :+:      :+:    :+:   */
+/*   create_tmp_file.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:19:18 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/13 01:49:08 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 02:30:32 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*create_random_alphanum(int fd)
 	{
 		if (read(fd, &buf, 1) < 1)
 			return (NULL);
-		if (ft_isalnum(buf))
+		if (ft_is_id(buf))
 		{
 			id[read_random] = buf;
 			read_random++;
@@ -58,29 +58,41 @@ char	*create_unique_id()
 	return (unique_id);
 }
 
-int	create_temp_file(t_filelist *cur_file_in)
+char	*create_path_and_filename(t_filelist *cur_file_in)
 {
-	int		fd;
 	char	*unique_id;
 	char	*new_filename;
 	char	*path_and_filename;
 
 	unique_id = create_unique_id();
 	if (!unique_id)
-		return (-1);
+		return (NULL);
 	new_filename = ft_strjoin(cur_file_in->filename, unique_id);
 	free(unique_id);
 	if (!new_filename)
-		return (-1);
+		return (NULL);
 	new_filename = ft_strjoin(new_filename, ".tmp");
 	if (!new_filename)
-		return (-1);
+		return (NULL);
 	cur_file_in->filename = new_filename;
 	path_and_filename = ft_strjoin("./tmp/", cur_file_in->filename);
 	if (!path_and_filename)
-		return (-1);
-    fd = open(path_and_filename, O_RDWR | O_CREAT, 0644);
-    if (fd == -1)
-        return (-1);
+		return (NULL);
+	return (path_and_filename);
+}
+
+int	create_tmp_file(t_filelist *cur_file_in)
+{
+	int		fd;
+	char	*path_and_filename;
+
+	fd = -1;
+	while (fd == -1)
+	{
+		path_and_filename = create_path_and_filename(cur_file_in);
+		if (!path_and_filename)
+			return (-1);
+    	fd = open(path_and_filename, O_RDWR | O_CREAT | O_EXCL, 0644);
+	}
 	return (fd);
 }

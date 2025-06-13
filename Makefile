@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/13 01:27:40 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/13 02:32:12 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,12 +75,13 @@ SRCS_ERROR	:=						\
 SRCS_EXEC	:=						\
 	$(DIR_EXEC)/exec.c				\
 	$(DIR_EXEC)/heredoc.c			\
-	$(DIR_EXEC)/create_temp_file.c
+	$(DIR_EXEC)/create_tmp_file.c	\
 
 SRCS_MEMORY	:=						\
-	$(DIR_MEMORY)/free_all.c	\
+	$(DIR_MEMORY)/free_all.c		\
 	$(DIR_MEMORY)/free_env_list.c	\
 	$(DIR_MEMORY)/free_env_copy.c	\
+	$(DIR_MEMORY)/delete_tmp_files.c
 
 SRCS_PARSING :=						\
 	$(DIR_PARSING)/quotes.c 		\
