@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/13 02:32:12 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/13 18:52:33 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ SRCS_ENV_COPY	:=					\
 	$(DIR_ENV_COPY)/get_env_list.c
 
 SRCS_ERROR	:=						\
-	$(DIR_ERROR)/error.c
+	$(DIR_ERROR)/free_and_exit.c
 
 SRCS_EXEC	:=						\
 	$(DIR_EXEC)/exec.c				\

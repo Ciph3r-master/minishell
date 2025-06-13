@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 01:55:53 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/13 18:02:14 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 19:55:51 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 
 void	delete_tmps(t_filelist *cur_file_in)
 {
+	#include <stdio.h>
 	while (cur_file_in)
 	{
-		if (cur_file_in->type == FILE_HD
-			&& cur_file_in->fd != -1)
+		if (cur_file_in->type == FILE_HD)
 		{
-			if (close(cur_file_in->fd) == -1)
+			if (cur_file_in->fd != -1 && close(cur_file_in->fd) == -1)
 				perror("close");
 			if (cur_file_in->pathname &&
 				unlink(cur_file_in->pathname) == -1)

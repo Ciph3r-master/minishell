@@ -6,11 +6,14 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 18:18:51 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 19:49:52 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <stdio.h>
+#include <readline/readline.h>
+#include "minishell.h"
+#include "libft.h"
 
 // au final c'est quoi un heredoc
 // c'est, on creer un fichier temporaire
@@ -33,9 +36,42 @@
 // le fd de mon fichier ouvert avec write(fd, , )
 //
 
-int	read_heredoc_fd(int heredoc_fd)
+int	readline_heredoc(char *here_line, char *limiter, int fd)
 {
-	(void)heredoc_fd;
+	here_line = readline("> ");
+	if (!here_line)
+	{
+		write(1, "ctrl+d in heredoc, EOF\n", 23);
+		free(here_line);
+		return (0);
+	}
+	if (ft_strcmp(limiter, here_line) == 0)
+	{
+		free(here_line);
+		return (0);
+	}
+	write(fd, here_line, ft_strlen(here_line));
+	write(fd, "\n", 1);
+	free(here_line);
+	return (1);
+}
+
+int	read_heredoc_fd(t_filelist *cur_file_in)
+{
+	char	*here_line;
+	char	*limiter;
+	int		fd;
+	int		read;
+
+	limiter = cur_file_in->limiter;
+	fd = cur_file_in->fd;
+	here_line = NULL;
+	read = 1;
+	while (read)
+		read = readline_heredoc(here_line, limiter, fd);
+	if (close(fd) == -1)
+		return (-1);
+	cur_file_in->fd = -1;
 	return (0);
 }
 
@@ -44,7 +80,7 @@ int	run_heredoc(t_filelist *cur_file_in)
 	cur_file_in->fd = create_tmp_file(cur_file_in);
 	if (cur_file_in->fd == -1)
 		return (-1);
-	if (read_heredoc_fd(cur_file_in->fd) == -1)
+	if (read_heredoc_fd(cur_file_in) == -1)
 		return (-1);
 	return (1);
 }
