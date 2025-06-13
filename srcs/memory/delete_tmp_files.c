@@ -15,27 +15,30 @@
 #include "minishell.h"
 #include "libft.h"
 
-void delete_tmp_files(void)
+void	delete_tmp_files(void)
 {
-    DIR				*dir;
-    struct dirent	*entry;
-    char			*path;
+	DIR				*dir;
+	struct dirent	*entry;
+	char			*path;
 
-    dir = opendir("./tmp/");
-    if (!dir)
-        return;
-    while ((entry = readdir(dir)) != NULL)
-    {
-        if (entry->d_name[0] == '.' &&
-           (entry->d_name[1] == '\0' ||
-           (entry->d_name[1] == '.' && entry->d_name[2] == '\0')))
-            continue;
-
-        path = ft_strjoin("./tmp/", entry->d_name);
-        if (!path)
-            continue;
-        unlink(path);
-        free(path);
-    }
-    closedir(dir);
+	dir = opendir("./tmp/");
+	if (!dir)
+		return ;
+	entry = readdir(dir);
+	while (entry != NULL)
+	{
+		if (!(entry->d_name[0] == '.'
+				&& (entry->d_name[1] == '\0'
+					|| (entry->d_name[1] == '.' && entry->d_name[2] == '\0'))))
+		{
+			path = ft_strjoin("./tmp/", entry->d_name);
+			if (path)
+			{
+				unlink(path);
+				free(path);
+			}
+		}
+		entry = readdir(dir);
+	}
+	closedir(dir);
 }

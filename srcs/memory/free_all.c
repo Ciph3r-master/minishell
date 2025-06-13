@@ -20,6 +20,7 @@ void	free_all(t_data *data)
 		free_env_copy(data->env_copy);
 	if (data->env_list)
 		free_env_list(data->env_list);
+	free_path_and_filenames(data);
 	exit(EXIT_SUCCESS);
 	return ;
 }

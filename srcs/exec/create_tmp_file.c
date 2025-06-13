@@ -81,7 +81,6 @@ char	*create_path_and_filename(t_filelist *cur_file_in)
 	return (path_and_filename);
 }
 
-// ajouter path and file name a t_file_list
 // fonction de sortie free path and filename
 //fonction de sortie free filename
 int	create_tmp_file(t_filelist *cur_file_in)
@@ -95,7 +94,9 @@ int	create_tmp_file(t_filelist *cur_file_in)
 		path_and_filename = create_path_and_filename(cur_file_in);
 		if (!path_and_filename)
 			return (-1);
-    	fd = open(path_and_filename, O_RDWR | O_CREAT | O_EXCL, 0644);
+		fd = open(path_and_filename, O_RDWR | O_CREAT | O_EXCL, 0644);
+		if (fd != -1)
+			cur_file_in->path_and_filename = path_and_filename;
 	}
 	return (fd);
 }

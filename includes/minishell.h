@@ -76,6 +76,7 @@ typedef struct s_filelist
 {
 	int					fd;
 	char				*filename;
+	char				*path_and_filename;
 	char				*limiter;
 	t_filetype			type;
 	t_filelist			*next;
