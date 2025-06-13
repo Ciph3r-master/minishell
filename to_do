@@ -1,3 +1,5 @@
 ### HEREDOC ###
 
-verifier valgrind create_tmp_file/delete
+- verifier valgrind create_tmp_file/delete
+- changer le nom du fichier des tmp file par /tmp/ quand les heredoc
+	seront "termine" pour avoir un comportement logique des heredoc.tmp

@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 01:20:52 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 18:13:29 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	exec(t_data *data)
 	cmd_node = data->cmd_node;
 	// cette fonction va parcourir tous les node
 	// pour verifier si il on des heredoc, si oui on les cree
-	// puis on les execute, avec la gestion des signaux
-	// donc ouvrir un readline qui attend le oef present dans la structure
+	// puis on les peuple, avec la gestion des signaux
+	// donc ouvrir un readline qui attend le EOF present dans la structure
 	// on les execute un a un jusqu'a que la file_list soit vide
 	if (-1 == exec_heredoc(cmd_node))
 		free_and_exit(data);

@@ -58,11 +58,11 @@ char	*create_unique_id()
 	return (unique_id);
 }
 
-char	*create_path_and_filename(t_filelist *cur_file_in)
+char	*create_pathname(t_filelist *cur_file_in)
 {
 	char	*unique_id;
 	char	*new_filename;
-	char	*path_and_filename;
+	char	*pathname;
 
 	unique_id = create_unique_id();
 	if (!unique_id)
@@ -75,28 +75,28 @@ char	*create_path_and_filename(t_filelist *cur_file_in)
 	if (!new_filename)
 		return (NULL);
 	cur_file_in->filename = new_filename;
-	path_and_filename = ft_strjoin("./tmp/", cur_file_in->filename);
-	if (!path_and_filename)
+	pathname = ft_strjoin("./tmp/", cur_file_in->filename);
+	if (!pathname)
 		return (NULL);
-	return (path_and_filename);
+	return (pathname);
 }
 
 // fonction de sortie free path and filename
-//fonction de sortie free filename
+// fonction de sortie free filename
 int	create_tmp_file(t_filelist *cur_file_in)
 {
 	int		fd;
-	char	*path_and_filename;
+	char	*pathname;
 
 	fd = -1;
 	while (fd == -1)
 	{
-		path_and_filename = create_path_and_filename(cur_file_in);
-		if (!path_and_filename)
+		pathname = create_pathname(cur_file_in);
+		if (!pathname)
 			return (-1);
-		fd = open(path_and_filename, O_RDWR | O_CREAT | O_EXCL, 0644);
+		fd = open(pathname, O_RDWR | O_CREAT | O_EXCL, 0644);
 		if (fd != -1)
-			cur_file_in->path_and_filename = path_and_filename;
+			cur_file_in->pathname = pathname;
 	}
 	return (fd);
 }

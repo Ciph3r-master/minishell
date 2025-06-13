@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_path_and_filename.c                           :+:      :+:    :+:   */
+/*   free_pathname.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-13 12:47:15 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-13 12:47:15 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/13 12:47:15 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/13 17:22:04 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 #include "minishell.h"
 
 // itere dans un file_in et en
-void	free_path_and_filename(t_filelist *cur_file_in)
+void	free_pathname(t_filelist *cur_file_in)
 {
-
-	return (0);
+	return ;
 }
 
 // il faut qu'on fasse une fonction qui initialise tous
@@ -25,8 +24,8 @@ void	free_path_and_filename(t_filelist *cur_file_in)
 // ou 0
 // ----------------------
 // on va parcourir tous les noeud de filename_in
-// et free tous les path_and_filename quand c'est un heredoc
-void	free_path_and_filenames(t_data *data)
+// et free tous les pathname quand c'est un heredoc
+void	free_pathnames(t_data *data)
 {
 	t_cmd_node	*cur_cmd;
 
@@ -35,7 +34,7 @@ void	free_path_and_filenames(t_data *data)
 	cur_cmd = data->cmd_node;
 	while (cur_cmd)
 	{
-		free_path_and_filename(cur_cmd->file_in);
+		free_pathname(cur_cmd->file_in);
 		cur_cmd = cur_cmd->next;
 	}
 }

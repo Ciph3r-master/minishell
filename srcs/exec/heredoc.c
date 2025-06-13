@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 02:30:40 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 18:18:51 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,11 @@
 
 // au final c'est quoi un heredoc
 // c'est, on creer un fichier temporaire
-// il faudra le supprimer apres son execution dans
+// il faudra le close et supprimer apres son execution dans
 // les execution des redir_in avec unlink()
+// ou a la sortie du programme
 // on utilise le nom du fichier temporaire
 // pour creer le fichier
-
-
-// fd = open("mon_fichier.txt", O_RDWR | O_CREAT, 0644);
-// if (fd == -1) {
 
 // on va ensuite ouvrir readline dans une boucle infinie
 // on va lire la ligne,
@@ -35,12 +32,19 @@
 // la ligne que j'ai ecrit dans ma line doit etre ecrite dans
 // le fd de mon fichier ouvert avec write(fd, , )
 //
+
+int	read_heredoc_fd(int heredoc_fd)
+{
+	(void)heredoc_fd;
+	return (0);
+}
+
 int	run_heredoc(t_filelist *cur_file_in)
 {
-	int	fd;
-
-	fd = create_tmp_file(cur_file_in);
-	if (-1 == fd)
+	cur_file_in->fd = create_tmp_file(cur_file_in);
+	if (cur_file_in->fd == -1)
+		return (-1);
+	if (read_heredoc_fd(cur_file_in->fd) == -1)
 		return (-1);
 	return (1);
 }

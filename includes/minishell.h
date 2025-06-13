@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 02:29:55 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/13 17:35:03 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_filelist
 {
 	int					fd;
 	char				*filename;
-	char				*path_and_filename;
+	char				*pathname;
 	char				*limiter;
 	t_filetype			type;
 	t_filelist			*next;
@@ -166,12 +166,12 @@ void		free_and_exit(t_data *data);
 int			exec(t_data *data);
 int			exec_heredoc(t_cmd_node *cmd_node);
 int			create_tmp_file(t_filelist *cur_file_in);
-void		delete_tmp_files(void);
 
 // memory/
 void		free_all(t_data *data);
 void		free_env_list(t_env_list *env_list);
 void		free_env_copy(char **env_copy);
+void		delete_tmp_files(t_data *data);
 
 // signals/
 void		init_signals(void);
