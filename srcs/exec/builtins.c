@@ -32,7 +32,9 @@
 int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
 {
 	int	node_type;
+	int	exec_out;
 
+	exec_out = 0;
 	node_type = INT_MIN;
 	if (!cmd_node || !cmd_node->type)
 		return (-1);
@@ -40,10 +42,15 @@ int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
 		return (-1);
 	if (REDIRECT_IN & node_type
 		|| HEREDOC & node_type)
-		if (-1 == exec_redir_in_and_hd(cmd_node->file_in))
+	{
+		exec_redir_in_and_hd(cmd_node->file_in);
+		if (-1 == exec_out)
 			return (-1);
+		if (-2 == exec_out)
+			return (-2);
+	}
 	if (REDIRECT_OUT & node_type
 		|| APPEND & node_type)
 		// exec_redir_out_and_append(cmd_node->file_in);
-	return (1);
+	return (exec_out);
 }

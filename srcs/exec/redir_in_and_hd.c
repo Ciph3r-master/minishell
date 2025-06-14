@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
+#include <unistd.h>
 #include "minishell.h"
 
 // en premier je vais faire les redir_in et les redir_out
@@ -42,7 +44,39 @@
 
 // si c'est un FILE_OUT
 
-int	exec_redir_in_and_hd(t_filelist	*cur_file_in)
+int	exec_redir_in(t_filelist *cur_file_in)
 {
+	char	*pathname;
 
+	if (!cur_file_in || !cur_file_in->filename)
+		return (-1);
+
+	cur_file_in->fd = open(pathname, O_RDONLY, 0644);
+
+}
+
+int	exec_redir_in_and_hd(t_filelist	*file_in)
+{
+	t_filelist	*cur_file_in;
+	int			exec_out;
+
+	if (!file_in)
+		return (-1);
+	cur_file_in = file_in;
+	while (cur_file_in)
+	{
+		if (!cur_file_in->type)
+			return (-1);
+		if (FILE_IN == cur_file_in->type)
+		{
+			exec_out = exec_redir_in(cur_file_in);
+			if (-1 == exec_out)
+				return (-1);
+			if (-2 == exec_out)
+				return (-2);
+		}
+		if (FILE_HD == cur_file_in->type)
+			exec_redir_hd(cur_file_in);
+		cur_file_in = cur_file_in->next;
+	}
 }
