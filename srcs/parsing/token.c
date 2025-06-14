@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/14 19:33:44 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/14 22:45:26 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_cmd(t_cmd *cmd)
 	{
 		while (cmd->args[i])
 		{
-			printf("  arg[%d] = %s\n", i, cmd->args[i]);
+			printf("  arg[%d] = [%s]\n", i, cmd->args[i]);
 			i++;
 		}
 	}
@@ -154,7 +154,9 @@ int	init_tokens(t_data *data)
 		tl = tmp;
 	}
 	//print_dlist(tl, false);
+	print_tokenlist(tl, false);
 	find_expand(&tl, data->env_list);
+	merge_token(&tl);
 	print_tokenlist(tl, false);
 	set_operator(tl);
 	set_builtin(tl);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/14 19:25:33 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/14 22:12:25 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,9 @@ t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos);
 t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos);
 t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos);
 t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos);
-//set_token_type.c
-void	set_operator(t_tokenlist *tl);
+void 		merge_token(t_tokenlist **tl);
+	// set_token_type.c
+	void set_operator(t_tokenlist *tl);
 void	set_builtin(t_tokenlist *tl);
 void	set_cmd(t_tokenlist *tl);
 void	set_file(t_tokenlist *tl);

@@ -3,15 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   extract_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:17:18 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/14 19:21:30 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:07:46 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+
+//TODO GERER LES FREE
+void	merge_token(t_tokenlist **tl)
+{
+	t_tokenlist *current;
+
+	current = *tl;
+	while (current && current->next)
+	{
+		if (current->type != TSPACE && current->next->type != TSPACE
+		&& current->type != TOPERATOR && current->next->type != TOPERATOR)
+		{
+			current->token = ft_strjoin(current->token, current->next->token);
+			tokenlist_remove_node(tl, current->next);
+		}
+		else
+			current = current->next;
+	}
+}
+
 
 t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos)
 {
