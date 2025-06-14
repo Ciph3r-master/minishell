@@ -6,99 +6,12 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/13 15:57:43 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/14 02:54:57 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
-
-// static int	add_string_to_strings(char **strings, char *string)
-// {
-// 	int		i;
-// 	char	*new_str;
-
-// 	i = 0;
-// 	new_str = NULL;
-// 	while (strings[i])
-// 	{
-// 		new_str = ft_strjoin(strings[i], string);
-// 		if (new_str == NULL)
-// 		{
-// 			printf("strjoin: failed\n");
-// 			free_char_tab_all(strings);
-// 			exit(1);
-// 		}
-// 		free(strings[i]);
-// 		strings[i] = new_str;
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-// static int	check_path_with_access(char **paths)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (paths[i])
-// 	{
-// 		if (0 == access(paths[i], X_OK))
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-// int	get_cmd_path_name(char **pathname, char *cmd)
-// {
-// 	char	*path;
-// 	char	**paths;
-
-// 	if (access(cmd, X_OK) == 0)
-// 	{
-// 		*pathname = cmd;
-// 		return (1);
-// 	}
-// 	path = getenv("PATH");
-// 	if (NULL == path)
-// 	{
-// 		printf("getenv: can't get $PATH");
-// 		exit(1);
-// 	}
-// 	paths = ft_split_set(path, ":");
-// 	add_string_to_strings(paths, "/");
-// 	add_string_to_strings(paths, cmd);
-// 	if (find_path_with_access(paths, pathname) == 0)
-// 	{
-// 		free_char_tab_all(paths);
-// 		return (0);
-// 	}
-// 	free_char_tab_all(paths);
-// 	return (1);
-// }
-
-// int	find_path_with_access(char **paths, char **pathname)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (paths[i])
-// 	{
-// 		if (access(paths[i], X_OK) == 0)
-// 		{
-// 			*pathname = ft_strdup(paths[i]);
-// 			if (NULL == *pathname)
-// 			{
-// 				printf("ft_strdup: failed\n");
-// 				free_char_tab_all(paths);
-// 				exit (EXIT_FAILURE);
-// 			}
-// 			return (1);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
 
 static	char	*ft_strndup(const char *src, int size)
 {
@@ -301,9 +214,6 @@ void	print_cmd(t_cmd *cmd)
 	{
 		printf("  Aucun argument.\n");
 	}
-
-	if (cmd && cmd->path)
-		printf("Chemin : %s\n", cmd->path);
 }
 
 void	create_cmd_node(t_tokenlist *tl, t_data *data)
@@ -448,8 +358,6 @@ static	t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos)
 
 t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
 {
-	// if (ft_is_white_space(line[*pos]))
-	// 	tokenlist_push_back(&tl, ft_strndup("", 1), TSPACE);
 	extract_space(tl, line, pos);
 	if (!line[*pos])
 		return (NULL);

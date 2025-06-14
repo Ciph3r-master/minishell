@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/12 18:16:11 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:59:25 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,9 @@ t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type);
 t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
 void		print_tokenlist(t_tokenlist *tokenlist, bool reverse);
 t_tokenlist	*tokenlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type);
-
-t_filelist	*filelist_create_node(void	*content, t_filetype type);
+t_tokenlist *tokenlist_insert_after(t_tokenlist *node, void *content, t_tokentype type);
+void 		tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node);
+t_filelist *filelist_create_node(void *content, t_filetype type);
 t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype type);
 void		print_filelist(t_filelist *filelist, bool reverse);
 t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type);

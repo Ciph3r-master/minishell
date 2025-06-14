@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/13 15:59:26 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/13 19:17:16 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	replace_token(t_tokenlist *token, t_env_list *env)
 {
 	int		start;
 	int		len;
-	char	*ntoken;
+	char	*prefix;
 	char	*tmp;
 	char	*join;
 	int		pos;
@@ -80,17 +80,20 @@ void	replace_token(t_tokenlist *token, t_env_list *env)
 	len = 0;
 	while (token->token && token->token[len] != '$')
 		len++;
-	ntoken = ft_substr(token->token, start, len);
+	prefix = ft_substr(token->token, start, len);
 	tmp = find_value(&token->token[len + 1], env);
 	pos = len + varlen(&token->token[len + 1]) + 1;
-	join = ft_strjoin3(ntoken, tmp, &token->token[pos]);
+	join = ft_strjoin3(prefix, tmp, &token->token[pos]);
 	token->token = join;
+	free(prefix);
 }
 
 void	find_expand(t_tokenlist *tl, t_env_list *env)
 {
 	t_tokenlist	*current;
+	t_tokenlist *tmp;
 	char		*expand;
+	char		**split_token;
 
 	current = tl;
 	while (current)
@@ -103,6 +106,23 @@ void	find_expand(t_tokenlist *tl, t_env_list *env)
 			replace_token(current, env);
 			expand = ft_strchr(current->token, '$');
 		}
-		current = current->next;
+		if (current->type == TWORD)
+		{
+			split_token = ft_split(current->token);
+			int i = 0;
+			while (split_token[i])
+				i++;
+			i--;
+			tmp = current->next;
+			while (i >= 0)
+			{
+				tokenlist_insert_after(current, split_token[i], TARG);
+				i--;
+			}
+			//tokenlist_remove_node(&tl, current);
+			current = tmp;
+		}
+		else
+			current = current->next;
 	}
 }
