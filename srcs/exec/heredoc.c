@@ -95,6 +95,8 @@ int	run_heredoc_in_file_in(t_filelist *cur_file_in)
 		return (-1);
 	while (cur_file_in)
 	{
+		if (!cur_file_in->type)
+			return (1);
 		if (cur_file_in->type == FILE_HD)
 		{
 			if (run_heredoc(cur_file_in) == -1)
