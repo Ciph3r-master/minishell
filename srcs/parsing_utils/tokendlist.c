@@ -149,5 +149,5 @@ void tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node)
 		*head = node->next;
 	if (node->next)
 		node->next->prev = node->prev;
-	free(node);
+	// free(node);
 }

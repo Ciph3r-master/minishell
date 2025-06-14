@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/13 19:17:16 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/14 18:56:01 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,21 @@ void	replace_token(t_tokenlist *token, t_env_list *env)
 	free(prefix);
 }
 
-void	find_expand(t_tokenlist *tl, t_env_list *env)
+void	find_expand(t_tokenlist **tl, t_env_list *env)
 {
 	t_tokenlist	*current;
 	t_tokenlist *tmp;
 	char		*expand;
 	char		**split_token;
 
-	current = tl;
+	current = *tl;
 	while (current)
 	{
+		if (!current->token)
+		{
+			current = current->next;
+			continue;
+		}
 		expand = ft_strchr(current->token, '$');
 		while (current->type != TQUOTES && expand)
 		{
@@ -117,9 +122,11 @@ void	find_expand(t_tokenlist *tl, t_env_list *env)
 			while (i >= 0)
 			{
 				tokenlist_insert_after(current, split_token[i], TARG);
+				if (i > 0)
+					tokenlist_insert_after(current, NULL, TSPACE);
 				i--;
 			}
-			//tokenlist_remove_node(&tl, current);
+			tokenlist_remove_node(tl, current);
 			current = tmp;
 		}
 		else
