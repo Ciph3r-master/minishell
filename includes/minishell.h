@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 18:59:25 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/14 19:25:33 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,18 @@ int			is_open_quotes(char *line, char quote);
 t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl);
 int			init_tokens(t_data *data);
 
+//extract_token.c
+t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos);
+t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos);
+t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos);
+t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos);
+//set_token_type.c
+void	set_operator(t_tokenlist *tl);
+void	set_builtin(t_tokenlist *tl);
+void	set_cmd(t_tokenlist *tl);
+void	set_file(t_tokenlist *tl);
+void	set_limiter(t_tokenlist *tl);
+void	set_args(t_tokenlist *tl);
 //token utils
 int			is_builtin(char *word);
 int			is_operator(char *line);
@@ -139,7 +151,7 @@ t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype 
 t_filelist	*filelist_getlast(t_filelist *filelist);
 
 //expand
-void	find_expand(t_tokenlist *tl, t_env_list *env);
+void	find_expand(t_tokenlist **tl, t_env_list *env);
 
 // data/
 	//init_data.c
