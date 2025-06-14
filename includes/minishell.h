@@ -168,10 +168,10 @@ int			exec_heredoc(t_cmd_node *cmd_node);
 int			create_tmp_file(t_filelist *cur_file_in);
 
 // memory/
-void		free_all(t_data *data);
-void		free_env_list(t_env_list *env_list);
-void		free_env_copy(char **env_copy);
 void		delete_tmp_files(t_data *data);
+void		free_all(t_data *data);
+void		free_env_copy(char **env_copy);
+void		free_env_list(t_env_list *env_list);
 
 // signals/
 void		init_signals(void);
