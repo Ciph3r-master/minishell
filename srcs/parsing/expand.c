@@ -6,14 +6,14 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/14 18:56:01 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/14 19:30:41 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-char *ft_strjoin3(char *s1, char *s2, char *s3)
+static char *ft_strjoin3(char *s1, char *s2, char *s3)
 {
 	int len1;
 	int len2;
@@ -33,7 +33,7 @@ char *ft_strjoin3(char *s1, char *s2, char *s3)
 	return (join);
 }
 
-int		varlen(char *var)
+static int		varlen(char *var)
 {
 	int	i;
 
@@ -47,7 +47,7 @@ int		varlen(char *var)
 	return (i);
 }
 
-char	*find_value(char *var, t_env_list *envlist)
+static char	*find_value(char *var, t_env_list *envlist)
 {
 	int			var_len;
 	t_env_list	*current;
@@ -67,7 +67,7 @@ char	*find_value(char *var, t_env_list *envlist)
 	return (NULL);
 }
 
-void	replace_token(t_tokenlist *token, t_env_list *env)
+static void	replace_token(t_tokenlist *token, t_env_list *env)
 {
 	int		start;
 	int		len;
