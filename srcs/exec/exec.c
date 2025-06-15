@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/15 15:10:30 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/15 15:39:49 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	exec(t_data *data)
 	{
 		if (BUILTIN & node_type)
 		{
+	#include <stdio.h>
+	printf("bonjour\n");
 			// va permettre d'executer une commande en builtin
 			// donc on va juste aller chercher la commande
 			// dans un dossier builtin et l'executer

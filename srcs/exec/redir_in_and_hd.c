@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_in_and_hd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-14 15:27:53 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-14 15:27:53 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/14 15:27:53 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/15 15:39:40 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,11 @@
 
 // si c'est un FILE_OUT
 
+
 int	exec_redir_in(t_filelist *cur_file_in)
 {
-	char	*pathname;
-
-	if (!cur_file_in || !cur_file_in->filename)
-		return (-1);
-
-	cur_file_in->fd = open(pathname, O_RDONLY, 0644);
-
+	(void)cur_file_in;
+	return (1);
 }
 
 int	exec_redir_in_and_hd(t_filelist	*file_in)
@@ -75,8 +71,9 @@ int	exec_redir_in_and_hd(t_filelist	*file_in)
 			if (-2 == exec_out)
 				return (-2);
 		}
-		if (FILE_HD == cur_file_in->type)
-			exec_redir_hd(cur_file_in);
+		// if (FILE_HD == cur_file_in->type)
+		// 	exec_redir_hd(cur_file_in);
 		cur_file_in = cur_file_in->next;
 	}
+	return (exec_out);
 }

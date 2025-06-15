@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-14 14:41:52 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-14 14:41:52 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/14 14:41:52 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/15 15:21:17 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
 	node_type = INT_MIN;
 	if (!cmd_node || !cmd_node->type)
 		return (-1);
-	if (!(BUILTIN & node_type))
-		return (-1);
-	if (REDIRECT_IN & node_type
-		|| HEREDOC & node_type)
+	if (REDIRECT_IN & node_type || HEREDOC & node_type)
 	{
 		exec_redir_in_and_hd(cmd_node->file_in);
 		if (-1 == exec_out)
@@ -49,8 +46,7 @@ int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
 		if (-2 == exec_out)
 			return (-2);
 	}
-	if (REDIRECT_OUT & node_type
-		|| APPEND & node_type)
+	// if (REDIRECT_OUT & node_type || APPEND & node_type)
 		// exec_redir_out_and_append(cmd_node->file_in);
 	return (exec_out);
 }
