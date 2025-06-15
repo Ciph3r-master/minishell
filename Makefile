@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/15 15:20:42 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/15 18:16:06 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,12 +72,13 @@ SRCS_ENV_COPY	:=					\
 SRCS_ERROR	:=						\
 	$(DIR_ERROR)/free_and_exit.c
 
-SRCS_EXEC	:=						\
-	$(DIR_EXEC)/builtins.c	\
-	$(DIR_EXEC)/create_tmp_file.c	\
-	$(DIR_EXEC)/exec.c				\
-	$(DIR_EXEC)/heredoc.c			\
-	$(DIR_EXEC)/redir_in_and_hd.c	\
+SRCS_EXEC	:=							\
+	$(DIR_EXEC)/builtins.c				\
+	$(DIR_EXEC)/create_tmp_file.c		\
+	$(DIR_EXEC)/exec.c					\
+	$(DIR_EXEC)/heredoc.c				\
+	$(DIR_EXEC)/redir_in_and_hd.c		\
+	$(DIR_EXEC)/redir_out_and_append.c
 
 SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/delete_tmp_files.c	\

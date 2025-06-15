@@ -6,21 +6,11 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/15 15:39:49 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:03:20 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// ########## INIT CMD_NODE ##############################
-
-// fonction servant a imiter le pasring en creant des fausse
-// donne en liste chainee qui vont etre envoyé a ma fonction exec
-// comme si le parsing avais envoyé ces données
-t_cmd_node	*cmd_node_list(t_cmd_node *cmd_node)
-{
-	return (cmd_node);
-}
 
 // ########## EXEC ##############################
 
@@ -41,14 +31,12 @@ int	exec(t_data *data)
 	node_type = INT_MIN;
 	cmd_node = data->cmd_node;
 	exec_out = 0;
-	// if (-1 == exec_heredoc(cmd_node))
-	// 	free_and_exit(data);
+	if (-1 == exec_heredoc(cmd_node))
+		free_and_exit(data);
 	if (!cmd_node->next)
 	{
 		if (BUILTIN & node_type)
 		{
-	#include <stdio.h>
-	printf("bonjour\n");
 			// va permettre d'executer une commande en builtin
 			// donc on va juste aller chercher la commande
 			// dans un dossier builtin et l'executer
