@@ -29,9 +29,3 @@ int	builtin_pwd(void)
 	free(cwd);
 	return (0);
 }
-
-// int	main(void)
-// {
-// 	builtin_pwd();
-// 	return (0);
-// }

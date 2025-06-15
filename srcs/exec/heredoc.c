@@ -36,13 +36,14 @@
 // le fd de mon fichier ouvert avec write(fd, , )
 //
 
-int	readline_heredoc(char *here_line, char *limiter, int fd)
+int	readline_heredoc(char *limiter, int fd)
 {
+	char	*here_line;
+
 	here_line = readline("> ");
 	if (!here_line)
 	{
 		write(1, "ctrl+d in heredoc, EOF\n", 23);
-		free(here_line);
 		return (0);
 	}
 	if (ft_strcmp(limiter, here_line) == 0)
@@ -58,19 +59,22 @@ int	readline_heredoc(char *here_line, char *limiter, int fd)
 
 int	read_heredoc_fd(t_filelist *cur_file_in)
 {
-	char	*here_line;
 	char	*limiter;
 	int		fd;
-	int		read;
+	int		reading;
 
+	if (!cur_file_in || !cur_file_in->limiter)
+		return (-1);
 	limiter = cur_file_in->limiter;
 	fd = cur_file_in->fd;
-	here_line = NULL;
-	read = 1;
-	while (read)
-		read = readline_heredoc(here_line, limiter, fd);
+	reading = 1;
+	while (reading)
+		reading = readline_heredoc(limiter, fd);
 	if (close(fd) == -1)
+	{
+		cur_file_in->fd = -1;
 		return (-1);
+	}
 	cur_file_in->fd = -1;
 	return (0);
 }
@@ -85,10 +89,17 @@ int	run_heredoc(t_filelist *cur_file_in)
 	return (1);
 }
 
-int	run_heredoc_in_file_in(t_filelist *cur_file_in)
+int	run_heredoc_in_file_in(t_filelist *file_in)
 {
-	while (cur_file_in)
+	t_filelist	*cur_file_in;
+
+	if (!file_in || !file_in->type)
+		return (-1);
+	cur_file_in = file_in;
+	while (file_in)
 	{
+		if (!cur_file_in->type)
+			return (1);
 		if (cur_file_in->type == FILE_HD)
 		{
 			if (run_heredoc(cur_file_in) == -1)
@@ -96,7 +107,7 @@ int	run_heredoc_in_file_in(t_filelist *cur_file_in)
 		}
 		cur_file_in = cur_file_in->next;
 	}
-	return (0);
+	return (1);
 }
 
 // cette fonction va parcourir tous les node

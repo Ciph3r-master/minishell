@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/14 00:53:44 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/15 15:10:30 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,37 @@ t_cmd_node	*cmd_node_list(t_cmd_node *cmd_node)
 // -> a l'interieur de chaque cmd executer les redir_out a l'interieur
 int	exec(t_data *data)
 {
-	// int			node_type;
+	int			node_type;
+	int			exec_out;
 	t_cmd_node	*cmd_node;
 
-	// node_type = INT_MIN;
+	node_type = INT_MIN;
 	cmd_node = data->cmd_node;
-	// cette fonction va parcourir tous les node
-	// pour verifier si il on des heredoc, si oui on les cree
-	// puis on les peuple, avec la gestion des signaux
-	// donc ouvrir un readline qui attend le EOF present dans la structure
-	// on les execute un a un jusqu'a que la file_list soit vide
-	if (-1 == exec_heredoc(cmd_node))
-		free_and_exit(data);
-	// if (!cmd_node->next)
-	// {
-	// 	if (BUILTIN & node_type)
-	// 		// va permettre d'executer une commande en builtin
-	// 		// donc on va juste aller chercher la commande
-	// 		// dans un dossier builtin et l'executer
-	// 		// a l'interieur on va aussi executer
-	// 		// les redir_in puis les redir_out
-	// 		// apres l'execution on dois rendre les sortie classique
-	// 		exec_simple_cmd_builtin(cmd_node);
-	// 	if (EXTERN & node_type)
-	// 		// va permettre d'executer une commande en extern
-	// 		// on va creer un fork simple pour simplement executer
-	// 		// avant d'executer on va faire les redir_in, puis les redir_out
-	// 		exec_simple_cmd_extern(cmd_node);
-	// }
+	exec_out = 0;
+	// if (-1 == exec_heredoc(cmd_node))
+	// 	free_and_exit(data);
+	if (!cmd_node->next)
+	{
+		if (BUILTIN & node_type)
+		{
+			// va permettre d'executer une commande en builtin
+			// donc on va juste aller chercher la commande
+			// dans un dossier builtin et l'executer
+			// a l'interieur on va aussi executer
+			// les redir_in puis les redir_out
+			// apres l'execution on dois rendre les sortie classique
+			exec_out = exec_simple_cmd_builtins(cmd_node);
+			if (exec_out == -1)
+				free_and_exit(data);
+			if (exec_out == -2)
+				return (-2);
+		}
+		// if (EXTERN & node_type)
+		// 	// va permettre d'executer une commande en extern
+		// 	// on va creer un fork simple pour simplement executer
+		// 	// avant d'executer on va faire les redir_in, puis les redir_out
+		// 	exec_simple_cmd_extern(cmd_node);
+	}
 	// else if (cmd_node->next)
 	// {
 	// 	// on va dans une boucle, executer chaque commande suivi d'un pipe

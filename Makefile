@@ -77,11 +77,12 @@ SRCS_EXEC	:=						\
 	$(DIR_EXEC)/heredoc.c			\
 	$(DIR_EXEC)/create_tmp_file.c	\
 
-SRCS_MEMORY	:=						\
-	$(DIR_MEMORY)/free_all.c		\
-	$(DIR_MEMORY)/free_env_list.c	\
-	$(DIR_MEMORY)/free_env_copy.c	\
-	$(DIR_MEMORY)/delete_tmp_files.c
+SRCS_MEMORY	:=							\
+	$(DIR_MEMORY)/delete_tmp_files.c	\
+	$(DIR_MEMORY)/free_all.c			\
+	$(DIR_MEMORY)/free_env_copy.c		\
+	$(DIR_MEMORY)/free_env_list.c		\
+	$(DIR_MEMORY)/free_pathname.c
 
 SRCS_PARSING :=						\
 	$(DIR_PARSING)/quotes.c 		\

@@ -162,18 +162,32 @@ void		print_env_copy(char **env_copy);
 // error
 void		free_and_exit(t_data *data);
 
-// exec
-int			exec(t_data *data);
-int			exec_heredoc(t_cmd_node *cmd_node);
+// exec/
+	// builtins.c
+int			exec_simple_cmd_builtins(t_cmd_node *cmd_node);
+	// create_tmp_file.c
 int			create_tmp_file(t_filelist *cur_file_in);
+	// exec.c
+int			exec(t_data *data);
+	// heredoc.c
+int			exec_heredoc(t_cmd_node *cmd_node);
+	// redir_in_and_hd.c
+int			exec_redir_in_and_hd(t_filelist	*cur_file_in);
 
 // memory/
-void		free_all(t_data *data);
-void		free_env_list(t_env_list *env_list);
-void		free_env_copy(char **env_copy);
+	// delete_tmp_file.c
 void		delete_tmp_files(t_data *data);
+	// free_all.c
+void		free_all(t_data *data);
+	// free_env_copy.c
+void		free_env_copy(char **env_copy);
+	// free_env_list.c
+void		free_env_list(t_env_list *env_list);
+	// free_pathname.c
+void		free_pathname(t_filelist *cur_file_in);
 
 // signals/
+	// init_signals.c
 void		init_signals(void);
 
 #endif

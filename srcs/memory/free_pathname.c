@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_pathname.c                           :+:      :+:    :+:   */
+/*   free_path_and_filename.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/13 12:47:15 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 17:22:04 by thibaud          ###   ########.fr       */
+/*   Created: 2025-06-13 12:47:15 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-06-13 12:47:15 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // itere dans un file_in et en
 void	free_pathname(t_filelist *cur_file_in)
 {
+	(void)cur_file_in;
 	return ;
 }
 
@@ -24,13 +25,13 @@ void	free_pathname(t_filelist *cur_file_in)
 // ou 0
 // ----------------------
 // on va parcourir tous les noeud de filename_in
-// et free tous les pathname quand c'est un heredoc
+// et free tous les path_and_filename quand c'est un heredoc
 void	free_pathnames(t_data *data)
 {
 	t_cmd_node	*cur_cmd;
 
 	if (!data || !data->cmd_node)
-		return (-1);
+		return ;
 	cur_cmd = data->cmd_node;
 	while (cur_cmd)
 	{
