@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/15 16:03:20 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/15 23:53:08 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,17 @@ int	exec(t_data *data)
 			if (exec_out == -2)
 				return (-2);
 		}
-		// if (EXTERN & node_type)
-		// 	// va permettre d'executer une commande en extern
-		// 	// on va creer un fork simple pour simplement executer
-		// 	// avant d'executer on va faire les redir_in, puis les redir_out
-		// 	exec_simple_cmd_extern(cmd_node);
+		if (EXTERN & node_type)
+		{
+			// 	// va permettre d'executer une commande en extern
+			// 	// on va creer un fork simple pour simplement executer
+			// 	// avant d'executer on va faire les redir_in, puis les redir_out
+			exec_out = exec_simple_cmd_extern(cmd_node);
+			if (exec_out == -1)
+				free_and_exit(data);
+			if (exec_out == -2)
+				return (-2);
+		}
 	}
 	// else if (cmd_node->next)
 	// {
@@ -84,6 +90,7 @@ int	exec(t_data *data)
 //				ctrl D : - bash: warning: here-document at line 133 delimited by end-of-file (wanted `EOF') --------> printf(%s) le delimiter
 //		 - on ferme le fichier temp
 //		 - on execute la suite
+
 // int	main(int argc, char **argv, char **env)
 // {
 // 	t_cmd_node	*cmd_node;

@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:41:52 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/15 23:27:22 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 00:38:05 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,22 @@ int	exec_builtins(t_cmd_node *cmd_node)
 	return (1);
 }
 
-// va permettre d'executer une commande en builtin
-// donc on va juste aller chercher la commande
-// dans un dossier builtin et l'executer
-// a l'interieur on va aussi executer
-// les redir_in puis les redir_out
-// apres l'execution on dois rendre les sortie classique
+int	reset_stdin_stdout(int saved_stdin, int saved_stdout)
+{
+	if (dup2(saved_stdin, STDIN_FILENO) == -1)
+		return (-1);
+	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
+		return (-1);
+	return (1);
+}
 
-// en premier je vais faire les redir_in et les redir_out
-// c´est a dire
-// que je vais faire c'est faire une fonction pour changer le stdin vers le fd
-// de stdin vers le fd avec dup 2
-// avec le dernier des file_in puisque c'est lui qui "gagne"
-// puis une fonction avec les redir_out
-// je vais aller chercher le dernier redir_out pour
-// mettre le fd dans le stdout le remplacer par le fd
-// avant ca je peut verifier si un redir_in existe
-// ou si un redir_out existe
-int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
+int	exec_redirections(t_cmd_node *cmd_node)
 {
 	int	node_type;
 	int	exec_out;
 
-	exec_out = 0;
 	node_type = INT_MIN;
+	exec_out = 0;
 	if (!cmd_node || !cmd_node->type)
 		return (-1);
 	if (REDIRECT_IN & node_type || HEREDOC & node_type)
@@ -65,7 +57,25 @@ int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
 		if (-1 == exec_out)
 			return (-1);
 	}
-	exec_builtins(cmd_node);
-	// reset_in_out();
-	return (exec_out);
+	return (1);
+}
+
+int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
+{
+	int	exec_out;
+	int saved_stdin;
+	int saved_stdout;
+
+	if (!cmd_node || !cmd_node->type)
+		return (-1);
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	exec_out = exec_redirections(cmd_node);
+	if (exec_out != 1)
+		return (exec_out);
+	if (exec_builtins(cmd_node) != 1)
+		return (-1);
+	if (reset_stdin_stdout(saved_stdin, saved_stdout) != 1)
+		return (-1);
+	return (1);
 }

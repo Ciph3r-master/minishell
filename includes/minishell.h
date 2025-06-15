@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/15 18:14:21 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/15 23:48:35 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,8 @@ int			exec_simple_cmd_builtins(t_cmd_node *cmd_node);
 int			create_tmp_file(t_filelist *cur_file_in);
 	// exec.c
 int			exec(t_data *data);
+	// extern.c
+int			exec_simple_cmd_extern(t_cmd_node *cmd_node);
 	// heredoc.c
 int			exec_heredoc(t_cmd_node *cmd_node);
 	// redir_in_and_hd.c
