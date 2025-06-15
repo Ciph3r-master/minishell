@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 18:13:29 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/14 00:53:44 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	exec(t_data *data)
 	// 		// dans un dossier builtin et l'executer
 	// 		// a l'interieur on va aussi executer
 	// 		// les redir_in puis les redir_out
-	// 		// ??? apres l'execution on dois rendre les sortie classique ???
+	// 		// apres l'execution on dois rendre les sortie classique
 	// 		exec_simple_cmd_builtin(cmd_node);
 	// 	if (EXTERN & node_type)
 	// 		// va permettre d'executer une commande en extern
