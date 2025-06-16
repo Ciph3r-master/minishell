@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 21:39:27 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 01:46:24 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_cmd_node
 
 typedef struct s_data
 {
+	char		*exit_status;
 	char		*pwd;
 	char		*line;
 	char		*old_pwd;
@@ -188,7 +189,10 @@ int			create_tmp_file(t_filelist *cur_file_in);
 	// exec.c
 int			exec(t_data *data);
 	// extern.c
-int			exec_simple_cmd_extern(t_cmd_node *cmd_node);
+int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
+	// faker.c
+t_data		*init_sample_data_simple_cmd(t_data *data);
+t_data		*init_sample_data_complex_cmd(void);
 	// heredoc.c
 int			exec_heredoc(t_cmd_node *cmd_node);
 	// redir_in_and_hd.c

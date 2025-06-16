@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 21:13:19 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 01:38:35 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	exec(t_data *data)
 			// 	// va permettre d'executer une commande en extern
 			// 	// on va creer un fork simple pour simplement executer
 			// 	// avant d'executer on va faire les redir_in, puis les redir_out
-			exec_out = exec_simple_cmd_extern(cmd_node);
+			exec_out = exec_simple_cmd_extern(cmd_node, data);
 			if (exec_out == -1)
 				free_and_exit(data);
 			if (exec_out == -2)

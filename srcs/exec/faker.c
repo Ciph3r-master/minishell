@@ -3,16 +3,14 @@
 #include <stdio.h>
 #include "minishell.h"
 
-t_data *init_sample_data_simple_cmd(void)
+t_data *init_sample_data_simple_cmd(t_data *data)
 {
-	t_data *data = malloc(sizeof(t_data));
 	t_cmd_node *cmd_node = malloc(sizeof(t_cmd_node));
 	t_cmd *cmd = malloc(sizeof(t_cmd));
 
 	if (!data || !cmd_node || !cmd)
 		return NULL;
 
-	memset(data, 0, sizeof(t_data));
 	memset(cmd_node, 0, sizeof(t_cmd_node));
 	memset(cmd, 0, sizeof(t_cmd));
 
@@ -37,8 +35,6 @@ t_data *init_sample_data_simple_cmd(void)
 	data->cmd_node = cmd_node;
 	data->pwd = NULL;
 	data->old_pwd = NULL;
-	data->env_list = NULL;
-	data->env_copy = NULL;
 
 	return data;
 }

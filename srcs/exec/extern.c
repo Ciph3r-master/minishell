@@ -64,7 +64,30 @@ int	get_cmd_path_name(t_cmd_node *cmd_node)
 	return (1);
 }
 
-int exec_extern(t_cmd_node *cmd_node)
+int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
+{
+	int		pid;
+	int		status;
+	char	*pathname;
+	char	**args;
+
+	pathname = cmd_node->cmd->pathname;
+	args = cmd_node->cmd->args;
+	pid = fork();
+	if (-1 == pid)
+		return (-1);
+	if (0 == pid)
+		if (-1 != execve(pathname, args, data->env_copy))
+			return (-1);
+	else
+	{
+		wait(&status);
+		data->exit_status = WEXITSTATUS(status);
+	}
+	return (0);
+}
+
+int exec_extern(t_cmd_node *cmd_node, t_data *data)
 {
 	int		exec_out;
 
@@ -77,7 +100,8 @@ int exec_extern(t_cmd_node *cmd_node)
 		printf("minishell: %s: command not found\n", cmd_node->cmd->cmd);
 		return (exec_out);
 	}
-	return (1);
+	exec_out = execute_cmd_in_child_process(cmd_node, data);
+	return (exec_out);
 }
 
 int	cmd_is_directory(t_cmd_node *cmd_node)
@@ -95,7 +119,7 @@ int	cmd_is_directory(t_cmd_node *cmd_node)
 //on "sait" si ce n'est pas un directory avec erreur -1 et -2
 //on doit maintenant trouver et executer la commande avec erreur -2
 //	si n'existe pas et erreur -1 en cas de pb
-int exec_simple_cmd_extern(t_cmd_node *cmd_node)
+int exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 {
 	int	exec_out;
 	int saved_stdin;
@@ -118,7 +142,7 @@ int exec_simple_cmd_extern(t_cmd_node *cmd_node)
 	exec_out = cmd_is_directory(cmd_node);
 	if (exec_out != 1)
 		return (exec_out);
-	exec_out = exec_extern(cmd_node);
+	exec_out = exec_extern(cmd_node, data);
 	if (exec_out != 1)
 		return (exec_out);
 	if (reset_stdin_stdout(saved_stdin, saved_stdout) != 1)
