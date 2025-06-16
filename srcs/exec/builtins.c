@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:41:52 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 19:05:04 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 22:15:30 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,14 @@ int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
 	if (!cmd_node || !cmd_node->type)
 		return (-1);
 	saved_stdin = dup(STDIN_FILENO);
+	if (saved_stdin == -1)
+		return (-1);
 	saved_stdout = dup(STDOUT_FILENO);
+	if (saved_stdout == -1)
+	{
+		close(saved_stdin);
+		return (-1);
+	}
 	exec_out = exec_redirections(cmd_node);
 	if (exec_out != 1)
 		return (exec_out);
