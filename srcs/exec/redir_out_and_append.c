@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:08:37 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/15 18:50:27 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:49:09 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	exec_redir_out_and_append(t_filelist *file_in)
 		if (FILE_APPEND == cur_file_in->type)
 		{
 			exec_out = exec_redir_append(cur_file_in);
-			if (exec_out == 1)
+			if (exec_out == -1)
 				return (exec_out);
 		}
 		cur_file_in = cur_file_in->next;

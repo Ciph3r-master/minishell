@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/15 23:48:35 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:52:34 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,10 @@ void		print_filelist(t_filelist *filelist, bool reverse);
 t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type);
 t_filelist	*filelist_getlast(t_filelist *filelist);
 
+// builtins/
+	// pwd.c
+int		builtin_pwd(void);
+
 //expand
 void	find_expand(t_tokenlist *tl, t_env_list *env);
 
@@ -177,6 +181,9 @@ int			exec_heredoc(t_cmd_node *cmd_node);
 int			exec_redir_in_and_hd(t_filelist	*cur_file_in);
 	// redir_out_and_append.c
 int			exec_redir_out_and_append(t_filelist *file_in);
+	// redirections.c
+int			reset_stdin_stdout(int saved_stdin, int saved_stdout);
+int			exec_redirections(t_cmd_node *cmd_node);
 
 // memory/
 	// delete_tmp_file.c

@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 19:49:52 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:11:27 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	readline_heredoc(char *limiter, int fd)
 int	read_heredoc_fd(t_filelist *cur_file_in)
 {
 	char	*limiter;
-	int		fd;
 	int		reading;
+	int		fd;
 
 	if (!cur_file_in || !cur_file_in->limiter)
 		return (-1);
@@ -81,6 +81,8 @@ int	read_heredoc_fd(t_filelist *cur_file_in)
 
 int	run_heredoc(t_filelist *cur_file_in)
 {
+	if (!cur_file_in)
+		return (-1);
 	cur_file_in->fd = create_tmp_file(cur_file_in);
 	if (cur_file_in->fd == -1)
 		return (-1);
@@ -93,13 +95,13 @@ int	run_heredoc_in_file_in(t_filelist *file_in)
 {
 	t_filelist	*cur_file_in;
 
-	if (!file_in || !file_in->type)
+	if (!file_in)
 		return (-1);
 	cur_file_in = file_in;
 	while (file_in)
 	{
 		if (!cur_file_in->type)
-			return (1);
+			return (-1);
 		if (cur_file_in->type == FILE_HD)
 		{
 			if (run_heredoc(cur_file_in) == -1)

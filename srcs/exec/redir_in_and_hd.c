@@ -6,12 +6,13 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:27:53 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/15 18:31:06 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:47:38 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "minishell.h"
 #include "libft.h"
 
@@ -21,7 +22,8 @@ int	exec_redir_in(t_filelist *cur_file_in)
 		return (-1);
 	if (access(cur_file_in->filename, F_OK) == -1)
 	{
-		printf("bash: %s: No such file or directory\n", cur_file_in->filename);
+		printf("minishell: %s: ", cur_file_in->filename);
+		printf("No such file or directory\n");
 		return (-2);
 	}
 	cur_file_in->fd = open(cur_file_in->filename, O_RDONLY);
@@ -62,7 +64,7 @@ int	exec_redir_in_and_hd(t_filelist	*file_in)
 	cur_file_in = file_in;
 	while (cur_file_in)
 	{
-		if (!cur_file_in->type)
+		if (!cur_file_in || !cur_file_in->type)
 			return (-1);
 		if (FILE_IN == cur_file_in->type)
 		{
@@ -70,7 +72,7 @@ int	exec_redir_in_and_hd(t_filelist	*file_in)
 			if (exec_out != 1)
 				return (exec_out);
 		}
-		if (FILE_HD == cur_file_in->type)
+		else if (FILE_HD == cur_file_in->type)
 		{
 			exec_out = exec_redir_in_hd(cur_file_in);
 			if (exec_out != 1)
