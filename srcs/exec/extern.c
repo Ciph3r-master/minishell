@@ -82,6 +82,7 @@ int exec_extern(t_cmd_node *cmd_node)
 
 int	cmd_is_directory(t_cmd_node *cmd_node)
 {
+	(void)cmd_node;
 	return (1);
 }
 

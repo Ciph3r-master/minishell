@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 08:20:19 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 20:32:05 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 21:44:11 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char				*ft_strnstr(const char *big, const char *little,
 						size_t len);
 int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strdup(const char *s);
-
+char				*ft_strndup(const char *src, int size);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);

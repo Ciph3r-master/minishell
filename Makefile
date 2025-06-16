@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/16 20:55:36 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/16 21:44:58 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,11 +93,13 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_env_list.c		\
 	$(DIR_MEMORY)/free_pathname.c
 
-SRCS_PARSING :=							\
-	$(DIR_PARSING)/quotes.c 			\
-	$(DIR_PARSING)/token.c  			\
-	$(DIR_PARSING)/token_utils.c		\
-	$(DIR_PARSING)/expand.c
+SRCS_PARSING :=						\
+	$(DIR_PARSING)/quotes.c 		\
+	$(DIR_PARSING)/token.c  		\
+	$(DIR_PARSING)/token_utils.c	\
+	$(DIR_PARSING)/expand.c			\
+	$(DIR_PARSING)/extract_token.c	\
+	$(DIR_PARSING)/set_token_type.c	\
 
 SRCS_PARSING_UTILS :=				  	\
 	$(DIR_PARSING_UTILS)/tokendlist.c	\

@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 22:04:08 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/13 02:20:32 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/16 21:39:42 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS		:= 					\
 	ft_strchr.c					\
 	ft_strcmp.c					\
 	ft_strdup.c					\
+	ft_strndup.c				\
 	ft_striteri.c				\
 	ft_strjoin.c				\
 	ft_strlcat.c				\

@@ -120,3 +120,34 @@ void	print_tokenlist(t_tokenlist *tokenlist, bool reverse)
 	}
 	printf("\n");
 }
+
+t_tokenlist *tokenlist_insert_after(t_tokenlist *node, void *content, t_tokentype type)
+{
+	t_tokenlist *new_node;
+
+	if (!node)
+		return (NULL);
+	new_node = tokenlist_create_node(content, type);
+	if (!new_node)
+		return (NULL);
+	new_node->next = node->next;
+	new_node->prev = node;
+	if (node->next)
+		node->next->prev = new_node;
+	node->next = new_node;
+	return (new_node);
+}
+
+void tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node)
+{
+	//GERER ERROR
+	if (!head || !*head || !node)
+		return;
+	if (node->prev)
+		node->prev->next = node->next;
+	else
+		*head = node->next;
+	if (node->next)
+		node->next->prev = node->prev;
+	// free(node);
+}

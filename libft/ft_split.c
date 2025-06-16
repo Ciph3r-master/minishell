@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 09:35:59 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 20:31:45 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 21:44:09 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,6 @@ int	ft_count_words(char *str)
 		is_word = 0;
 	}
 	return (count);
-}
-
-char	*ft_strndup(char *str, int n)
-{
-	char	*dup;
-	int		i;
-
-	dup = malloc((n + 1) * sizeof(char));
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (i != n)
-	{
-		dup[i] = str[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
 }
 
 void	assign_split(char *str, char **split)
