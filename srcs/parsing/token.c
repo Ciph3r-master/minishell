@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/13 01:45:40 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 20:47:18 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,8 +302,8 @@ void	print_cmd(t_cmd *cmd)
 		printf("  Aucun argument.\n");
 	}
 
-	if (cmd && cmd->path)
-		printf("Chemin : %s\n", cmd->path);
+	if (cmd && cmd->pathname)
+		printf("Chemin : %s\n", cmd->pathname);
 }
 
 void	create_cmd_node(t_tokenlist *tl, t_data *data)

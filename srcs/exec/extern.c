@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extern.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:47:00 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/16 19:41:22 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 20:38:30 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	find_path_with_access(char **paths, char **pathname)
 			*pathname = ft_strdup(paths[i]);
 			if (NULL == *pathname)
 			{
-				free_char_tab_all(paths);
+				ft_free_char_tab_all(paths);
 				return (-1);
 			}
 			return (1);
@@ -37,11 +37,14 @@ int	find_path_with_access(char **paths, char **pathname)
 	return (-2);
 }
 
-int	get_cmd_path_name(char **pathname, t_cmd_node *cmd_node)
+int	get_cmd_path_name(t_cmd_node *cmd_node)
 {
+	char	*pathname;
 	char	*path;
 	char	**paths;
+	int		exec_out;
 
+	pathname = NULL;
 	path = getenv("PATH");
 	if (NULL == path)
 		return (-1);
@@ -50,28 +53,36 @@ int	get_cmd_path_name(char **pathname, t_cmd_node *cmd_node)
 		return (-1);
 	if (ft_add_string_to_strings(paths, cmd_node->cmd->args[0]) == NULL)
 		return (-1);
-	if (find_path_with_access(paths, pathname) != 1)
+	exec_out = find_path_with_access(paths, &pathname) != 1;
+	if (exec_out != 1)
 	{
 		ft_free_char_tab_all(paths);
-		return (-1);
+		return (exec_out);
 	}
+	cmd_node->cmd->pathname = pathname;
 	ft_free_char_tab_all(paths);
 	return (1);
 }
 
 int exec_extern(t_cmd_node *cmd_node)
 {
-	char	*pathname;
 	int		exec_out;
 
-	pathname = NULL;
-	exec_out = 1;
 	if (!cmd_node || !cmd_node->cmd->cmd)
 		return (-1);
-	exec_out = get_cmd_path_name(&pathname, cmd_node);
+	exec_out = get_cmd_path_name(cmd_node);
 	if (exec_out == -2)
-		printf("minishell: %s: command not found", cmd_node->cmd->cmd);
-	return (exec_out);
+	{
+		//stderr
+		printf("minishell: %s: command not found\n", cmd_node->cmd->cmd);
+		return (exec_out);
+	}
+	return (1);
+}
+
+int	cmd_is_directory(t_cmd_node *cmd_node)
+{
+	return (1);
 }
 
 //on doit checker avant toute chose si la commande est un directory
@@ -92,12 +103,20 @@ int exec_simple_cmd_extern(t_cmd_node *cmd_node)
 	if (!cmd_node || !cmd_node->type)
 		return (-1);
 	saved_stdin = dup(STDIN_FILENO);
+	if (saved_stdin == -1)
+		return (-1);
 	saved_stdout = dup(STDOUT_FILENO);
+	if (saved_stdout == -1)
+	{
+		close(saved_stdin);
+		return (-1);
+	}
 	exec_out = exec_redirections(cmd_node);
 	if (exec_out != 1)
 		return (exec_out);
-	// if (cmd_is_directory(cmd_node))
-	// 	return (-2);
+	exec_out = cmd_is_directory(cmd_node);
+	if (exec_out != 1)
+		return (exec_out);
 	exec_out = exec_extern(cmd_node);
 	if (exec_out != 1)
 		return (exec_out);

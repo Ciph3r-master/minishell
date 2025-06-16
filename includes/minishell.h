@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 18:52:34 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/16 20:44:46 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
-	char	*path;
+	char	*pathname;
 }	t_cmd;
 
 typedef struct s_filelist	t_filelist;
