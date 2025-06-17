@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/14 19:24:39 by qutruche         ###   ########.fr        #
+#    Updated: 2025/06/17 17:57:11 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,8 @@ SRCS_PARSING :=						\
 
 SRCS_PARSING_UTILS :=				  \
 	$(DIR_PARSING_UTILS)/tokendlist.c \
-	$(DIR_PARSING_UTILS)/filedlist.c
+	$(DIR_PARSING_UTILS)/filedlist.c  \
+	$(DIR_PARSING_UTILS)/cmddlist.c  \
 
 SRCS_SIGNALS :=				  				\
 	$(DIR_SIGNALS)/init_signals.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_token_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:23:56 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/14 19:24:15 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:00:54 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	set_builtin(t_tokenlist *tl)
 	current = tl;
 	while (current)
 	{
-		if (current->type == TWORD)
+		if (current->type == TEXTERN)
 		{
 			if (!current->token)
 				return ;
@@ -78,11 +78,27 @@ void	set_cmd(t_tokenlist *tl)
 		|| current->type == TSPACE
 		|| current->type == TPIPE)
 		{
+			if (current->type == TBUILTIN)
+				break;
 			current = current->next;
 			continue;
 		}
 		current->type = TEXTERN;
 		break;
+	}
+}
+
+void set_cmds(t_tokenlist *tl)
+{
+	t_tokenlist *current;
+
+	current = tl;
+	set_cmd(tl);
+	while (current)
+	{
+		if (current->next && current->type == TPIPE)
+			set_cmd(current);
+		current = current->next;
 	}
 }
 
