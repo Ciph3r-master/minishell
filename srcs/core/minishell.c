@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 	// 	printf("\n\n=== pars ===\n\n");
 	// 	init_tokens(&data);
 		printf("\n\n=== faker ===\n\n");
-		init_cmd_multi_redir_in_heredoc(&data);
+		init_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(&data);
 		printf("\n\n=== exec ===\n\n");
 		exec(&data);
 	// }

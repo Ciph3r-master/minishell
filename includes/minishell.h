@@ -196,6 +196,10 @@ t_data		*init_sample_data_simple_cmd(t_data *data);
 t_data		*init_cmd_redir_in(t_data *data);
 t_data		*init_cmd_multi_redir_in(t_data *data);
 t_data		*init_cmd_multi_redir_in_heredoc(t_data *data);
+t_data		*init_cmd_multi_redir_in_multi_heredoc(t_data *data);
+t_data		*init_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
+t_data		*init_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
+t_data		*init_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
 t_data		*init_sample_data_complex_cmd(t_data *data);
 	// heredoc.c
 int			exec_heredoc(t_cmd_node *cmd_node);

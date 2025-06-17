@@ -53,7 +53,7 @@ int	exec_redirections(t_cmd_node *cmd_node)
 	}
 	if (REDIRECT_OUT & node_type || APPEND & node_type)
 	{
-		exec_out = exec_redir_out_and_append(cmd_node->file_in);
+		exec_out = exec_redir_out_and_append(cmd_node->file_out);
 		if (exec_out == -1)
 			return (exec_out);
 	}
