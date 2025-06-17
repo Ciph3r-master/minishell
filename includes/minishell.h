@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 01:46:24 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 01:51:53 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_cmd_node
 
 typedef struct s_data
 {
-	char		*exit_status;
+	int			exit_status;
 	char		*pwd;
 	char		*line;
 	char		*old_pwd;
@@ -178,7 +178,8 @@ t_env_list	*get_env_list(t_data *data, char **env);
 char		**get_env_copy(t_env_list *env_list);
 void		print_env_copy(char **env_copy);
 
-// error
+// error/
+	// free_and_exit.c
 void		free_and_exit(t_data *data);
 
 // exec/

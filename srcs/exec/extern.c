@@ -77,8 +77,10 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 	if (-1 == pid)
 		return (-1);
 	if (0 == pid)
+	{
 		if (-1 != execve(pathname, args, data->env_copy))
 			return (-1);
+	}
 	else
 	{
 		wait(&status);

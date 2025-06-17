@@ -6,7 +6,7 @@
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/16 21:44:58 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/17 01:52:41 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ SRCS_EXEC	:=							\
 	$(DIR_EXEC)/create_tmp_file.c		\
 	$(DIR_EXEC)/exec.c					\
 	$(DIR_EXEC)/extern.c				\
+	$(DIR_EXEC)/faker.c					\
 	$(DIR_EXEC)/heredoc.c				\
 	$(DIR_EXEC)/redir_in_and_hd.c		\
 	$(DIR_EXEC)/redir_out_and_append.c	\

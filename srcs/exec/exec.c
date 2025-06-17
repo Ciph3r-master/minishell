@@ -6,11 +6,27 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 01:38:35 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 02:06:46 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int pipeline_has_heredoc(t_cmd_node *cmd_node)
+{
+	t_cmd_node	*cur_cmd_node;
+	int			node_type;
+
+	cur_cmd_node = cmd_node;
+	node_type = cmd_node->type;
+	while (cur_cmd_node)
+	{
+		if (HEREDOC & node_type)
+			return (1);
+		cur_cmd_node = cur_cmd_node->next;
+	}
+	return (0);
+}
 
 // ########## EXEC ##############################
 
@@ -33,8 +49,11 @@ int	exec(t_data *data)
 	cmd_node = data->cmd_node;
 	node_type = cmd_node->type;
 	exec_out = 0;
-	if (-1 == exec_heredoc(cmd_node))
-		free_and_exit(data);
+	if (pipeline_has_heredoc(cmd_node))
+	{
+		if (-1 == exec_heredoc(cmd_node))
+			free_and_exit(data);
+	}
 	if (!cmd_node->next)
 	{
 		if (BUILTIN & node_type)
