@@ -6,20 +6,26 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 18:13:29 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 02:06:46 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ########## INIT CMD_NODE ##############################
-
-// fonction servant a imiter le pasring en creant des fausse
-// donne en liste chainee qui vont etre envoyé a ma fonction exec
-// comme si le parsing avais envoyé ces données
-t_cmd_node	*cmd_node_list(t_cmd_node *cmd_node)
+int pipeline_has_heredoc(t_cmd_node *cmd_node)
 {
-	return (cmd_node);
+	t_cmd_node	*cur_cmd_node;
+	int			node_type;
+
+	cur_cmd_node = cmd_node;
+	node_type = cmd_node->type;
+	while (cur_cmd_node)
+	{
+		if (HEREDOC & node_type)
+			return (1);
+		cur_cmd_node = cur_cmd_node->next;
+	}
+	return (0);
 }
 
 // ########## EXEC ##############################
@@ -34,15 +40,20 @@ t_cmd_node	*cmd_node_list(t_cmd_node *cmd_node)
 // -> a l'interieur de chaque cmd executer les redir_out a l'interieur
 int	exec(t_data *data)
 {
+	t_cmd_node	*cmd_node;
 	int			node_type;
 	int			exec_out;
-	t_cmd_node	*cmd_node;
 
-	node_type = INT_MIN;
+	if (!data || !data->cmd_node)
+		return (-2);
 	cmd_node = data->cmd_node;
+	node_type = cmd_node->type;
 	exec_out = 0;
-	// if (-1 == exec_heredoc(cmd_node))
-	// 	free_and_exit(data);
+	if (pipeline_has_heredoc(cmd_node))
+	{
+		if (-1 == exec_heredoc(cmd_node))
+			free_and_exit(data);
+	}
 	if (!cmd_node->next)
 	{
 		if (BUILTIN & node_type)
@@ -59,11 +70,17 @@ int	exec(t_data *data)
 			if (exec_out == -2)
 				return (-2);
 		}
-		// if (EXTERN & node_type)
-		// 	// va permettre d'executer une commande en extern
-		// 	// on va creer un fork simple pour simplement executer
-		// 	// avant d'executer on va faire les redir_in, puis les redir_out
-		// 	exec_simple_cmd_extern(cmd_node);
+		if (EXTERN & node_type)
+		{
+			// 	// va permettre d'executer une commande en extern
+			// 	// on va creer un fork simple pour simplement executer
+			// 	// avant d'executer on va faire les redir_in, puis les redir_out
+			exec_out = exec_simple_cmd_extern(cmd_node, data);
+			if (exec_out == -1)
+				free_and_exit(data);
+			if (exec_out == -2)
+				return (-2);
+		}
 	}
 	// else if (cmd_node->next)
 	// {
@@ -94,6 +111,7 @@ int	exec(t_data *data)
 //				ctrl D : - bash: warning: here-document at line 133 delimited by end-of-file (wanted `EOF') --------> printf(%s) le delimiter
 //		 - on ferme le fichier temp
 //		 - on execute la suite
+
 // int	main(int argc, char **argv, char **env)
 // {
 // 	t_cmd_node	*cmd_node;

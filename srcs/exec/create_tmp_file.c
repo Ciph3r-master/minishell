@@ -34,6 +34,7 @@ char	*create_random_alphanum(int fd)
 			read_random++;
 		}
 	}
+	id[8] = '\0';
 	random_alpha_num = ft_strdup(id);
 	if (!random_alpha_num)
 		return (NULL);
@@ -64,6 +65,8 @@ char	*create_pathname(t_filelist *cur_file_in)
 	char	*new_filename;
 	char	*pathname;
 
+	if (!cur_file_in)
+		return (NULL);
 	unique_id = create_unique_id();
 	if (!unique_id)
 		return (NULL);
@@ -71,6 +74,7 @@ char	*create_pathname(t_filelist *cur_file_in)
 	free(unique_id);
 	if (!new_filename)
 		return (NULL);
+	free(cur_file_in->filename);
 	new_filename = ft_strjoin(new_filename, ".tmp");
 	if (!new_filename)
 		return (NULL);
@@ -81,13 +85,13 @@ char	*create_pathname(t_filelist *cur_file_in)
 	return (pathname);
 }
 
-// fonction de sortie free path and filename
-// fonction de sortie free filename
 int	create_tmp_file(t_filelist *cur_file_in)
 {
 	int		fd;
 	char	*pathname;
 
+	if (!cur_file_in)
+		return (-1);
 	fd = -1;
 	while (fd == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/13 18:36:42 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 01:25:49 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,23 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	init_signals();
 	init_data(&data, env);
-	while (1)
-	{
-		data.line = readline("minishell> ");
-		if (!data.line)
-		{
-			write(1, "exit\n", 5);
-			rl_clear_history();
-			free_and_exit(&data);
-		}
-		add_history(data.line);
-		printf("\n\n=== pars ===\n\n");
-		init_tokens(&data);
+	// while (1)
+	// {
+	// 	data.line = readline("minishell> ");
+	// 	if (!data.line)
+	// 	{
+	// 		write(1, "exit\n", 5);
+	// 		rl_clear_history();
+	// 		free_and_exit(&data);
+	// 	}
+	// 	add_history(data.line);
+	// 	printf("\n\n=== pars ===\n\n");
+	// 	init_tokens(&data);
+		printf("\n\n=== faker ===\n\n");
+		init_sample_data_simple_cmd(&data);
 		printf("\n\n=== exec ===\n\n");
 		exec(&data);
-	}
+	// }
 	// jamais execute
 	free_all(&data);
 	return (0);

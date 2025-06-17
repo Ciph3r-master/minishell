@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab_char_all.c                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 23:15:36 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 20:30:28 by thibaud          ###   ########.fr       */
+/*   Created: 2025/06/14 19:19:43 by qutruche          #+#    #+#             */
+/*   Updated: 2025/06/14 19:19:51 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_free_char_tab_all(char **split)
+char	*ft_strndup(const char *src, int size)
 {
-	int	i;
+	char	*dup;
+	int		i;
 
+	if (size == 0)
+		return (NULL);
 	i = 0;
-	while (split[i])
+	dup = (char *) malloc(sizeof(char) * size + 1);
+	if (!dup)
+		return (NULL);
+	while (src[i] && i < size)
 	{
-		free(split[i]);
+		dup[i] = src[i];
 		i++;
 	}
-	free(split);
-	return (NULL);
+	dup[i] = 0;
+	return (dup);
 }

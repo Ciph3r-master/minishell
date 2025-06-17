@@ -4,9 +4,13 @@
 - changer le nom du fichier des tmp file par /tmp/ quand les heredoc
 	seront "termine" pour avoir un comportement logique des heredoc.tmp
 
+<<<<<<< HEAD
 ### aujourdhui ###
 
 verifier que le code fait depuis chez moi fonctionne comme il le devrais
 
 tester : heredoc, redirs_in, redirs_out, builtins, extern
 			avec le faker
+=======
+quentin doit mettre les type builtin dans les bitmask dans cmd_node
+>>>>>>> 4b585c5286bf213d12f5fe682dc82636ecd46f5f

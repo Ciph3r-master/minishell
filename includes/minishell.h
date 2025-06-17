@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 17:35:03 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 01:51:53 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
-	char	*path;
+	char	*pathname;
 }	t_cmd;
 
 typedef struct s_filelist	t_filelist;
@@ -110,6 +110,7 @@ typedef struct s_cmd_node
 
 typedef struct s_data
 {
+	int			exit_status;
 	char		*pwd;
 	char		*line;
 	char		*old_pwd;
@@ -123,6 +124,19 @@ int			is_open_quotes(char *line, char quote);
 t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl);
 int			init_tokens(t_data *data);
 
+//extract_token.c
+t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos);
+t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos);
+t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos);
+t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos);
+void 		merge_token(t_tokenlist **tl);
+	// set_token_type.c
+	void set_operator(t_tokenlist *tl);
+void	set_builtin(t_tokenlist *tl);
+void	set_cmd(t_tokenlist *tl);
+void	set_file(t_tokenlist *tl);
+void	set_limiter(t_tokenlist *tl);
+void	set_args(t_tokenlist *tl);
 //token utils
 int			is_builtin(char *word);
 int			is_operator(char *line);
@@ -131,15 +145,20 @@ t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type);
 t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
 void		print_tokenlist(t_tokenlist *tokenlist, bool reverse);
 t_tokenlist	*tokenlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type);
-
-t_filelist	*filelist_create_node(void	*content, t_filetype type);
+t_tokenlist *tokenlist_insert_after(t_tokenlist *node, void *content, t_tokentype type);
+void 		tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node);
+t_filelist *filelist_create_node(void *content, t_filetype type);
 t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype type);
 void		print_filelist(t_filelist *filelist, bool reverse);
 t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type);
 t_filelist	*filelist_getlast(t_filelist *filelist);
 
+// builtins/
+	// pwd.c
+int		builtin_pwd(void);
+
 //expand
-void	find_expand(t_tokenlist *tl, t_env_list *env);
+void	find_expand(t_tokenlist **tl, t_env_list *env);
 
 // data/
 	//init_data.c
@@ -159,7 +178,8 @@ t_env_list	*get_env_list(t_data *data, char **env);
 char		**get_env_copy(t_env_list *env_list);
 void		print_env_copy(char **env_copy);
 
-// error
+// error/
+	// free_and_exit.c
 void		free_and_exit(t_data *data);
 
 // exec/
@@ -169,10 +189,20 @@ int			exec_simple_cmd_builtins(t_cmd_node *cmd_node);
 int			create_tmp_file(t_filelist *cur_file_in);
 	// exec.c
 int			exec(t_data *data);
+	// extern.c
+int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
+	// faker.c
+t_data		*init_sample_data_simple_cmd(t_data *data);
+t_data		*init_sample_data_complex_cmd(void);
 	// heredoc.c
 int			exec_heredoc(t_cmd_node *cmd_node);
 	// redir_in_and_hd.c
 int			exec_redir_in_and_hd(t_filelist	*cur_file_in);
+	// redir_out_and_append.c
+int			exec_redir_out_and_append(t_filelist *file_in);
+	// redirections.c
+int			reset_stdin_stdout(int saved_stdin, int saved_stdout);
+int			exec_redirections(t_cmd_node *cmd_node);
 
 // memory/
 	// delete_tmp_file.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-28 12:14:04 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-05-28 12:14:04 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/05/28 12:14:04 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/16 19:13:46 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,6 @@ int	add_string_to_strings(char **strings, char *string)
 		i++;
 	}
 	return (0);
-}
-
-int	find_path_with_access(char **paths, char **pathname)
-{
-	int	i;
-
-	i = 0;
-	while (paths[i])
-	{
-		if (0 == access(paths[i], X_OK))
-		{
-			*pathname = ft_strdup(paths[i]);
-			if (NULL == *pathname)
-			{
-				printf("ft_strdup: failed\n");
-				free_char_tab_all(paths);
-				exit (EXIT_FAILURE);
-			}
-			return (0);
-		}
-		i++;
-	}
-	return (1);
 }
 
 int	find_path_with_access(char **paths, char **pathname)
