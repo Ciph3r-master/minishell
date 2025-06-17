@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/14 21:55:34 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/17 23:00:41 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,12 @@ void	find_expand(t_tokenlist **tl, t_env_list *env)
 			tmp = current->next;
 			while (i >= 0)
 			{
-				tokenlist_insert_after(current, split_token[i], TARG);
+				tokenlist_insert_after(current, ft_strdup(split_token[i]), TARG);
 				if (i > 0)
 					tokenlist_insert_after(current, NULL, TSPACE);
 				i--;
 			}
+			free_matrix(split_token);
 			tokenlist_remove_node(tl, current);
 			current = tmp;
 		}

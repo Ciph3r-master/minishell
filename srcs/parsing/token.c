@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/17 21:03:38 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/17 22:54:58 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,18 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 	{
 		if (current->type == TEXTERN || current->type == TBUILTIN)
 		{
-			node->cmd->args[0] = current->token;
-			node->cmd->cmd = current->token;
+			node->cmd->args[0] = ft_strdup(current->token);
+			node->cmd->cmd = ft_strdup(current->token);
 		}
 		if (current->type == TARG)
 		{
-			node->cmd->args[ac] = current->token;
+			node->cmd->args[ac] = ft_strdup(current->token);
 			ac++;
 		}	
 		if (current->type == TLIMITER)
 		{
-			filelist_push_back(&node->file_in, "tmp name", FILE_HD);
-			filelist_getlast(node->file_in)->limiter = current->token;
+			filelist_push_back(&node->file_in, ft_strdup("tmpname"), FILE_HD);
+			filelist_getlast(node->file_in)->limiter = ft_strdup(current->token);
 		}	
 		if (current->type == TFILE)
 		{
@@ -125,13 +125,13 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 			if (current->prev && current->prev->type == TSPACE)
 				prev = current->prev->prev;
 			if (prev && prev->type == TRD_IN)
-				filelist_push_back(&node->file_in, current->token, FILE_IN);
+				filelist_push_back(&node->file_in, ft_strdup(current->token), FILE_IN);
 			if (prev && (prev->type == TRD_OUT || prev->type == TAPPEND))
 			{
 				if (prev->type == TRD_OUT)
-					filelist_push_back(&node->file_out, current->token, FILE_OUT);
+					filelist_push_back(&node->file_out, ft_strdup(current->token), FILE_OUT);
 				else
-					filelist_push_back(&node->file_out, current->token, FILE_APPEND);
+					filelist_push_back(&node->file_out, ft_strdup(current->token), FILE_APPEND);
 			}
 		}
 		current = current->next;

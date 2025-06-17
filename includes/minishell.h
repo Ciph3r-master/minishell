@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 20:23:56 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/17 22:57:21 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +187,11 @@ void		free_and_exit(t_data *data);
 void		free_all(t_data *data);
 void		free_env_list(t_env_list *env_list);
 void		free_env_copy(char **env_copy);
+void 		free_tokenlist(t_tokenlist **tl);
+void 		free_cmd_list(t_cmd_node **cmd_node);
+void 		free_matrix(char **split);
 
-// signals/
-void		init_signals(void);
+	// signals/
+	void init_signals(void);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/17 17:57:11 by billcipher       ###   ########.fr        #
+#    Updated: 2025/06/17 22:58:22 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,9 +72,12 @@ SRCS_ERROR	:=						\
 	$(DIR_ERROR)/error.c			\
 
 SRCS_MEMORY	:=						\
-	$(DIR_MEMORY)/free_all.c	\
+	$(DIR_MEMORY)/free_all.c		\
 	$(DIR_MEMORY)/free_env_list.c	\
 	$(DIR_MEMORY)/free_env_copy.c	\
+	$(DIR_MEMORY)/free_tokens.c		\
+	$(DIR_MEMORY)/free_cmds_node.c	\
+	$(DIR_MEMORY)/free_utils.c	\
 
 SRCS_PARSING :=						\
 	$(DIR_PARSING)/quotes.c 		\
