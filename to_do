@@ -3,3 +3,10 @@
 - verifier valgrind create_tmp_file/delete
 - changer le nom du fichier des tmp file par /tmp/ quand les heredoc
 	seront "termine" pour avoir un comportement logique des heredoc.tmp
+
+### aujourdhui ###
+
+verifier que le code fait depuis chez moi fonctionne comme il le devrais
+
+tester : heredoc, redirs_in, redirs_out, builtins, extern
+			avec le faker
