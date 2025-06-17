@@ -24,9 +24,11 @@ int	exec_redir_out(t_filelist *cur_file_in)
 	if (dup2(cur_file_in->fd, STDOUT_FILENO) == -1)
 	{
 		close(cur_file_in->fd);
+		cur_file_in->fd = -1;
 		return (-1);
 	}
 	close(cur_file_in->fd);
+	cur_file_in->fd = -1;
 	return (1);
 }
 
@@ -40,9 +42,11 @@ int	exec_redir_append(t_filelist *cur_file_in)
 	if (dup2(cur_file_in->fd, STDOUT_FILENO) == -1)
 	{
 		close(cur_file_in->fd);
+		cur_file_in->fd = -1;
 		return (-1);
 	}
 	close(cur_file_in->fd);
+	cur_file_in->fd = -1;
 	return (1);
 }
 

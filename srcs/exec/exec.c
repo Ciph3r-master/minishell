@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int pipeline_has_heredoc(t_cmd_node *cmd_node)
+int	pipeline_has_heredoc(t_cmd_node *cmd_node)
 {
 	t_cmd_node	*cur_cmd_node;
 	int			node_type;

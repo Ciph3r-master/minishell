@@ -30,8 +30,8 @@ int	exec_builtins(t_cmd_node *cmd_node)
 int	exec_simple_cmd_builtins(t_cmd_node *cmd_node)
 {
 	int	exec_out;
-	int saved_stdin;
-	int saved_stdout;
+	int	saved_stdin;
+	int	saved_stdout;
 
 	if (!cmd_node || !cmd_node->type)
 		return (-1);

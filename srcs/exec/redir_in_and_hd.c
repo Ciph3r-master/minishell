@@ -32,9 +32,11 @@ int	exec_redir_in(t_filelist *cur_file_in)
 	if (dup2(cur_file_in->fd, STDIN_FILENO) == -1)
 	{
 		close(cur_file_in->fd);
+		cur_file_in->fd = -1;
 		return (-1);
 	}
 	close(cur_file_in->fd);
+	cur_file_in->fd = -1;
 	return (1);
 }
 
@@ -48,9 +50,11 @@ int	exec_redir_in_hd(t_filelist *cur_file_in)
 	if (dup2(cur_file_in->fd, STDIN_FILENO) == -1)
 	{
 		close(cur_file_in->fd);
+		cur_file_in->fd = -1;
 		return (-1);
 	}
 	close(cur_file_in->fd);
+	cur_file_in->fd = -1;
 	return (1);
 }
 
@@ -64,8 +68,6 @@ int	exec_redir_in_and_hd(t_filelist	*file_in)
 	cur_file_in = file_in;
 	while (cur_file_in)
 	{
-		if (!cur_file_in || !cur_file_in->type)
-			return (-1);
 		if (FILE_IN == cur_file_in->type)
 		{
 			exec_out = exec_redir_in(cur_file_in);

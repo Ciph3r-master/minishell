@@ -21,15 +21,24 @@ void	delete_tmps(t_filelist *cur_file_in)
 	{
 		if (cur_file_in->type == FILE_HD)
 		{
-			if (cur_file_in->fd != -1 && close(cur_file_in->fd) == -1)
-				perror("close");
-			if (cur_file_in->pathname
-				&& unlink(cur_file_in->pathname) == -1)
-				perror("unlink");
+			if (cur_file_in->fd != -1)
+			{
+				#include <stdio.h>
+				printf("cur_file_in->fd : %d", cur_file_in->fd);
+				if (close(cur_file_in->fd) == -1)
+					perror("close fawef");
+				cur_file_in->fd = -1;
+			}
+			if (cur_file_in->pathname)
+			{
+				if (unlink(cur_file_in->pathname) == -1)
+					perror("unlink");
+				free(cur_file_in->pathname);
+				cur_file_in->pathname = NULL;
+			}
 		}
 		cur_file_in = cur_file_in->next;
 	}
-	return ;
 }
 
 void	delete_tmp_files(t_data *data)

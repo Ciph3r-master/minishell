@@ -41,10 +41,10 @@ char	*create_random_alphanum(int fd)
 	return (random_alpha_num);
 }
 
-char	*create_unique_id()
+char	*create_unique_id(void)
 {
-    int 	fd;
-	char 	*unique_id;
+	char	*unique_id;
+    int		fd;
 
 	fd = open("/dev/urandom", O_RDONLY);
     if (fd == -1)

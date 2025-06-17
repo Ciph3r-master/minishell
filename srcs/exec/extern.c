@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include "minishell.h"
@@ -53,7 +54,7 @@ int	get_cmd_path_name(t_cmd_node *cmd_node)
 		return (-1);
 	if (ft_add_string_to_strings(paths, cmd_node->cmd->args[0]) == NULL)
 		return (-1);
-	exec_out = find_path_with_access(paths, &pathname) != 1;
+	exec_out = find_path_with_access(paths, &pathname);
 	if (exec_out != 1)
 	{
 		ft_free_char_tab_all(paths);
@@ -86,10 +87,10 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 		wait(&status);
 		data->exit_status = WEXITSTATUS(status);
 	}
-	return (0);
+	return (1);
 }
 
-int exec_extern(t_cmd_node *cmd_node, t_data *data)
+int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 {
 	int		exec_out;
 
@@ -121,23 +122,16 @@ int	cmd_is_directory(t_cmd_node *cmd_node)
 //on "sait" si ce n'est pas un directory avec erreur -1 et -2
 //on doit maintenant trouver et executer la commande avec erreur -2
 //	si n'existe pas et erreur -1 en cas de pb
-int exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
+int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 {
 	int	exec_out;
-	int saved_stdin;
-	int saved_stdout;
+	int	saved_stdin;
+	int	saved_stdout;
 
 	if (!cmd_node || !cmd_node->type)
 		return (-1);
-	saved_stdin = dup(STDIN_FILENO);
-	if (saved_stdin == -1)
+	if (save_stdin_stdout(&saved_stdin, &saved_stdout) == -1)
 		return (-1);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (saved_stdout == -1)
-	{
-		close(saved_stdin);
-		return (-1);
-	}
 	exec_out = exec_redirections(cmd_node);
 	if (exec_out != 1)
 		return (exec_out);

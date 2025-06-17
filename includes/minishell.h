@@ -193,7 +193,10 @@ int			exec(t_data *data);
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
 	// faker.c
 t_data		*init_sample_data_simple_cmd(t_data *data);
-t_data		*init_sample_data_complex_cmd(void);
+t_data		*init_cmd_redir_in(t_data *data);
+t_data		*init_cmd_multi_redir_in(t_data *data);
+t_data		*init_cmd_multi_redir_in_heredoc(t_data *data);
+t_data		*init_sample_data_complex_cmd(t_data *data);
 	// heredoc.c
 int			exec_heredoc(t_cmd_node *cmd_node);
 	// redir_in_and_hd.c
@@ -201,6 +204,7 @@ int			exec_redir_in_and_hd(t_filelist	*cur_file_in);
 	// redir_out_and_append.c
 int			exec_redir_out_and_append(t_filelist *file_in);
 	// redirections.c
+int			save_stdin_stdout(int *saved_stdin, int *saved_stdout);
 int			reset_stdin_stdout(int saved_stdin, int saved_stdout);
 int			exec_redirections(t_cmd_node *cmd_node);
 

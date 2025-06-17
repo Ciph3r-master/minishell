@@ -71,12 +71,9 @@ int	read_heredoc_fd(t_filelist *cur_file_in)
 	while (reading)
 		reading = readline_heredoc(limiter, fd);
 	if (close(fd) == -1)
-	{
-		cur_file_in->fd = -1;
 		return (-1);
-	}
 	cur_file_in->fd = -1;
-	return (0);
+	return (1);
 }
 
 int	run_heredoc(t_filelist *cur_file_in)
@@ -98,10 +95,8 @@ int	run_heredoc_in_file_in(t_filelist *file_in)
 	if (!file_in)
 		return (-1);
 	cur_file_in = file_in;
-	while (file_in)
+	while (cur_file_in)
 	{
-		if (!cur_file_in->type)
-			return (-1);
 		if (cur_file_in->type == FILE_HD)
 		{
 			if (run_heredoc(cur_file_in) == -1)

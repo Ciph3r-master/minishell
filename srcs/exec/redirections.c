@@ -13,6 +13,20 @@
 #include <unistd.h>
 #include "minishell.h"
 
+int	save_stdin_stdout(int *saved_stdin, int *saved_stdout)
+{
+	*saved_stdin = dup(STDIN_FILENO);
+	if (*saved_stdin == -1)
+		return (-1);
+	*saved_stdout = dup(STDOUT_FILENO);
+	if (*saved_stdout == -1)
+	{
+		close(*saved_stdin);
+		return (-1);
+	}
+	return (1);
+}
+
 int	reset_stdin_stdout(int saved_stdin, int saved_stdout)
 {
 	if (dup2(saved_stdin, STDIN_FILENO) == -1)
@@ -27,7 +41,7 @@ int	exec_redirections(t_cmd_node *cmd_node)
 	int	node_type;
 	int	exec_out;
 
-	node_type = INT_MIN;
+	node_type = cmd_node->type;
 	exec_out = 0;
 	if (!cmd_node || !cmd_node->type)
 		return (-1);
