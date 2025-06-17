@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/17 01:25:49 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 22:59:16 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 	// 	printf("\n\n=== pars ===\n\n");
 	// 	init_tokens(&data);
 		printf("\n\n=== faker ===\n\n");
-		init_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(&data);
+		init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(&data);
 		printf("\n\n=== exec ===\n\n");
 		exec(&data);
 	// }

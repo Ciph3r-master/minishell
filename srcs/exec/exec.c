@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 02:06:46 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 22:29:05 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	exec(t_data *data)
 			// a l'interieur on va aussi executer
 			// les redir_in puis les redir_out
 			// apres l'execution on dois rendre les sortie classique
-			exec_out = exec_simple_cmd_builtins(cmd_node);
+			exec_out = exec_simple_cmd_builtins(cmd_node, data);
 			if (exec_out == -1)
 				free_and_exit(data);
 			if (exec_out == -2)

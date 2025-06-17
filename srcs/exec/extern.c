@@ -128,7 +128,7 @@ int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 	int	saved_stdin;
 	int	saved_stdout;
 
-	if (!cmd_node || !cmd_node->type)
+	if (!cmd_node)
 		return (-1);
 	if (save_stdin_stdout(&saved_stdin, &saved_stdout) == -1)
 		return (-1);

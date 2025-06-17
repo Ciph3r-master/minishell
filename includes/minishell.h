@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 01:51:53 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 22:28:59 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,23 +184,32 @@ void		free_and_exit(t_data *data);
 
 // exec/
 	// builtins.c
-int			exec_simple_cmd_builtins(t_cmd_node *cmd_node);
+int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
 	// create_tmp_file.c
 int			create_tmp_file(t_filelist *cur_file_in);
 	// exec.c
 int			exec(t_data *data);
 	// extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
-	// faker.c
-t_data		*init_sample_data_simple_cmd(t_data *data);
-t_data		*init_cmd_redir_in(t_data *data);
-t_data		*init_cmd_multi_redir_in(t_data *data);
-t_data		*init_cmd_multi_redir_in_heredoc(t_data *data);
-t_data		*init_cmd_multi_redir_in_multi_heredoc(t_data *data);
-t_data		*init_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
-t_data		*init_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
-t_data		*init_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
-t_data		*init_sample_data_complex_cmd(t_data *data);
+int			cmd_is_directory(t_cmd_node *cmd_node);
+	// faker_extern.c
+t_data		*init_extern_simple_cmd(t_data *data);
+t_data		*init_extern_cmd_redir_in(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_heredoc(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
+	// faker_builtin.c
+t_data		*init_builtin_simple_cmd(t_data *data);
+t_data		*init_builtin_cmd_redir_in(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_heredoc(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
 	// heredoc.c
 int			exec_heredoc(t_cmd_node *cmd_node);
 	// redir_in_and_hd.c
