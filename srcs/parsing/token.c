@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/16 21:43:55 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/18 15:40:57 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 			node->cmd->args[0] = ft_strdup(current->token);
 			node->cmd->cmd = ft_strdup(current->token);
 			if (current->type == TEXTERN)
-				node->type |= TEXTERN;
+				node->type |= EXTERN;
 			else
-				node->type |= TBUILTIN;
+				node->type |= BUILTIN;
 		}
 		if (current->type == TARG)
 		{
@@ -138,19 +138,19 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 			if (prev && prev->type == TRD_IN)
 			{
 				filelist_push_back(&node->file_in, ft_strdup(current->token), FILE_IN);
-				node->type = TRD_IN;
+				node->type |= REDIRECT_IN;
 			}
 			if (prev && (prev->type == TRD_OUT || prev->type == TAPPEND))
 			{
 				if (prev->type == TRD_OUT)
 				{
 					filelist_push_back(&node->file_out, ft_strdup(current->token), FILE_OUT);
-					node->type = TRD_OUT;
+					node->type |= REDIRECT_OUT;
 				}
 				else
 				{
 					filelist_push_back(&node->file_out, ft_strdup(current->token), FILE_APPEND);
-					node->type = TAPPEND;
+					node->type |= APPEND;
 				}
 			}
 		}
