@@ -44,9 +44,6 @@ int	exec(t_data *data)
 	int			node_type;
 	int			exec_out;
 
-	#include <stdio.h>
-	printf("data->cmd_node->type : %d\n", data->cmd_node->type);
-
 	if (!data || !data->cmd_node)
 		return (-2);
 	cmd_node = data->cmd_node;

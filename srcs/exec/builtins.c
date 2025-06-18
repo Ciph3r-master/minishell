@@ -24,7 +24,7 @@ int	exec_builtins(t_cmd_node *cmd_node, t_data *data)
 	if (ft_strcmp("pwd", cmd) == 0)
 		builtin_pwd();
 	else
-		printf("minishell: %s: command not found", cmd);
+		printf("minishell: %s: command not found\n", cmd);
 	return (1);
 }
 

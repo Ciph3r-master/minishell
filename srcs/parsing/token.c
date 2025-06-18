@@ -26,7 +26,7 @@ int	count_args(t_tokenlist *tl)
 			ac++;
 		current = current->next;
 	}
-	printf("AC [%d]\n", ac);
+	// printf("AC [%d]\n", ac);
 	return (ac);
 }
 
@@ -221,7 +221,7 @@ int	init_tokens(t_data *data)
 	//print_dlist(tl, false);
 	find_expand(&data->tokenlist, data->env_list);
 	merge_token(&data->tokenlist);
-	print_tokenlist(data->tokenlist, false);
+	// print_tokenlist(data->tokenlist, false);
 	set_operator(data->tokenlist);
 	set_cmds(data->tokenlist);
 	set_builtin(data->tokenlist);
@@ -229,8 +229,8 @@ int	init_tokens(t_data *data)
 	set_limiter(data->tokenlist);
 
 	set_args(data->tokenlist);
-	print_tokenlist(data->tokenlist, false);
+	// print_tokenlist(data->tokenlist, false);
 	extract_cmds(data);
-	print_cmdlist(data->cmd_node);
+	// print_cmdlist(data->cmd_node);
 	return (0);
 }
