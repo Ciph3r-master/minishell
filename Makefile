@@ -79,6 +79,7 @@ SRCS_ERROR	:=							\
 SRCS_EXEC	:=							\
 	$(DIR_EXEC)/builtins.c				\
 	$(DIR_EXEC)/create_tmp_file.c		\
+	$(DIR_EXEC)/exec_pipe.c				\
 	$(DIR_EXEC)/exec.c					\
 	$(DIR_EXEC)/extern.c				\
 	$(DIR_EXEC)/faker_builtin.c			\
