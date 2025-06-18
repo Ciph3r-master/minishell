@@ -15,12 +15,7 @@
 
 void	free_and_exit(t_data *data)
 {
-	delete_tmp_files(data);
-	if (data->env_copy)
-		free_env_copy(data->env_copy);
-	if (data->env_list)
-		free_env_list(data->env_list);
-	// free_pathnames(data);
+	free_all(data);
 	exit(EXIT_FAILURE);
 	return ;
 }

@@ -234,4 +234,7 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
+valgrind: all
+	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" ./minishell
+
 .PHONY: all clean fclean re

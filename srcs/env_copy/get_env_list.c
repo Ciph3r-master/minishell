@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   get_env_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-10 16:12:35 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-10 16:12:35 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/10 16:12:35 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/18 17:18:40 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ void	get_value_size(int *value_size, char *env_line)
 	return ;
 }
 
-//a voir avec quentin
-// est ce que je doit initialiser un "\0"
-// sinon je vais free_and_exit
+
 char	*get_env_value(char *env_line)
 {
 	char	*value;
