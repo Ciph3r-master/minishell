@@ -47,6 +47,8 @@ int	exec_pipe(t_cmd_node *cmd_node, t_data *data)
 	pid_t		*pids;
 	int			status;
 	int			i;
+	int 		j;
+	int 		last_exit_code;
 	t_cmd_node	*cur_cmd;
 
 	old_pipe[0] = -1;
@@ -79,10 +81,29 @@ int	exec_pipe(t_cmd_node *cmd_node, t_data *data)
 			}
 			if (old_pipe[1] != -1)
 				close(old_pipe[1]);
-			exec_redirections(cmd_node);
-			exec_simple_cmd(cmd_node, data);
+			exec_redirections(cur_cmd);
+			exec_simple_cmd(cur_cmd, data);
+			free_and_exit(data);
 		}
+		pids[i++] = pid;
+		if (old_pipe[0] != -1)
+			close(old_pipe[0]);
+		if (old_pipe[1] != -1)
+			close(old_pipe[1]);
+		old_pipe[0] = new_pipe[0];
+		old_pipe[1] = new_pipe[1];
+		cur_cmd = cur_cmd->next;
 	}
-
+	j = 0;
+	last_exit_code = -1;
+	while (j < i)
+	{
+		waitpid(pids[j], &status, 0);
+		if (WIFEXITED(status))
+			last_exit_code = WEXITSTATUS(status);
+		j++;
+	}
 	free(pids);
+	data->exit_status = last_exit_code;
+	return (1);
 }
