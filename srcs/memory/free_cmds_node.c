@@ -30,8 +30,8 @@ void free_cmd(t_cmd **cmd)
 	i = 0;
 	if (!cmd || !*cmd)
 		return ;
-	if ((*cmd)->path)
-		free((*cmd)->path);
+	if ((*cmd)->pathname)
+		free((*cmd)->pathname);
 	if ((*cmd)->cmd)
 		free((*cmd)->cmd);
 	if ((*cmd)->args)

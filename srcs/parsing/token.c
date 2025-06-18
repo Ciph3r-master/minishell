@@ -79,7 +79,7 @@ t_cmd *init_cmd(void)
 		return (NULL);
 	cmd->args = NULL;
 	cmd->cmd = NULL;
-	cmd->path = NULL;
+	cmd->pathname = NULL;
 	return (cmd);
 }
 

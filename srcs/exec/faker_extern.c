@@ -26,7 +26,6 @@ t_data *init_extern_simple_cmd(t_data *data)
 	cmd_node->error_code = 0;
 	cmd_node->file_in = NULL;
 	cmd_node->file_out = NULL;
-	cmd_node->delimiter = NULL;
 	cmd_node->cmd = cmd;
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
@@ -70,7 +69,6 @@ t_data *init_extern_cmd_redir_in(t_data *data)
 	cmd_node->error_code = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = NULL;
-	cmd_node->delimiter = NULL;
 	cmd_node->cmd = cmd;
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
@@ -127,7 +125,6 @@ t_data *init_extern_cmd_multi_redir_in(t_data *data)
 	cmd_node->error_code = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = NULL;
-	cmd_node->delimiter = NULL;
 	cmd_node->cmd = cmd;
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
@@ -189,7 +186,6 @@ t_data *init_extern_cmd_multi_redir_in_heredoc(t_data *data)
 	cmd_node->error_code = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = NULL;
-	cmd_node->delimiter = NULL;
 	cmd_node->cmd = cmd;
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
@@ -259,7 +255,6 @@ t_data *init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data)
 	cmd_node->error_code = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = NULL;
-	cmd_node->delimiter = NULL;
 	cmd_node->cmd = cmd;
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
@@ -337,7 +332,6 @@ t_data *init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data)
 	cmd_node->error_code = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = file_out1;
-	cmd_node->delimiter = NULL;
 	cmd_node->cmd = cmd;
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
@@ -423,7 +417,6 @@ t_data *init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *dat
 	cmd_node->error_code = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = file_out1;
-	cmd_node->delimiter = NULL;
 	cmd_node->cmd = cmd;
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
@@ -509,7 +502,6 @@ t_data *init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_da
 	cmd_node->error_code = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = file_out1;
-	cmd_node->delimiter = NULL;
 	cmd_node->cmd = cmd;
 	cmd_node->prev = NULL;
 	cmd_node->next = NULL;
