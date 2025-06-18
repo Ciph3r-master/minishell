@@ -102,7 +102,6 @@ typedef struct s_cmd_node
 	int			error_code;
 	t_filelist	*file_in;
 	t_filelist	*file_out;
-	char		*delimiter;
 	t_cmd		*cmd;
 	t_cmd_node	*prev;
 	t_cmd_node	*next;
@@ -115,6 +114,7 @@ typedef struct s_data
 	char		*line;
 	char		*old_pwd;
 	char		**env_copy;
+	t_tokenlist	*tokenlist;
 	t_env_list	*env_list;
 	t_cmd_node	*cmd_node;
 }	t_data;
@@ -129,16 +129,19 @@ t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos);
 t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos);
 t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos);
 t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos);
-void 		merge_token(t_tokenlist **tl);
-	// set_token_type.c
-	void set_operator(t_tokenlist *tl);
+void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_tokenlist *end);
+
+void merge_token(t_tokenlist **tl);
+// set_token_type.c
+void set_operator(t_tokenlist *tl);
 void	set_builtin(t_tokenlist *tl);
 void	set_cmd(t_tokenlist *tl);
 void	set_file(t_tokenlist *tl);
 void	set_limiter(t_tokenlist *tl);
 void	set_args(t_tokenlist *tl);
-//token utils
-int			is_builtin(char *word);
+void 	set_cmds(t_tokenlist *tl);
+// token utils
+int is_builtin(char *word);
 int			is_operator(char *line);
 //DLIST
 t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type);
@@ -152,6 +155,11 @@ t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype
 void		print_filelist(t_filelist *filelist, bool reverse);
 t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type);
 t_filelist	*filelist_getlast(t_filelist *filelist);
+t_cmd_node 	*cmdlist_create_node(void);
+t_cmd_node 	*cmdlist_push_front(t_cmd_node **cmdlist);
+t_cmd_node 	*cmdlist_push_back(t_cmd_node **cmdlist);
+t_cmd_node 	*cmdlist_getlast(t_cmd_node *cmdlist);
+void 		print_cmdlist(t_cmd_node *cmdlist);
 
 // builtins/
 	// pwd.c
@@ -232,9 +240,17 @@ void		free_env_copy(char **env_copy);
 void		free_env_list(t_env_list *env_list);
 	// free_pathname.c
 void		free_pathname(t_filelist *cur_file_in);
+	// free_tokens.c
+void		free_tokenlist(t_tokenlist **tl);
+	// free_cmd_node.c
+void		free_cmd_list(t_cmd_node **cmd_node);
+	//	free_utils.c
+void		free_matrix(char **split);
 
 // signals/
 	// init_signals.c
 void		init_signals(void);
+
+
 
 #endif

@@ -121,11 +121,12 @@ void	find_expand(t_tokenlist **tl, t_env_list *env)
 			tmp = current->next;
 			while (i >= 0)
 			{
-				tokenlist_insert_after(current, split_token[i], TARG);
+				tokenlist_insert_after(current, ft_strdup(split_token[i]), TARG);
 				if (i > 0)
 					tokenlist_insert_after(current, NULL, TSPACE);
 				i--;
 			}
+			free_matrix(split_token);
 			tokenlist_remove_node(tl, current);
 			current = tmp;
 		}

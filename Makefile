@@ -3,10 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
+<<<<<<< HEAD
 #    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
 #    Updated: 2025/06/17 22:12:41 by thibaud          ###   ########.fr        #
+=======
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
+#    Updated: 2025/06/17 22:58:22 by billcipher       ###   ########.fr        #
+>>>>>>> parsing
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +83,7 @@ SRCS_ENV_COPY	:=						\
 SRCS_ERROR	:=							\
 	$(DIR_ERROR)/free_and_exit.c
 
+<<<<<<< HEAD
 SRCS_EXEC	:=							\
 	$(DIR_EXEC)/builtins.c				\
 	$(DIR_EXEC)/create_tmp_file.c		\
@@ -94,6 +102,15 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_env_copy.c		\
 	$(DIR_MEMORY)/free_env_list.c		\
 	$(DIR_MEMORY)/free_pathname.c
+=======
+SRCS_MEMORY	:=						\
+	$(DIR_MEMORY)/free_all.c		\
+	$(DIR_MEMORY)/free_env_list.c	\
+	$(DIR_MEMORY)/free_env_copy.c	\
+	$(DIR_MEMORY)/free_tokens.c		\
+	$(DIR_MEMORY)/free_cmds_node.c	\
+	$(DIR_MEMORY)/free_utils.c	\
+>>>>>>> parsing
 
 SRCS_PARSING :=						\
 	$(DIR_PARSING)/quotes.c 		\
@@ -103,9 +120,16 @@ SRCS_PARSING :=						\
 	$(DIR_PARSING)/extract_token.c	\
 	$(DIR_PARSING)/set_token_type.c	\
 
+<<<<<<< HEAD
 SRCS_PARSING_UTILS :=				  	\
 	$(DIR_PARSING_UTILS)/tokendlist.c	\
 	$(DIR_PARSING_UTILS)/filedlist.c
+=======
+SRCS_PARSING_UTILS :=				  \
+	$(DIR_PARSING_UTILS)/tokendlist.c \
+	$(DIR_PARSING_UTILS)/filedlist.c  \
+	$(DIR_PARSING_UTILS)/cmddlist.c  \
+>>>>>>> parsing
 
 SRCS_SIGNALS :=				  			\
 	$(DIR_SIGNALS)/init_signals.c

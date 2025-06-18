@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/17 22:59:16 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/17 23:05:04 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "minishell.h"
+#include <stdlib.h>
 
 int	main(int argc, char **argv, char **env)
 {
@@ -24,24 +25,22 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	init_signals();
 	init_data(&data, env);
-	// while (1)
-	// {
-	// 	data.line = readline("minishell> ");
-	// 	if (!data.line)
-	// 	{
-	// 		write(1, "exit\n", 5);
-	// 		rl_clear_history();
-	// 		free_and_exit(&data);
-	// 	}
-	// 	add_history(data.line);
-	// 	printf("\n\n=== pars ===\n\n");
-	// 	init_tokens(&data);
-		printf("\n\n=== faker ===\n\n");
-		init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(&data);
-		printf("\n\n=== exec ===\n\n");
+	while (1)
+	{
+		free_cmd_list(&data.cmd_node);
+		free_tokenlist(&data.tokenlist);
+		data.line = readline("minishell> ");
+		if (!data.line)
+		{
+			write(1, "exit\n", 5);
+			free_and_exit(&data);
+		}
+		add_history(data.line);
+		init_tokens(&data);
+		free(data.line);
 		exec(&data);
-	// }
-	// jamais execute
+	}
+	rl_clear_history();
 	free_all(&data);
 	return (0);
 }
