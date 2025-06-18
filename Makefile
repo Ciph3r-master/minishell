@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
+#    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/17 22:58:22 by billcipher       ###   ########.fr        #
+#    Updated: 2025/06/18 17:07:30 by qutruche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -198,5 +198,8 @@ re:
 	@echo "$(COLOR_GREEN)==> Rebuilding $(NAME)...$(COLOR_RESET)"
 	$(MAKE) fclean
 	$(MAKE) all
+
+valgrind: all
+	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" ./minishell
 
 .PHONY: all clean fclean re

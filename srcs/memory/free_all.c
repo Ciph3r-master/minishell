@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:03:29 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 22:30:33 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/18 17:13:03 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	free_all(t_data *data)
 		free_env_list(data->env_list);
 	if (data->tokenlist)
 		free_tokenlist(&data->tokenlist);
+	if (data->cmd_node)
+		free_cmd_list(&data->cmd_node);
 	exit(EXIT_SUCCESS);
 	return ;
 }

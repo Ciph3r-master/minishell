@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/17 23:05:04 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/18 17:11:54 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ int	main(int argc, char **argv, char **env)
 		if (!data.line)
 		{
 			write(1, "exit\n", 5);
+			rl_clear_history();
 			free_and_exit(&data);
 		}
 		add_history(data.line);
 		init_tokens(&data);
 		free(data.line);
 	}
-	rl_clear_history();
-	free_all(&data);
 	return (0);
 }

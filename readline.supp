@@ -1,15 +1,6 @@
 {
-   readline
+   Readline_All_Functions
    Memcheck:Leak
-   fun:malloc
-   fun:__libc_malloc
-   obj:/usr/lib/libreadline.so*
-}
-
-{
-   readline_cache
-   Memcheck:Leak
-   fun:malloc
-   fun:__libc_malloc
-   obj:/usr/lib/libhistory.so*
+   ...
+   obj:*/libreadline.so*
 }
