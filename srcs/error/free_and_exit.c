@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   free_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 16:55:25 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/05/28 01:01:01 by thibaud          ###   ########.fr       */
+/*   Created: 2025/06/11 15:38:08 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/18 19:14:27 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include "minishell.h"
 
-int	builtin_pwd(void)
+void	free_and_exit(t_data *data)
 {
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-	{
-		perror("pwd");
-		return (1);
-	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return (0);
+	free_all(data);
+	exit(EXIT_FAILURE);
+	return ;
 }

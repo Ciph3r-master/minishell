@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-10 11:58:30 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/17 22:29:05 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ########## INIT CMD_NODE ##############################
-
-// fonction servant a imiter le pasring en creant des fausse
-// donne en liste chainee qui vont etre envoyé a ma fonction exec
-// comme si le parsing avais envoyé ces données
-t_cmd_node	*cmd_node_list(t_cmd_node *cmd_node)
+int	pipeline_has_heredoc(t_cmd_node *cmd_node)
 {
-	return (cmd_node);
-}
+	t_cmd_node	*cur_cmd_node;
+	int			node_type;
 
-// ########## EXEC HEREDOC ##############################
-
-int	exec_heredoc(t_cmd_node *cmd_node)
-{
-
+	cur_cmd_node = cmd_node;
+	node_type = cmd_node->type;
+	while (cur_cmd_node)
+	{
+		if (HEREDOC & node_type)
+			return (1);
+		cur_cmd_node = cur_cmd_node->next;
+	}
+	return (0);
 }
 
 // ########## EXEC ##############################
@@ -39,42 +38,60 @@ int	exec_heredoc(t_cmd_node *cmd_node)
 // executer les pipe si il y en a, et donc creer des fork pour chaque pipe, avec un old et new_pipe
 // -> a l'interieur de chaque cmd executer les redir_in a l'interieur
 // -> a l'interieur de chaque cmd executer les redir_out a l'interieur
-int	exec(t_cmd_node *cmd_node)
+int	exec(t_data *data)
 {
-	int	node_type;
+	t_cmd_node	*cmd_node;
+	int			node_type;
+	int			exec_out;
 
-	node_type = INT_MIN;
-	// cette fonction va parcourir tous les node
-	// pour verifier si il on des heredoc, si oui on les cree
-	// puis on les execute, avec la gestion des signaux
-	// donc ouvrir un readline qui attend le oef present dans la structure
-	// on les execute un a un jusqu'a que la file_list soit vide
-	exec_heredoc(cmd_node);
+	if (!data || !data->cmd_node)
+		return (-2);
+	cmd_node = data->cmd_node;
+	node_type = cmd_node->type;
+	exec_out = 0;
+	if (pipeline_has_heredoc(cmd_node))
+	{
+		if (-1 == exec_heredoc(cmd_node))
+			free_and_exit(data);
+	}
 	if (!cmd_node->next)
 	{
 		if (BUILTIN & node_type)
+		{
 			// va permettre d'executer une commande en builtin
 			// donc on va juste aller chercher la commande
 			// dans un dossier builtin et l'executer
 			// a l'interieur on va aussi executer
 			// les redir_in puis les redir_out
-			// ??? apres l'execution on dois rendre les sortie classique ???
-			exec_simple_cmd_builtin(cmd_node);
+			// apres l'execution on dois rendre les sortie classique
+			exec_out = exec_simple_cmd_builtins(cmd_node, data);
+			if (exec_out == -1)
+				free_and_exit(data);
+			if (exec_out == -2)
+				return (-2);
+		}
 		if (EXTERN & node_type)
-			// va permettre d'executer une commande en extern
-			// on va creer un fork simple pour simplement executer
-			// avant d'executer on va faire les redir_in, puis les redir_out
-			exec_simple_cmd_extern(cmd_node);
+		{
+			// 	// va permettre d'executer une commande en extern
+			// 	// on va creer un fork simple pour simplement executer
+			// 	// avant d'executer on va faire les redir_in, puis les redir_out
+			exec_out = exec_simple_cmd_extern(cmd_node, data);
+			if (exec_out == -1)
+				free_and_exit(data);
+			if (exec_out == -2)
+				return (-2);
+		}
 	}
-	else if (cmd_node->next)
-	{
-		// on va dans une boucle, executer chaque commande suivi d'un pipe
-		// on va faire les redirection des pipe avant celle
-		// des redir_in et de redir_out, pour chaque commande
-		// puis on fait les redir_in et out, ainsi on a les redir qui prennent
-		// la priorité sur les pipes
-		execute_pipe(cmd_node);
-	}
+	// else if (cmd_node->next)
+	// {
+	// 	// on va dans une boucle, executer chaque commande suivi d'un pipe
+	// 	// on va faire les redirection des pipe avant celle
+	// 	// des redir_in et de redir_out, pour chaque commande
+	// 	// puis on fait les redir_in et out, ainsi on a les redir qui prennent
+	// 	// la priorité sur les pipes
+	// 	execute_pipe(cmd_node);
+	// }
+	return (0);
 }
 
 // fonction servant a imiter le pasring en creant des fausse
@@ -94,10 +111,11 @@ int	exec(t_cmd_node *cmd_node)
 //				ctrl D : - bash: warning: here-document at line 133 delimited by end-of-file (wanted `EOF') --------> printf(%s) le delimiter
 //		 - on ferme le fichier temp
 //		 - on execute la suite
-int	main(int argc, char **argv, char **env)
-{
-	t_cmd_node	*cmd_node;
 
-	cmd_node = init_cmd_node_list(cmd_node);
-	exec(cmd_node);
-}
+// int	main(int argc, char **argv, char **env)
+// {
+// 	t_cmd_node	*cmd_node;
+
+// 	cmd_node = init_cmd_node_list(cmd_node);
+// 	exec(cmd_node);
+// }

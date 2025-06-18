@@ -6,7 +6,7 @@
 #    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/18 17:07:30 by qutruche         ###   ########.fr        #
+#    Updated: 2025/06/18 19:14:55 by qutruche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,10 +45,12 @@ A_LIBFT = ./libft/libft.a
 # === Directories ===
 
 DIR_SRCS			:= srcs
+DIR_BUILTINS		:= $(DIR_SRCS)/builtins
 DIR_CORE			:= $(DIR_SRCS)/core
 DIR_DATA			:= $(DIR_SRCS)/data
 DIR_ENV_COPY		:= $(DIR_SRCS)/env_copy
 DIR_ERROR			:= $(DIR_SRCS)/error
+DIR_EXEC			:= $(DIR_SRCS)/exec
 DIR_MEMORY			:= $(DIR_SRCS)/memory
 DIR_PARSING  		:= $(DIR_SRCS)/parsing
 DIR_PARSING_UTILS	:= $(DIR_SRCS)/parsing_utils
@@ -57,69 +59,92 @@ DIR_OBJS			:= .objs
 
 # === Source Files ===
 
-SRCS_CORE	:=				\
+SRCS_BUILTINS	:=						\
+	$(DIR_BUILTINS)/pwd.c
+
+SRCS_CORE	:=							\
 	$(DIR_CORE)/minishell.c
 
-SRCS_DATA	:=				\
+SRCS_DATA	:=							\
 	$(DIR_DATA)/init_data.c
 
-SRCS_ENV_COPY	:=					\
-	$(DIR_ENV_COPY)/env_list.c		\
-	$(DIR_ENV_COPY)/get_env_copy.c	\
+SRCS_ENV_COPY	:=						\
+	$(DIR_ENV_COPY)/env_list.c			\
+	$(DIR_ENV_COPY)/get_env_copy.c		\
 	$(DIR_ENV_COPY)/get_env_list.c
 
-SRCS_ERROR	:=						\
-	$(DIR_ERROR)/error.c			\
+SRCS_ERROR	:=							\
+	$(DIR_ERROR)/free_and_exit.c
 
-SRCS_MEMORY	:=						\
-	$(DIR_MEMORY)/free_all.c		\
-	$(DIR_MEMORY)/free_env_list.c	\
-	$(DIR_MEMORY)/free_env_copy.c	\
-	$(DIR_MEMORY)/free_tokens.c		\
-	$(DIR_MEMORY)/free_cmds_node.c	\
-	$(DIR_MEMORY)/free_utils.c	\
+SRCS_EXEC	:=							\
+	$(DIR_EXEC)/builtins.c				\
+	$(DIR_EXEC)/create_tmp_file.c		\
+	$(DIR_EXEC)/exec.c					\
+	$(DIR_EXEC)/extern.c				\
+	$(DIR_EXEC)/faker_builtin.c			\
+	$(DIR_EXEC)/faker_extern.c			\
+	$(DIR_EXEC)/heredoc.c				\
+	$(DIR_EXEC)/redir_in_and_hd.c		\
+	$(DIR_EXEC)/redir_out_and_append.c	\
+	$(DIR_EXEC)/redirections.c
 
-SRCS_PARSING :=						\
-	$(DIR_PARSING)/quotes.c 		\
-	$(DIR_PARSING)/token.c  		\
-	$(DIR_PARSING)/token_utils.c	\
-	$(DIR_PARSING)/expand.c			\
-	$(DIR_PARSING)/extract_token.c	\
-	$(DIR_PARSING)/set_token_type.c	\
+SRCS_MEMORY	:=							\
+	$(DIR_MEMORY)/delete_tmp_files.c	\
+	$(DIR_MEMORY)/free_all.c			\
+	$(DIR_MEMORY)/free_env_list.c		\
+	$(DIR_MEMORY)/free_env_copy.c		\
+	$(DIR_MEMORY)/free_pathname.c		\
+	$(DIR_MEMORY)/free_tokens.c			\
+	$(DIR_MEMORY)/free_cmds_node.c		\
+	$(DIR_MEMORY)/free_utils.c			\
+
+SRCS_PARSING :=							\
+	$(DIR_PARSING)/quotes.c 			\
+	$(DIR_PARSING)/token.c  			\
+	$(DIR_PARSING)/token_utils.c		\
+	$(DIR_PARSING)/expand.c				\
+	$(DIR_PARSING)/extract_token.c		\
+	$(DIR_PARSING)/set_token_type.c		\
 
 SRCS_PARSING_UTILS :=				  \
 	$(DIR_PARSING_UTILS)/tokendlist.c \
 	$(DIR_PARSING_UTILS)/filedlist.c  \
 	$(DIR_PARSING_UTILS)/cmddlist.c  \
 
-SRCS_SIGNALS :=				  				\
+SRCS_SIGNALS :=				  			\
 	$(DIR_SIGNALS)/init_signals.c
 
-SRCS := $(SRCS_CORE) 			\
-        $(SRCS_DATA)			\
-        $(SRCS_ENV_COPY)		\
-        $(SRCS_ERROR) 			\
-        $(SRCS_MEMORY) 			\
-        $(SRCS_PARSING) 		\
-        $(SRCS_PARSING_UTILS)	\
+SRCS := $(SRCS_BUILTINS) 				\
+		$(SRCS_CORE) 					\
+        $(SRCS_DATA)					\
+        $(SRCS_ENV_COPY)				\
+        $(SRCS_ERROR) 					\
+        $(SRCS_EXEC) 					\
+        $(SRCS_MEMORY) 					\
+        $(SRCS_PARSING) 				\
+        $(SRCS_PARSING_UTILS)			\
         $(SRCS_SIGNALS)
 
 
 # === Object Files ===
 
+OBJS_BUILTINS		:= $(SRCS_BUILTINS:$(DIR_BUILTINS)/%.c=$(DIR_OBJS)/%.o)
 OBJS_CORE			:= $(SRCS_CORE:$(DIR_CORE)/%.c=$(DIR_OBJS)/%.o)
 OBJS_DATA			:= $(SRCS_DATA:$(DIR_DATA)/%.c=$(DIR_OBJS)/%.o)
 OBJS_ENV_COPY		:= $(SRCS_ENV_COPY:$(DIR_ENV_COPY)/%.c=$(DIR_OBJS)/%.o)
 OBJS_ERROR			:= $(SRCS_ERROR:$(DIR_ERROR)/%.c=$(DIR_OBJS)/%.o)
+OBJS_EXEC			:= $(SRCS_EXEC:$(DIR_EXEC)/%.c=$(DIR_OBJS)/%.o)
 OBJS_MEMORY			:= $(SRCS_MEMORY:$(DIR_MEMORY)/%.c=$(DIR_OBJS)/%.o)
 OBJS_PARSING 		:= $(SRCS_PARSING:$(DIR_PARSING)/%.c=$(DIR_OBJS)/%.o)
 OBJS_PARSING_UTILS	:= $(SRCS_PARSING_UTILS:$(DIR_PARSING_UTILS)/%.c=$(DIR_OBJS)/%.o)
 OBJS_SIGNALS		:= $(SRCS_SIGNALS:$(DIR_SIGNALS)/%.c=$(DIR_OBJS)/%.o)
 
-OBJS := $(OBJS_CORE)			\
+OBJS := $(OBJS_BUILTINS)		\
+		$(OBJS_CORE)			\
         $(OBJS_DATA)			\
         $(OBJS_ENV_COPY)		\
         $(OBJS_ERROR) 			\
+        $(OBJS_EXEC) 			\
         $(OBJS_MEMORY)			\
         $(OBJS_PARSING)			\
         $(OBJS_PARSING_UTILS)	\
@@ -138,6 +163,11 @@ lib:
 	@echo "$(COLOR_GREEN)==> Compilation de libft...$(COLOR_RESET)"
 	$(MAKE) -C $(DIR_LIBFT)
 
+$(DIR_OBJS)/%.o: $(DIR_BUILTINS)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
 $(DIR_OBJS)/%.o: $(DIR_CORE)/%.c
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
@@ -154,6 +184,11 @@ $(DIR_OBJS)/%.o: $(DIR_ENV_COPY)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(DIR_OBJS)/%.o: $(DIR_ERROR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(DIR_OBJS)/%.o: $(DIR_EXEC)/%.c
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@

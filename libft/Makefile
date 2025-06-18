@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
+#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 22:04:08 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/14 19:22:56 by qutruche         ###   ########.fr        #
+#    Updated: 2025/06/16 21:39:42 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS		:= 					\
 	ft_bzero.c					\
 	ft_calloc.c					\
 	ft_free_tab_char_all.c		\
+	ft_is_id.c		\
 	ft_is_white_space.c			\
 	ft_isalnum.c				\
 	ft_isalpha.c				\

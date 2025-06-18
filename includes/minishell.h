@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 22:57:21 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/17 22:28:59 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
-	char	*path;
+	char	*pathname;
 }	t_cmd;
 
 typedef struct s_filelist	t_filelist;
@@ -76,6 +76,7 @@ typedef struct s_filelist
 {
 	int					fd;
 	char				*filename;
+	char				*pathname;
 	char				*limiter;
 	t_filetype			type;
 	t_filelist			*next;
@@ -108,6 +109,7 @@ typedef struct s_cmd_node
 
 typedef struct s_data
 {
+	int			exit_status;
 	char		*pwd;
 	char		*line;
 	char		*old_pwd;
@@ -159,8 +161,12 @@ t_cmd_node 	*cmdlist_push_back(t_cmd_node **cmdlist);
 t_cmd_node 	*cmdlist_getlast(t_cmd_node *cmdlist);
 void 		print_cmdlist(t_cmd_node *cmdlist);
 
-	// expand
-void find_expand(t_tokenlist **tl, t_env_list *env);
+// builtins/
+	// pwd.c
+int		builtin_pwd(void);
+
+//expand
+void	find_expand(t_tokenlist **tl, t_env_list *env);
 
 // data/
 	//init_data.c
@@ -180,18 +186,71 @@ t_env_list	*get_env_list(t_data *data, char **env);
 char		**get_env_copy(t_env_list *env_list);
 void		print_env_copy(char **env_copy);
 
-// error
+// error/
+	// free_and_exit.c
 void		free_and_exit(t_data *data);
 
-// memory/
-void		free_all(t_data *data);
-void		free_env_list(t_env_list *env_list);
-void		free_env_copy(char **env_copy);
-void 		free_tokenlist(t_tokenlist **tl);
-void 		free_cmd_list(t_cmd_node **cmd_node);
-void 		free_matrix(char **split);
+// exec/
+	// builtins.c
+int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
+	// create_tmp_file.c
+int			create_tmp_file(t_filelist *cur_file_in);
+	// exec.c
+int			exec(t_data *data);
+	// extern.c
+int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
+int			cmd_is_directory(t_cmd_node *cmd_node);
+	// faker_extern.c
+t_data		*init_extern_simple_cmd(t_data *data);
+t_data		*init_extern_cmd_redir_in(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_heredoc(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
+	// faker_builtin.c
+t_data		*init_builtin_simple_cmd(t_data *data);
+t_data		*init_builtin_cmd_redir_in(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_heredoc(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
+t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
+	// heredoc.c
+int			exec_heredoc(t_cmd_node *cmd_node);
+	// redir_in_and_hd.c
+int			exec_redir_in_and_hd(t_filelist	*cur_file_in);
+	// redir_out_and_append.c
+int			exec_redir_out_and_append(t_filelist *file_in);
+	// redirections.c
+int			save_stdin_stdout(int *saved_stdin, int *saved_stdout);
+int			reset_stdin_stdout(int saved_stdin, int saved_stdout);
+int			exec_redirections(t_cmd_node *cmd_node);
 
-	// signals/
-	void init_signals(void);
+// memory/
+	// delete_tmp_file.c
+void		delete_tmp_files(t_data *data);
+	// free_all.c
+void		free_all(t_data *data);
+	// free_env_copy.c
+void		free_env_copy(char **env_copy);
+	// free_env_list.c
+void		free_env_list(t_env_list *env_list);
+	// free_pathname.c
+void		free_pathname(t_filelist *cur_file_in);
+	// free_tokens.c
+void		free_tokenlist(t_tokenlist **tl);
+	// free_cmd_node.c
+void		free_cmd_list(t_cmd_node **cmd_node);
+	//	free_utils.c
+void		free_matrix(char **split);
+
+// signals/
+	// init_signals.c
+void		init_signals(void);
+
+
 
 #endif

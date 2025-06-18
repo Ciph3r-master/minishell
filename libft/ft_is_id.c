@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_is_id.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 15:38:08 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/18 17:12:12 by qutruche         ###   ########.fr       */
+/*   Created: 2025/06/13 02:17:13 by thibaud           #+#    #+#             */
+/*   Updated: 2025/06/13 02:19:59 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "minishell.h"
+#include "libft.h"
 
-void	free_and_exit(t_data *data)
+int	ft_is_id(int c)
 {
-	free_all(data);
-	exit(EXIT_FAILURE);
-	return ;
+	if ((c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9'))
+		return (1);
+	return (0);
 }

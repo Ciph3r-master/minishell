@@ -15,6 +15,7 @@
 
 void	free_all(t_data *data)
 {
+	delete_tmp_files(data);
 	if (data->env_copy)
 		free_env_copy(data->env_copy);
 	if (data->env_list)

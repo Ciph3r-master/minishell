@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
 /*   Updated: 2025/06/18 16:07:36 by qutruche         ###   ########.fr       */
@@ -26,7 +26,7 @@ int	count_args(t_tokenlist *tl)
 			ac++;
 		current = current->next;
 	}
-	printf("AC [%d]\n", ac);
+	// printf("AC [%d]\n", ac);
 	return (ac);
 }
 
@@ -51,6 +51,9 @@ void	print_cmd(t_cmd *cmd)
 	{
 		printf("  Aucun argument.\n");
 	}
+
+	if (cmd && cmd->pathname)
+		printf("Chemin : %s\n", cmd->pathname);
 }
 
 //void	init_cmd_node(t_data *data)
@@ -76,7 +79,7 @@ t_cmd *init_cmd(void)
 		return (NULL);
 	cmd->args = NULL;
 	cmd->cmd = NULL;
-	cmd->path = NULL;
+	cmd->pathname = NULL;
 	return (cmd);
 }
 
@@ -120,13 +123,13 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 		{
 			node->cmd->args[ac] = ft_strdup(current->token);
 			ac++;
-		}	
+		}
 		if (current->type == TLIMITER)
 		{
-			filelist_push_back(&node->file_in, ft_strdup("tmpname"), FILE_HD);
+			filelist_push_back(&node->file_in, ft_strdup("heredoc_"), FILE_HD);
 			filelist_getlast(node->file_in)->limiter = ft_strdup(current->token);
 			node->type |= HEREDOC;
-		}	
+		}
 		if (current->type == TFILE)
 		{
 			prev = current->prev;
@@ -192,7 +195,7 @@ t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
 	extract_space(tl, line, pos);
 	if (!line[*pos])
 		return (NULL);
-	
+
 	if (is_operator(&line[*pos]))
 		return (extract_operator(tl, line, pos));
 	if (line[*pos] == '"' || line[*pos] == '\'')
@@ -203,8 +206,8 @@ t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl)
 
 int	init_tokens(t_data *data)
 {
-	int		pos;
-	t_tokenlist *tmp;
+	int			pos;
+	t_tokenlist	*tmp;
 
 	pos = 0;
 	data->tokenlist = NULL;
@@ -218,7 +221,7 @@ int	init_tokens(t_data *data)
 	//print_dlist(tl, false);
 	find_expand(&data->tokenlist, data->env_list);
 	merge_token(&data->tokenlist);
-	print_tokenlist(data->tokenlist, false);
+	// print_tokenlist(data->tokenlist, false);
 	set_operator(data->tokenlist);
 	set_cmds(data->tokenlist);
 	set_builtin(data->tokenlist);
@@ -226,8 +229,8 @@ int	init_tokens(t_data *data)
 	set_limiter(data->tokenlist);
 
 	set_args(data->tokenlist);
-	print_tokenlist(data->tokenlist, false);
+	// print_tokenlist(data->tokenlist, false);
 	extract_cmds(data);
-	print_cmdlist(data->cmd_node);
+	// print_cmdlist(data->cmd_node);
 	return (0);
 }

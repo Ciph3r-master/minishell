@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	// init_signals();
+	init_signals();
 	init_data(&data, env);
 	while (1)
 	{
@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(data.line);
 		init_tokens(&data);
 		free(data.line);
+		exec(&data);
 	}
 	return (0);
 }
