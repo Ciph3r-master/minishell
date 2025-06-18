@@ -74,6 +74,8 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 
 	pathname = cmd_node->cmd->pathname;
 	args = cmd_node->cmd->args;
+		// for (int i = 0; args[i]; i++)
+		// 	printf("args[%d] = %s\n", i, args[i]);
 	pid = fork();
 	if (-1 == pid)
 		return (-1);
