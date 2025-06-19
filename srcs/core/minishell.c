@@ -12,10 +12,10 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "minishell.h"
 #include <stdlib.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include "minishell.h"
 
 int	main(int argc, char **argv, char **env)
 {
