@@ -1,3 +1,5 @@
 minishell> ls -la | cat
 args[0] = cat
 args[0] = ls
+
+Si command not found et redirect : boucle infini de la mort

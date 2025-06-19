@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/19 17:07:19 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:21:38 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	count_args(t_tokenlist *tl)
 			ac++;
 		current = current->next;
 	}
-	// printf("AC [%d]\n", ac);
 	return (ac);
 }
 
@@ -56,19 +55,6 @@ void	print_cmd(t_cmd *cmd)
 		printf("Chemin : %s\n", cmd->pathname);
 }
 
-//void	init_cmd_node(t_data *data)
-//{
-//	data->cmd_node = malloc(sizeof(t_cmd_node));
-//	//TODO EXIT FREE
-//	if (!data->cmd_node)
-//		return ;
-//	data->cmd_node->cmd = NULL;
-//	data->cmd_node->file_in = NULL;
-//	data->cmd_node->file_out = NULL;
-//	data->cmd_node->fd_in = -1;
-//	data->cmd_node->fd_out = -1;
-//}
-
 t_cmd *init_cmd(void)
 {
 	t_cmd	*cmd;
@@ -95,10 +81,61 @@ void	init_args(t_tokenlist *start, t_cmd *cmd)
 	cmd->args = args;
 }
 
+void	cmd_node_add_redir(t_cmd_node *node, t_tokenlist *current)
+{
+	t_tokenlist	*prev;
+	
+	prev = current->prev;
+	if (prev->prev && prev->type == TSPACE)
+		prev = prev->prev;
+	if (prev && prev->type == TRD_IN)
+	{
+		filelist_push_back(&node->file_in, ft_strdup(current->token), FILE_IN);
+		node->type |= REDIRECT_IN;
+	}
+	if (prev && (prev->type == TRD_OUT || prev->type == TAPPEND))
+	{
+		if (prev->type == TRD_OUT)
+		{
+			filelist_push_back(&node->file_out, ft_strdup(current->token), FILE_OUT);
+			node->type |= REDIRECT_OUT;
+		}
+		else
+		{
+			filelist_push_back(&node->file_out, ft_strdup(current->token), FILE_APPEND);
+			node->type |= APPEND;
+		}
+	}
+}
+
+void	cmd_node_set_cmd(t_tokenlist *current, t_cmd_node *node, int *ac)
+{
+	if (current->type == TEXTERN || current->type == TBUILTIN)
+	{
+		node->cmd->args[0] = ft_strdup(current->token);
+		node->cmd->cmd = ft_strdup(current->token);
+		if (current->type == TEXTERN)
+			node->type |= EXTERN;
+		else
+			node->type |= BUILTIN;
+	}
+	if (current->type == TARG)
+	{
+		node->cmd->args[*ac] = ft_strdup(current->token);
+		(*ac)++;
+	}
+}
+
+void	cmd_node_set_hd(t_cmd_node *node, t_tokenlist *current)
+{
+	filelist_push_back(&node->file_in, ft_strdup("heredoc_"), FILE_HD);
+	filelist_getlast(node->file_in)->limiter = ft_strdup(current->token);
+	node->type |= HEREDOC;
+}
+
 void extract_cmd_node(t_cmd_node *node, t_tokenlist *start, t_tokenlist *end)
 {
 	t_tokenlist	*current;
-	t_tokenlist	*prev;
 	int			ac;
 
 	node->cmd = init_cmd();
@@ -107,55 +144,13 @@ void extract_cmd_node(t_cmd_node *node, t_tokenlist *start, t_tokenlist *end)
 	ac = 1;
 	while (current && current != end)
 	{
-		if (current->type == TEXTERN || current->type == TBUILTIN)
-		{
-			printf("Argument count [%s] %d\n",  current->token, count_args(start));
-			node->cmd->args[0] = ft_strdup(current->token);
-			node->cmd->cmd = ft_strdup(current->token);
-			if (current->type == TEXTERN)
-				node->type |= EXTERN;
-			else
-				node->type |= BUILTIN;
-		}
-		if (current->type == TARG)
-		{
-			node->cmd->args[ac] = ft_strdup(current->token);
-			printf("Argument %s %d\n", node->cmd->args[ac], ac);
-			ac++;
-		}
+		cmd_node_set_cmd(current, node, &ac);
 		if (current->type == TLIMITER)
-		{
-			filelist_push_back(&node->file_in, ft_strdup("heredoc_"), FILE_HD);
-			filelist_getlast(node->file_in)->limiter = ft_strdup(current->token);
-			node->type |= HEREDOC;
-		}
+			cmd_node_set_hd(node, current);
 		if (current->type == TFILE)
-		{
-			prev = current->prev;
-			if (current->prev && current->prev->type == TSPACE)
-				prev = current->prev->prev;
-			if (prev && prev->type == TRD_IN)
-			{
-				filelist_push_back(&node->file_in, ft_strdup(current->token), FILE_IN);
-				node->type |= REDIRECT_IN;
-			}
-			if (prev && (prev->type == TRD_OUT || prev->type == TAPPEND))
-			{
-				if (prev->type == TRD_OUT)
-				{
-					filelist_push_back(&node->file_out, ft_strdup(current->token), FILE_OUT);
-					node->type |= REDIRECT_OUT;
-				}
-				else
-				{
-					filelist_push_back(&node->file_out, ft_strdup(current->token), FILE_APPEND);
-					node->type |= APPEND;
-				}
-			}
-		}
+			cmd_node_add_redir(node, current);
 		current = current->next;
 	}
-	printf("Set Argument NULL %d\n", ac);
 	node->cmd->args[ac] = NULL;
 }
 
@@ -217,20 +212,14 @@ int	init_tokens(t_data *data)
 			break ;
 		data->tokenlist = tmp;
 	}
-	//print_dlist(tl, false);
 	find_expand(&data->tokenlist, data->env_list);
 	merge_token(&data->tokenlist);
-	// print_tokenlist(data->tokenlist, false);
 	set_operator(data->tokenlist);
 	print_tokenlist(data->tokenlist, false);
 	if (is_invalid_redir(data->tokenlist))
-	{
 		return (1);
-	}
 	if (is_invalid_pipe(data->tokenlist))
-	{
 		return (1);
-	}
 	set_file(data->tokenlist);
 	print_tokenlist(data->tokenlist, false);
 	set_cmds(data->tokenlist);
