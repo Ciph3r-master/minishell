@@ -1,3 +1,7 @@
 minishell> ls -la | cat
 args[0] = cat
 args[0] = ls
+
+is_directory
+
+heredoc sans tmp

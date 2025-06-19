@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extern.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>             +#+  +:+       +#+        */
+/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/15 23:47:00 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/16 20:38:30 by thibaud          ###   ########.fr       */
+/*   Created: 2025-06-19 17:28:27 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-06-19 17:28:27 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "minishell.h"
 #include "libft.h"
 
-int get_child_exit_status(t_data *data)
+int	get_child_exit_status(t_data *data)
 {
 	int		status;
 	int		sig;
@@ -32,9 +32,7 @@ int get_child_exit_status(t_data *data)
 			write(STDOUT_FILENO, "\n", 1);
 	}
 	else if (WIFEXITED(status))
-	{
 		data->exit_status = WEXITSTATUS(status);
-	}
 	signal(SIGINT, sigint_handler);
 	return (1);
 }
