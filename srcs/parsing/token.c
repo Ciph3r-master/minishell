@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/19 03:50:59 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/19 17:07:19 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,12 @@ void	init_args(t_tokenlist *start, t_cmd *cmd)
 	args = malloc(sizeof(char *) * (count_args(start) + 2));
 	//FREE EXIT
 	if (!args)
-	{
-		args = NULL;
 		return ;
-	}
 	args[0] = NULL;
 	cmd->args = args;
 }
 
-void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_tokenlist *end)
+void extract_cmd_node(t_cmd_node *node, t_tokenlist *start, t_tokenlist *end)
 {
 	t_tokenlist	*current;
 	t_tokenlist	*prev;
@@ -112,6 +109,7 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 	{
 		if (current->type == TEXTERN || current->type == TBUILTIN)
 		{
+			printf("Argument count [%s] %d\n",  current->token, count_args(start));
 			node->cmd->args[0] = ft_strdup(current->token);
 			node->cmd->cmd = ft_strdup(current->token);
 			if (current->type == TEXTERN)
@@ -122,6 +120,7 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 		if (current->type == TARG)
 		{
 			node->cmd->args[ac] = ft_strdup(current->token);
+			printf("Argument %s %d\n", node->cmd->args[ac], ac);
 			ac++;
 		}
 		if (current->type == TLIMITER)
@@ -156,8 +155,8 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 		}
 		current = current->next;
 	}
-	if (count_args(start) != 0)
-		data->cmd_node->cmd->args[ac] = NULL;
+	printf("Set Argument NULL %d\n", ac);
+	node->cmd->args[ac] = NULL;
 }
 
 void	extract_cmds(t_data *data)
@@ -178,7 +177,7 @@ void	extract_cmds(t_data *data)
 			new_node = cmdlist_getlast(data->cmd_node);
 			if (current->type == TPIPE)
 				cmd_end = current;
-			extract_cmd_node(data, new_node, cmd_start, cmd_end);
+			extract_cmd_node(new_node, cmd_start, cmd_end);
 			if (current->type == TPIPE)
 				current = current->next;
 			else if (current->next == NULL)
