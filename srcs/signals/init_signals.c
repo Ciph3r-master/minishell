@@ -18,7 +18,7 @@
 #include <unistd.h>
 #include "minishell.h"
 
-static void	handler(int sig)
+void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -35,7 +35,7 @@ void	init_signals(void)
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = handler;
+	sa.sa_handler = sigint_handler;
 	if (sigaction(SIGINT, &sa, NULL) < 0)
 		exit(EXIT_FAILURE);
 	sa.sa_handler = SIG_IGN;

@@ -17,79 +17,48 @@
 #include "minishell.h"
 #include "libft.h"
 
-int	find_path_with_access(char **paths, char **pathname)
+int get_child_exit_status(t_data *data)
 {
-	int	i;
+	int		status;
+	int		sig;
 
-	i = 0;
-	while (paths[i])
+	signal(SIGINT, SIG_IGN);
+	wait(&status);
+	if (WIFSIGNALED(status))
 	{
-		if (0 == access(paths[i], X_OK))
-		{
-			*pathname = ft_strdup(paths[i]);
-			if (NULL == *pathname)
-			{
-				ft_free_char_tab_all(paths);
-				return (-1);
-			}
-			return (1);
-		}
-		i++;
+		sig = WTERMSIG(status);
+		data->exit_status = 128 + sig;
+		if (sig == SIGINT)
+			write(STDOUT_FILENO, "\n", 1);
 	}
-	return (-2);
-}
-
-int	get_cmd_path_name(t_cmd_node *cmd_node)
-{
-	char	*pathname;
-	char	*path;
-	char	**paths;
-	int		exec_out;
-
-	pathname = NULL;
-	path = getenv("PATH");
-	if (NULL == path)
-		return (-1);
-	paths = ft_split_set(path, ":");
-	if (ft_add_string_to_strings(paths, "/") == NULL)
-		return (-1);
-	if (ft_add_string_to_strings(paths, cmd_node->cmd->args[0]) == NULL)
-		return (-1);
-	exec_out = find_path_with_access(paths, &pathname);
-	if (exec_out != 1)
+	else if (WIFEXITED(status))
 	{
-		ft_free_char_tab_all(paths);
-		return (exec_out);
+		data->exit_status = WEXITSTATUS(status);
 	}
-	cmd_node->cmd->pathname = pathname;
-	ft_free_char_tab_all(paths);
+	signal(SIGINT, sigint_handler);
 	return (1);
 }
 
 int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 {
 	int		pid;
-	int		status;
 	char	*pathname;
 	char	**args;
 
 	pathname = cmd_node->cmd->pathname;
 	args = cmd_node->cmd->args;
-		// for (int i = 0; args[i]; i++)
-		// 	printf("args[%d] = %s\n", i, args[i]);
 	pid = fork();
 	if (-1 == pid)
 		return (-1);
 	if (0 == pid)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (-1 != execve(pathname, args, data->env_copy))
 			return (-1);
 	}
 	else
-	{
-		wait(&status);
-		data->exit_status = WEXITSTATUS(status);
-	}
+		get_child_exit_status(data);
 	return (1);
 }
 
@@ -102,7 +71,6 @@ int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 	exec_out = get_cmd_path_name(cmd_node);
 	if (exec_out == -2)
 	{
-		//stderr
 		printf("minishell: %s: command not found\n", cmd_node->cmd->cmd);
 		return (exec_out);
 	}
@@ -110,21 +78,6 @@ int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 	return (exec_out);
 }
 
-int	cmd_is_directory(t_cmd_node *cmd_node)
-{
-	(void)cmd_node;
-	return (1);
-}
-
-//on doit checker avant toute chose si la commande est un directory
-// 1 la commande a ete execute avec succes
-// -1 free and exit
-// -2 la commande n'existe pas, est un directory, un file_in n'existe pas
-
-//on a fait les redirection avec retour d'erreur -1 et -2
-//on "sait" si ce n'est pas un directory avec erreur -1 et -2
-//on doit maintenant trouver et executer la commande avec erreur -2
-//	si n'existe pas et erreur -1 en cas de pb
 int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 {
 	int	exec_out;

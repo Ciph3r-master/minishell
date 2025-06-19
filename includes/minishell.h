@@ -198,6 +198,10 @@ void		free_and_exit(t_data *data);
 // exec/
 	// builtins.c
 int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
+	// cmd_path.c
+int			cmd_is_directory(t_cmd_node *cmd_node);
+int			find_path_with_access(char **paths, char **pathname);
+int			get_cmd_path_name(t_cmd_node *cmd_node);
 	// create_tmp_file.c
 int			create_tmp_file(t_filelist *cur_file_in);
 	// exec_pipe.c
@@ -258,6 +262,7 @@ void		free_matrix(char **split);
 // signals/
 	// init_signals.c
 void		init_signals(void);
+void		sigint_handler(int sig);
 
 
 
