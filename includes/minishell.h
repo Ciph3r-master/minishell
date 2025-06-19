@@ -200,8 +200,11 @@ void		free_and_exit(t_data *data);
 int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
 	// create_tmp_file.c
 int			create_tmp_file(t_filelist *cur_file_in);
+	// exec_pipe.c
+int			exec_pipe(t_cmd_node *cmd_node, t_data *data);
 	// exec.c
 int			exec(t_data *data);
+int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	// extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
 int			cmd_is_directory(t_cmd_node *cmd_node);

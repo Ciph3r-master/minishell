@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
+#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/18 21:42:30 by billcipher       ###   ########.fr        #
+#    Updated: 2025/06/17 22:12:41 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ SRCS_ERROR	:=							\
 SRCS_EXEC	:=							\
 	$(DIR_EXEC)/builtins.c				\
 	$(DIR_EXEC)/create_tmp_file.c		\
+	$(DIR_EXEC)/exec_pipe.c				\
 	$(DIR_EXEC)/exec.c					\
 	$(DIR_EXEC)/extern.c				\
 	$(DIR_EXEC)/faker_builtin.c			\
