@@ -1,6 +1,11 @@
 #include "minishell.h"
 #include "libft.h"
 
+bool is_redirection(t_tokentype type)
+{
+	return (type == TRD_IN || type == TRD_OUT || type == TAPPEND || type == THD);
+}
+
 int	is_operator(char *line)
 {
 	if (!line)

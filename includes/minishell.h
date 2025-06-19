@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 22:28:59 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/19 03:50:44 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,15 @@ void	set_limiter(t_tokenlist *tl);
 void	set_args(t_tokenlist *tl);
 void 	set_cmds(t_tokenlist *tl);
 // token utils
-int is_builtin(char *word);
+int 		is_builtin(char *word);
 int			is_operator(char *line);
-//DLIST
-t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type);
+bool 		is_redirection(t_tokentype type);
+
+//syntax_error.c
+bool is_invalid_redir(t_tokenlist *tl);
+bool is_invalid_pipe(t_tokenlist *tl);
+	// DLIST
+	t_tokenlist *tokenlist_create_node(void *content, t_tokentype type);
 t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type);
 void		print_tokenlist(t_tokenlist *tokenlist, bool reverse);
 t_tokenlist	*tokenlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type);

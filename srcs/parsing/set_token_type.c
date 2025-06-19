@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:23:56 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/17 17:00:54 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/18 21:32:24 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,26 +102,26 @@ void set_cmds(t_tokenlist *tl)
 	}
 }
 
+bool is_invalid_target(t_tokentype type)
+{
+	return (is_redirection(type) || type == TPIPE || type == TSPACE);
+}
+
 void	set_file(t_tokenlist *tl)
 {
 	t_tokenlist	*current;
-	t_tokentype	type;
+	t_tokenlist	*target;
 
 	current = tl;
 	while (current)
 	{
-		type = current->type;
-		if (current->next != NULL
-			&& current->next->type != TRD_IN
-			&& current->next->type != TAPPEND
-			&& current->next->type != TRD_OUT
-			&& current->next->type != THD
-			&& (type == TRD_IN || type == TRD_OUT || type == TAPPEND))
+		if (is_redirection(current->type) && current->next)
 		{
-			if (current->next && current->next->type == TSPACE)
-				current = current->next;
-			if (current->next)
-				current->next->type = TFILE;
+			target = current->next;
+			if (target->type == TSPACE && target->next)
+				target = target->next;
+			if (!is_invalid_target(target->type))
+				target->type = TFILE;
 		}
 		current = current->next;
 	}

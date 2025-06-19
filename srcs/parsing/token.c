@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 18:49:40 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/18 16:07:36 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/19 03:50:59 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,14 +223,24 @@ int	init_tokens(t_data *data)
 	merge_token(&data->tokenlist);
 	// print_tokenlist(data->tokenlist, false);
 	set_operator(data->tokenlist);
+	print_tokenlist(data->tokenlist, false);
+	if (is_invalid_redir(data->tokenlist))
+	{
+		return (1);
+	}
+	if (is_invalid_pipe(data->tokenlist))
+	{
+		return (1);
+	}
+	set_file(data->tokenlist);
+	print_tokenlist(data->tokenlist, false);
 	set_cmds(data->tokenlist);
 	set_builtin(data->tokenlist);
-	set_file(data->tokenlist);
 	set_limiter(data->tokenlist);
 
 	set_args(data->tokenlist);
-	// print_tokenlist(data->tokenlist, false);
+	print_tokenlist(data->tokenlist, false);
 	extract_cmds(data);
-	// print_cmdlist(data->cmd_node);
+	print_cmdlist(data->cmd_node);
 	return (0);
 }

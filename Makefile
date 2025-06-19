@@ -106,6 +106,7 @@ SRCS_PARSING :=							\
 	$(DIR_PARSING)/expand.c				\
 	$(DIR_PARSING)/extract_token.c		\
 	$(DIR_PARSING)/set_token_type.c		\
+	$(DIR_PARSING)/syntax_error.c		\
 
 SRCS_PARSING_UTILS :=				  \
 	$(DIR_PARSING_UTILS)/tokendlist.c \
@@ -236,6 +237,9 @@ re:
 	$(MAKE) all
 
 valgrind: all
-	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" ./minishell
+	valgrind --show-leak-kinds=all --show-mismatched-frees=yes --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" ./minishell
+
+vallog: all
+	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="valgrind.log" ./minishell
 
 .PHONY: all clean fclean re
