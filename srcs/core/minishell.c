@@ -34,9 +34,9 @@ int	main(int argc, char **argv, char **env)
 			rl_clear_history();
 			free_and_exit(&data);
 		}
-		add_history(data.line);
 		free_cmd_list(&data.cmd_node);
 		free_tokenlist(&data.tokenlist);
+		add_history(data.line);
 		init_tokens(&data);
 		free(data.line);
 		exec(&data);
