@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/16 21:46:30 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/18 20:26:37 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void	find_expand(t_tokenlist **tl, t_env_list *env)
 		expand = ft_strchr(current->token, '$');
 		while (current->type != TQUOTES && expand)
 		{
-			// printf("EXPAND : %s LEN :[%d] VALUE:[%s]\n", expand, \
-			//  varlen(expand), find_value(&expand[1], env));
+			 /*printf("EXPAND : %s LEN :[%d] VALUE:[%s]\n", expand, \
+			  varlen(expand), find_value(&expand[1], env));*/
 			replace_token(current, env);
 			expand = ft_strchr(current->token, '$');
 		}
