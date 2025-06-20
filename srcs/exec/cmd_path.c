@@ -11,12 +11,53 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <string.h>
 #include "minishell.h"
 #include "libft.h"
 
+int	special_case_directory(t_cmd_node *cmd_node)
+{
+	char		*cmd;
+
+	if (!cmd_node || !cmd_node->cmd->cmd)
+		return (-1);
+	cmd = cmd_node->cmd->cmd;
+
+	if (ft_strcmp(".", cmd) == 0)
+	{
+		printf("minishell: .: filename argument required\n");
+		printf(".: usage: . filename [arguments]\n");
+		return (-2);
+	}
+	if (ft_strcmp("..", cmd) == 0)
+	{
+		printf("..: command not found\n");
+		return (-2);
+	}
+	return (1);
+}
+
 int	cmd_is_directory(t_cmd_node *cmd_node)
 {
-	(void)cmd_node;
+	struct stat	info;
+	char		*cmd;
+	int			exec_out;
+
+	if (!cmd_node || !cmd_node->cmd->cmd)
+		return (-1);
+	cmd = cmd_node->cmd->cmd;
+	exec_out = special_case_directory(cmd_node);
+	if (exec_out != 1)
+		return (exec_out);
+	if (stat(cmd, &info) != 0)
+		return (1);
+	if (S_ISDIR(info.st_mode))
+	{
+		printf("minishell: %s: Is a directory\n", cmd_node->cmd->cmd);
+		return (-2);
+	}
 	return (1);
 }
 
