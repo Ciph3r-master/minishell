@@ -200,6 +200,7 @@ void		free_and_exit(t_data *data);
 int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
 	// cmd_path.c
 int			cmd_is_directory(t_cmd_node *cmd_node);
+int			is_executable_cmd(t_cmd_node *cmd_node);
 int			find_path_with_access(char **paths, char **pathname);
 int			get_cmd_path_name(t_cmd_node *cmd_node);
 	// create_tmp_file.c

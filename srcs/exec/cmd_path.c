@@ -61,6 +61,18 @@ int	cmd_is_directory(t_cmd_node *cmd_node)
 	return (1);
 }
 
+int	is_executable_cmd(t_cmd_node *cmd_node)
+{
+	if (!cmd_node || !cmd_node->cmd->cmd)
+		return (-1);
+	if (0 == access(cmd_node->cmd->cmd, X_OK))
+	{
+		cmd_node->cmd->pathname = cmd_node->cmd->cmd;
+		return (1);
+	}
+	return (1);
+}
+
 int	find_path_with_access(char **paths, char **pathname)
 {
 	int	i;

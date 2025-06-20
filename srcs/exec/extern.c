@@ -64,13 +64,19 @@ int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 {
 	int		exec_out;
 
+	exec_out = 1;
 	if (!cmd_node || !cmd_node->cmd->cmd)
 		return (-1);
-	exec_out = get_cmd_path_name(cmd_node);
-	if (exec_out == -2)
+	if (is_executable_cmd(cmd_node) == -1)
+		return (-1);
+	if (cmd_node->cmd->pathname == NULL)
 	{
-		printf("minishell: %s: command not found\n", cmd_node->cmd->cmd);
-		return (exec_out);
+		exec_out = get_cmd_path_name(cmd_node);
+		if (exec_out == -2)
+		{
+			printf("minishell: %s: command not found\n", cmd_node->cmd->cmd);
+			return (exec_out);
+		}
 	}
 	exec_out = execute_cmd_in_child_process(cmd_node, data);
 	return (exec_out);
