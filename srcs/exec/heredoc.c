@@ -107,11 +107,6 @@ int	run_heredoc_in_file_in(t_filelist *file_in)
 	return (1);
 }
 
-// cette fonction va parcourir tous les node
-// pour verifier si il on des heredoc, si oui on les cree
-// puis on les execute, avec la gestion des signaux
-// donc ouvrir un readline qui attend le oef present dans la structure
-// on les execute un a un jusqu'a que la file_list soit vide
 int	exec_heredoc(t_cmd_node *cmd_node)
 {
 	t_cmd_node	*cur_cmd;

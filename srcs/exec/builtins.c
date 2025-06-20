@@ -41,9 +41,6 @@ int	exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data)
 	exec_out = exec_redirections(cmd_node);
 	if (exec_out != 1)
 		return (exec_out);
-	exec_out = cmd_is_directory(cmd_node);
-	if (exec_out != 1)
-		return (exec_out);
 	exec_out = exec_builtins(cmd_node, data);
 	if (exec_out != 1)
 		return (exec_out);
