@@ -12,10 +12,10 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "minishell.h"
 #include <stdlib.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include "minishell.h"
 
 int	main(int argc, char **argv, char **env)
 {
@@ -27,8 +27,6 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	while (1)
 	{
-		free_cmd_list(&data.cmd_node);
-		free_tokenlist(&data.tokenlist);
 		data.line = readline("minishell> ");
 		if (!data.line)
 		{
@@ -36,6 +34,8 @@ int	main(int argc, char **argv, char **env)
 			rl_clear_history();
 			free_and_exit(&data);
 		}
+		free_cmd_list(&data.cmd_node);
+		free_tokenlist(&data.tokenlist);
 		add_history(data.line);
 		init_tokens(&data);
 		free(data.line);

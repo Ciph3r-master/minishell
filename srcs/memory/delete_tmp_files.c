@@ -23,10 +23,8 @@ void	delete_tmps(t_filelist *cur_file_in)
 		{
 			if (cur_file_in->fd != -1)
 			{
-				#include <stdio.h>
-				printf("cur_file_in->fd : %d", cur_file_in->fd);
 				if (close(cur_file_in->fd) == -1)
-					perror("close fawef");
+					perror("close");
 				cur_file_in->fd = -1;
 			}
 			if (cur_file_in->pathname)

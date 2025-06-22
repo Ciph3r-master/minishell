@@ -79,7 +79,7 @@ char	*create_pathname(t_filelist *cur_file_in)
 	if (!new_filename)
 		return (NULL);
 	cur_file_in->filename = new_filename;
-	pathname = ft_strjoin("./tmp/", cur_file_in->filename);
+	pathname = ft_strjoin("/tmp/", cur_file_in->filename);
 	if (!pathname)
 		return (NULL);
 	return (pathname);
