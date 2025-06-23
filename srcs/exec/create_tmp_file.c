@@ -44,10 +44,10 @@ char	*create_random_alphanum(int fd)
 char	*create_unique_id(void)
 {
 	char	*unique_id;
-    int		fd;
+	int		fd;
 
 	fd = open("/dev/urandom", O_RDONLY);
-    if (fd == -1)
+	if (fd == -1)
 		return (NULL);
 	unique_id = create_random_alphanum(fd);
 	if (!unique_id)

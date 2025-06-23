@@ -56,6 +56,7 @@ int	cmd_is_directory(t_cmd_node *cmd_node)
 	if (S_ISDIR(info.st_mode))
 	{
 		printf("minishell: %s: Is a directory\n", cmd_node->cmd->cmd);
+		cmd_node->cmd_exit_status = 126;
 		return (-2);
 	}
 	return (1);

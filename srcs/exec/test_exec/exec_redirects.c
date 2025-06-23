@@ -43,7 +43,7 @@ t_cmd_node	*init_cmd_node(void)
 	cmd_node->type = REDIRECT_IN | REDIRECT_OUT | EXTERN;
 	cmd_node->fd_in = -1;
 	cmd_node->fd_out = -1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->filename_in = NULL;
 	cmd_node->filename_out = "test.txt";
 	cmd_node->prev = NULL;

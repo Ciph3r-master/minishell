@@ -99,7 +99,7 @@ typedef struct s_cmd_node
 	int			type;
 	int			fd_in;
 	int			fd_out;
-	int			error_code;
+	int			cmd_exit_status;
 	t_filelist	*file_in;
 	t_filelist	*file_out;
 	t_cmd		*cmd;
@@ -109,6 +109,8 @@ typedef struct s_cmd_node
 
 typedef struct s_data
 {
+	int			old_pipe[2];
+	int			new_pipe[2];
 	int			exit_status;
 	char		*pwd;
 	char		*line;
