@@ -34,9 +34,6 @@ int	main(int argc, char **argv)
 		exit(1);
 	}
 	redirect_out_append(fd, argv[1]);
-
-	printf("hello\n");
-
 	close(fd);
 	return (0);
 }

@@ -29,11 +29,13 @@ int	special_case_directory(t_cmd_node *cmd_node)
 	{
 		printf("minishell: .: filename argument required\n");
 		printf(".: usage: . filename [arguments]\n");
+		cmd_node->cmd_exit_status = 2;
 		return (-2);
 	}
 	if (ft_strcmp("..", cmd) == 0)
 	{
 		printf("..: command not found\n");
+		cmd_node->cmd_exit_status = 127;
 		return (-2);
 	}
 	return (1);
