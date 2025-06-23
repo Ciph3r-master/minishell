@@ -64,8 +64,6 @@ int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 {
 	int		exec_out;
 
-	printf("2 cmd_node->cmd->cmd :%s \n", cmd_node->cmd->cmd);
-
 	exec_out = 1;
 	if (!cmd_node || !cmd_node->cmd->cmd)
 		return (-1);
@@ -89,8 +87,6 @@ int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 	int	exec_out;
 	int	saved_stdin;
 	int	saved_stdout;
-
-	printf("cmd_node->cmd->cmd :%s \n", cmd_node->cmd->cmd);
 
 	if (!cmd_node)
 		return (-1);

@@ -59,6 +59,8 @@ int	exec_pipe_loop_cmd(t_data *data, t_cmd_node *cur_cmd, int *pids, int *i)
 {
 	pid_t		pid;
 
+	printf("coucou cmd_node->cmd->cmd :%s\n", cur_cmd->cmd->cmd);
+
 	if (cur_cmd->next)
 		pipe(data->new_pipe);
 	pid = fork();
@@ -107,6 +109,7 @@ int	exec_pipe(t_cmd_node *cmd_node, t_data *data)
 		return (-1);
 	while (cur_cmd)
 	{
+		printf("hello cmd_node->cmd->cmd :%s\n", cur_cmd->cmd->cmd);
 		if (exec_pipe_loop_cmd(data, cur_cmd, pids, &i) != 1)
 			return (-1);
 		cur_cmd = cur_cmd->next;

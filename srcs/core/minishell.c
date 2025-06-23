@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(data.line);
 		init_tokens(&data);
 		free(data.line);
+		printf("\n ---------- data -------\n\n");
 		exec(&data);
 	}
 	return (0);
