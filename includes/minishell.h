@@ -201,7 +201,7 @@ void		free_and_exit(t_data *data, int exit_code);
 	// builtins.c
 int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
 	// cmd_path.c
-int			cmd_is_directory(t_cmd_node *cmd_node);
+int			cmd_is_directory(t_cmd_node *cmd_node, t_data *data);
 int			is_executable_cmd(t_cmd_node *cmd_node);
 int			find_path_with_access(char **paths, char **pathname);
 int			get_cmd_path_name(t_cmd_node *cmd_node);
@@ -214,7 +214,6 @@ int			exec(t_data *data);
 int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	// extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
-int			cmd_is_directory(t_cmd_node *cmd_node);
 	// faker_extern.c
 t_data		*init_extern_simple_cmd(t_data *data);
 t_data		*init_extern_cmd_redir_in(t_data *data);

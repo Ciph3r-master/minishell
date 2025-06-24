@@ -51,7 +51,7 @@ int	read_heredoc_fd(t_filelist *cur_file_in)
 	limiter = cur_file_in->limiter;
 	fd = cur_file_in->fd;
 	reading = 1;
-	signal(SIGINT, sigint_handler_heredoc);
+	signal(SIGINT, SIG_DFL);
 	while (reading)
 		reading = readline_heredoc(limiter, fd);
 	signal(SIGINT, sigint_handler);

@@ -12,31 +12,6 @@ mettre une variable ? dans data c'est mon error code de la dernier code
 	traiter les erreur code
 	d'abort comprendre puis reflechir a l'implentation
 
-----------
-
-je vais devoir faire une fonction qui va parcourir la node list pour
-recuperer le code de sortie du dernier noeud,
-je doi sle faire a chaque boucle apres l'exec puis mettre le resultat dans
-data puisque data n'est pas supprime a chaque iteration de boucle et les node oui
-
-exit code :
-
-bash-5.1$ false
-bash-5.1$ echo $?
-1
-
-bash-5.1$ ls | efawefWEF | AFEFAWEFA
-bash: efawefWEF: command not found
-bash: AFEFAWEFA: command not found
-
-
-bash-5.1$ .. | ls
-bash: ..: command not found
-includes  libft  Makefile  minishell  readline.supp  special_case  srcs  valgrind.log
-bash-5.1$ . | ls
-bash: .: filename argument required
-.: usage: . filename [arguments]
-includes  libft  Makefile  minishell  readline.supp  special_case  srcs  valgrind.log
 
 ------- cd --------
 
@@ -48,20 +23,23 @@ bash-5.1$ cd
 chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 bash-5.1$ cd ..
 
---------- traiter le _ ----------
 
 --------- traiter SH level ------
 ------ avec is tty ------------
 
---------- UNSET PATH --------
-
-
+--------- UNSET PATH on verra c'est dans les buitlin--------
+--- si j'unset path il y aura des cas ou j'aurais un certain
+--- message et retour apres le execve qui aura echoue un truc comme ca
 
 
 les > sont casse quand il sont seul, ils ne cree pas de fichier, il marche
 dans un pipe ...
 
+en fait je doit faire un fork pour le readline,
+comme ca quand je fait le control d il se fait
+normalement il va kill,
+dans status du wait je peut recuperer le exit code qui sera celui du signal d'exit
 
-
+on dirais que mes retour d'erreur marchent
 
 

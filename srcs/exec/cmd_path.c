@@ -17,7 +17,7 @@
 #include "minishell.h"
 #include "libft.h"
 
-int	special_case_directory(t_cmd_node *cmd_node)
+int	special_case_directory(t_cmd_node *cmd_node, t_data *data)
 {
 	char		*cmd;
 
@@ -27,21 +27,21 @@ int	special_case_directory(t_cmd_node *cmd_node)
 
 	if (ft_strcmp(".", cmd) == 0)
 	{
-		printf("minishell: .: filename argument required\n");
-		printf(".: usage: . filename [arguments]\n");
-		cmd_node->cmd_exit_status = 2;
+		write(STDERR_FILENO, "minishell: .: filename argument required\n", 41);
+		write(STDERR_FILENO, ".: usage: . filename [arguments]\n", 33);
+		data->exit_status = 2;
 		return (-2);
 	}
 	if (ft_strcmp("..", cmd) == 0)
 	{
-		printf("..: command not found\n");
-		cmd_node->cmd_exit_status = 127;
+		write(STDERR_FILENO, "..: command not found\n", 22);
+		data->exit_status = 127;
 		return (-2);
 	}
 	return (1);
 }
 
-int	cmd_is_directory(t_cmd_node *cmd_node)
+int	cmd_is_directory(t_cmd_node *cmd_node, t_data *data)
 {
 	struct stat	info;
 	char		*cmd;
@@ -50,15 +50,17 @@ int	cmd_is_directory(t_cmd_node *cmd_node)
 	if (!cmd_node || !cmd_node->cmd->cmd)
 		return (-1);
 	cmd = cmd_node->cmd->cmd;
-	exec_out = special_case_directory(cmd_node);
+	exec_out = special_case_directory(cmd_node, data);
 	if (exec_out != 1)
 		return (exec_out);
 	if (stat(cmd, &info) != 0)
 		return (1);
 	if (S_ISDIR(info.st_mode))
 	{
-		printf("minishell: %s: Is a directory\n", cmd_node->cmd->cmd);
-		cmd_node->cmd_exit_status = 126;
+		write(STDERR_FILENO, "minishell: ", 11);
+		write(STDERR_FILENO, cmd, strlen(cmd));
+		write(STDERR_FILENO, ": Is a directory\n", 17);
+		data->exit_status = 126;
 		return (-2);
 	}
 	return (1);
