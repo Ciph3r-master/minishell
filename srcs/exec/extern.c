@@ -80,7 +80,7 @@ int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 			write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
 			write(STDERR_FILENO, cmd, ft_strlen(cmd));
 			write(STDERR_FILENO, ": command not found\n", 20);
-			cmd_node->cmd_exit_status = 127;
+			data->exit_status = 127;
 			return (exec_out);
 		}
 	}

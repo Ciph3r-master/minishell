@@ -14,6 +14,11 @@ mettre une variable ? dans data c'est mon error code de la dernier code
 
 ----------
 
+je vais devoir faire une fonction qui va parcourir la node list pour
+recuperer le code de sortie du dernier noeud,
+je doi sle faire a chaque boucle apres l'exec puis mettre le resultat dans
+data puisque data n'est pas supprime a chaque iteration de boucle et les node oui
+
 exit code :
 
 bash-5.1$ false
@@ -43,3 +48,15 @@ bash-5.1$ cd
 chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 bash-5.1$ cd ..
 
+--------- traiter le _ ----------
+
+--------- traiter SH level ------
+------ avec is tty ------------
+
+--------- UNSET PATH --------
+
+
+
+
+les > sont casse quand il sont seul, ils ne cree pas de fichier, il marche
+dans un pipe ...

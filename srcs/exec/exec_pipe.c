@@ -37,6 +37,9 @@ int	size_pids(t_cmd_node *cmd_node)
 
 void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
 {
+	int	exit_code;
+
+	exit_code = 0;
 	if (data->old_pipe[0] != -1)
 	{
 		dup2(data->old_pipe[0], STDIN_FILENO);
@@ -52,6 +55,7 @@ void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
 		close(data->old_pipe[1]);
 	exec_redirections(cur_cmd);
 	exec_simple_cmd(cur_cmd, data);
+	printf("coucou cur_cmd->cmd_exit_status :%s\n", cur_cmd->cmd->cmd);
 	free_and_exit(data);
 }
 
@@ -86,7 +90,7 @@ void	exec_pipe_get_exit_status(t_data *data, pid_t *pids, int i)
 	while (j < i)
 	{
 		waitpid(pids[j], &status, 0);
-		if (WIFEXITED(status))
+		if (WIFEXITED(status) && j == i - 1)
 			data->exit_status = WEXITSTATUS(status);
 		j++;
 	}

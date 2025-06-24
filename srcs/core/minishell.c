@@ -32,7 +32,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			write(1, "exit\n", 5);
 			rl_clear_history();
-			printf("data->exit_status : %d\n", data.exit_status);
 			free_and_exit(&data);
 		}
 		free_cmd_list(&data.cmd_node);
@@ -42,6 +41,7 @@ int	main(int argc, char **argv, char **env)
 		free(data.line);
 		printf("\n ---------- data -------\n\n");
 		exec(&data);
+		printf("exit status:%d\n", data.exit_status);
 	}
 	return (0);
 }

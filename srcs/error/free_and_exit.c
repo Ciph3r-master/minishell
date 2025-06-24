@@ -16,6 +16,5 @@
 void	free_and_exit(t_data *data)
 {
 	free_all(data);
-	exit(EXIT_FAILURE);
 	return ;
 }
