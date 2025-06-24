@@ -63,4 +63,5 @@ dans un pipe ...
 
 
 
------------ ctrl C dans un heredoc doit quitter minishell free and exit 130 ------
+
+

@@ -266,6 +266,7 @@ void		free_matrix(char **split);
 	// init_signals.c
 void		init_signals(void);
 void		sigint_handler(int sig);
+void		sigint_handler_heredoc(int sig);
 
 
 

@@ -68,7 +68,7 @@ int	exec(t_data *data)
 	if (pipeline_has_heredoc(cmd_node))
 	{
 		if (-1 == exec_heredoc(cmd_node))
-			free_and_exit(data, 326);
+			free_and_exit(data, 1);
 	}
 	if (!cmd_node->next)
 	{
@@ -79,7 +79,7 @@ int	exec(t_data *data)
 	else if (cmd_node->next)
 	{
 		if (exec_pipe(cmd_node, data) == -1)
-			free_and_exit(data, 326);
+			free_and_exit(data, 1);
 	}
 	return (0);
 }
