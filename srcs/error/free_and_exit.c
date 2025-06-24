@@ -13,8 +13,8 @@
 #include <stdlib.h>
 #include "minishell.h"
 
-void	free_and_exit(t_data *data)
+void	free_and_exit(t_data *data, int exit_code)
 {
-	free_all(data);
+	free_all(data, exit_code);
 	return ;
 }

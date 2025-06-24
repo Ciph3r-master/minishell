@@ -56,7 +56,7 @@ void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
 	exec_redirections(cur_cmd);
 	exec_simple_cmd(cur_cmd, data);
 	printf("coucou cur_cmd->cmd_exit_status :%s\n", cur_cmd->cmd->cmd);
-	free_and_exit(data);
+	free_and_exit(data, data->exit_status);
 }
 
 int	exec_pipe_loop_cmd(t_data *data, t_cmd_node *cur_cmd, int *pids, int *i)

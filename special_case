@@ -60,3 +60,7 @@ bash-5.1$ cd ..
 
 les > sont casse quand il sont seul, ils ne cree pas de fichier, il marche
 dans un pipe ...
+
+
+
+----------- ctrl C dans un heredoc doit quitter minishell free and exit 130 ------

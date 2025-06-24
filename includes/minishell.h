@@ -195,7 +195,7 @@ void		print_env_copy(char **env_copy);
 
 // error/
 	// free_and_exit.c
-void		free_and_exit(t_data *data);
+void		free_and_exit(t_data *data, int exit_code);
 
 // exec/
 	// builtins.c
@@ -248,7 +248,7 @@ int			exec_redirections(t_cmd_node *cmd_node);
 	// delete_tmp_file.c
 void		delete_tmp_files(t_data *data);
 	// free_all.c
-void		free_all(t_data *data);
+void		free_all(t_data *data, int exit_code);
 	// free_env_copy.c
 void		free_env_copy(char **env_copy);
 	// free_env_list.c

@@ -111,13 +111,13 @@ t_env_list	*get_env_list(t_data *data, char **env)
 	{
 		key = get_env_key(env[i]);
 		if (!key)
-			free_and_exit(data);
+			free_and_exit(data, 1);
 		value = get_env_value(env[i]);
 		if (!value)
-			free_and_exit(data);
+			free_and_exit(data, 1);
 		new_node = new_node_env_list(key, value);
 		if (!new_node)
-			free_and_exit(data);
+			free_and_exit(data, 1);
 		push_back_env_list(&data->env_list, new_node);
 		i++;
 	}

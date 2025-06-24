@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 		free(data.line);
 		printf("\n ---------- data -------\n\n");
 		exec(&data);
-		printf("exit status:%d\n", data.exit_status);
+	    printf("exit status:%d\n", data.exit_status);
 	}
 	return (0);
 }
