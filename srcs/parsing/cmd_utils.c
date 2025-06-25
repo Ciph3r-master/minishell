@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:48:30 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/22 14:51:12 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/25 14:48:12 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ t_cmd *init_cmd(void)
 	return (cmd);
 }
 
-void init_args(t_tokenlist *start, t_cmd *cmd)
+int	init_args(t_tokenlist *start, t_cmd *cmd)
 {
 	char **args;
 
 	args = malloc(sizeof(char *) * (count_args(start) + 2));
-	// FREE EXIT
 	if (!args)
-		return;
+		return (0);
 	args[0] = NULL;
 	cmd->args = args;
+	return (1);
 }

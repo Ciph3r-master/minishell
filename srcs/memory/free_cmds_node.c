@@ -15,8 +15,10 @@ void free_filelist(t_filelist **fl)
 		tmp = current->next;
 		if (current->filename)
 			free(current->filename);
+		current->filename = NULL;
 		if (current->limiter)
 			free(current->limiter);
+		current->limiter = NULL;
 		free(current);
 		current = tmp;
 	}
@@ -32,8 +34,10 @@ void free_cmd(t_cmd **cmd)
 		return ;
 	if ((*cmd)->pathname)
 		free((*cmd)->pathname);
+	(*cmd)->pathname = NULL;
 	if ((*cmd)->cmd)
 		free((*cmd)->cmd);
+	(*cmd)->cmd = NULL;
 	if ((*cmd)->args)
 	{
 		while ((*cmd)->args[i])
@@ -43,7 +47,8 @@ void free_cmd(t_cmd **cmd)
 		}
 		free((*cmd)->args);
 	}
-	free(*cmd);
+	(*cmd)->args = NULL;
+	free((*cmd));
 	*cmd = NULL;
 }
 void free_cmd_list(t_cmd_node **cmd_node)
@@ -57,12 +62,9 @@ void free_cmd_list(t_cmd_node **cmd_node)
 	while (current)
 	{
 		tmp = current->next;
-		if (current->file_in)
-			free_filelist(&current->file_in);
-		if (current->file_out)
-			free_filelist(&current->file_out);
-		if (current->cmd)
-			free_cmd(&current->cmd);
+		free_filelist(&current->file_in);
+		free_filelist(&current->file_out);
+		free_cmd(&current->cmd);
 		free(current);
 		current = tmp;
 	}

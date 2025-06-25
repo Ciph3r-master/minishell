@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:49:38 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/22 14:55:19 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/25 15:07:59 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,21 @@ void cmd_node_set_hd(t_cmd_node *node, t_tokenlist *current)
 	node->type |= HEREDOC;
 }
 
-void extract_cmd_node(t_cmd_node *node, t_tokenlist *start, t_tokenlist *end)
+void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_tokenlist *end)
 {
 	t_tokenlist *current;
 	int ac;
 
 	node->cmd = init_cmd();
-	init_args(start, node->cmd);
+	if (!node->cmd)
+	{
+		//TODO FREE EXIT
+		return;
+	}
+	if (!init_args(start, node->cmd))
+	{
+		free_and_exit(data);
+	}
 	current = start;
 	ac = 1;
 	while (current && current != end)

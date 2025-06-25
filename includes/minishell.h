@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/22 14:54:58 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/25 14:50:09 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int			is_open_quotes(char *line, char quote);
 t_tokenlist	*get_token(char	*line, int	*pos, t_tokenlist *tl);
 int			init_tokens(t_data *data);
 
-void 		init_args(t_tokenlist *start, t_cmd *cmd);
+int			init_args(t_tokenlist *start, t_cmd *cmd);
 t_cmd 		*init_cmd(void);
 
 	// extract_token.c
@@ -132,7 +132,7 @@ t_cmd 		*init_cmd(void);
 t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos);
 t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos);
 t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos);
-void 		extract_cmd_node(t_cmd_node *node, t_tokenlist *start, t_tokenlist *end);
+void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_tokenlist *end);
 
 void merge_token(t_tokenlist **tl);
 // set_token_type.c

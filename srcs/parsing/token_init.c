@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:11 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/23 22:18:15 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/25 14:49:13 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void extract_cmds(t_data *data)
 			new_node = cmdlist_getlast(data->cmd_node);
 			if (current->type == TPIPE)
 				cmd_end = current;
-			extract_cmd_node(new_node, cmd_start, cmd_end);
+			extract_cmd_node(data, new_node, cmd_start, cmd_end);
 			if (current->type == TPIPE)
 				current = current->next;
 			else if (current->next == NULL)
