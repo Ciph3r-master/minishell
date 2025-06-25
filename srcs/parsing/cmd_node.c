@@ -6,7 +6,7 @@
 /*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:49:38 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/25 15:07:59 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:53:47 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 	}
 	if (!init_args(start, node->cmd))
 	{
-		free_and_exit(data);
+		free_and_exit(data, 1);
 	}
 	current = start;
 	ac = 1;

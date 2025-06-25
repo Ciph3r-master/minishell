@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/18 23:36:53 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/25 16:32:50 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	{
 		exec_out = exec_simple_cmd_builtins(cmd_node, data);
 		if (exec_out == -1)
-			free_and_exit(data, 326);
+			free_and_exit(data, 1);
 		if (exec_out == -2)
 			return (-2);
 	}
@@ -46,7 +46,7 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	{
 		exec_out = exec_simple_cmd_extern(cmd_node, data);
 		if (exec_out == -1)
-			free_and_exit(data, 326);
+			free_and_exit(data, 1);
 		if (exec_out == -2)
 			return (-2);
 	}

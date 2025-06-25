@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-19 16:52:24 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/25 16:37:53 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	is_executable_cmd(t_cmd_node *cmd_node)
 		return (-1);
 	if (0 == access(cmd_node->cmd->cmd, X_OK))
 	{
-		cmd_node->cmd->pathname = cmd_node->cmd->cmd;
+		cmd_node->cmd->pathname = ft_strdup(cmd_node->cmd->cmd);
 		return (1);
 	}
 	return (1);

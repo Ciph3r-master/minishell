@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-18 17:39:46 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-18 17:39:46 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/18 17:39:46 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/25 15:59:28 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	exec_pipe_loop_cmd(t_data *data, t_cmd_node *cur_cmd, int *pids, int *i)
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
+	{
+		free(pids);
 		exec_pipe_child(cur_cmd, data);
+	}
 	pids[(*i)++] = pid;
 	if (data->old_pipe[0] != -1)
 		close(data->old_pipe[0]);
@@ -111,7 +114,10 @@ int	exec_pipe(t_cmd_node *cmd_node, t_data *data)
 	while (cur_cmd)
 	{
 		if (exec_pipe_loop_cmd(data, cur_cmd, pids, &i) != 1)
+		{
+			free(pids);
 			return (-1);
+		}
 		cur_cmd = cur_cmd->next;
 	}
 	exec_pipe_get_exit_status(data, pids, i);
