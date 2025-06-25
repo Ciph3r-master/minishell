@@ -78,7 +78,7 @@ void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 	}
 	if (!init_args(start, node->cmd))
 	{
-		free_and_exit(data);
+		free_and_exit(data, 1);
 	}
 	current = start;
 	ac = 1;

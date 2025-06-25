@@ -53,9 +53,6 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	return (1);
 }
 
-// je vais bosser avec exec_out
-// exec_out sera set a 0 au depart
-//
 int	exec(t_data *data)
 {
 	t_cmd_node	*cmd_node;

@@ -15,11 +15,12 @@
 #include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <signal.h>
 #include "minishell.h"
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data		data;
+	t_data					data;
 
 	(void)argc;
 	(void)argv;
@@ -34,6 +35,7 @@ int	main(int argc, char **argv, char **env)
 			rl_clear_history();
 			free_and_exit(&data, data.exit_status);
 		}
+		data.exit_status = 0;
 		free_cmd_list(&data.cmd_node);
 		free_tokenlist(&data.tokenlist);
 		add_history(data.line);

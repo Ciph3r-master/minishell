@@ -36,7 +36,8 @@ int	readline_heredoc(char *limiter, int fd)
 	}
 	write(fd, here_line, ft_strlen(here_line));
 	write(fd, "\n", 1);
-	free(here_line);
+	if (here_line)
+		free(here_line);
 	return (1);
 }
 
@@ -51,10 +52,8 @@ int	read_heredoc_fd(t_filelist *cur_file_in)
 	limiter = cur_file_in->limiter;
 	fd = cur_file_in->fd;
 	reading = 1;
-	signal(SIGINT, SIG_DFL);
 	while (reading)
 		reading = readline_heredoc(limiter, fd);
-	signal(SIGINT, sigint_handler);
 	if (close(fd) == -1)
 		return (-1);
 	cur_file_in->fd = -1;

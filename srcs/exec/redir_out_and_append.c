@@ -18,7 +18,8 @@ int	exec_redir_out(t_filelist *cur_file_in)
 {
 	if (!cur_file_in || !cur_file_in->filename)
 		return (-1);
-	cur_file_in->fd = open(cur_file_in->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	cur_file_in->fd = open(cur_file_in->filename, O_WRONLY
+			| O_CREAT | O_TRUNC, 0644);
 	if (cur_file_in->fd == -1)
 		return (-1);
 	if (dup2(cur_file_in->fd, STDOUT_FILENO) == -1)
