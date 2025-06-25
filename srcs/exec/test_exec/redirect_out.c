@@ -19,7 +19,6 @@ int	redirect_out(int fd, char *filename)
 {
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	dup2(fd, STDOUT_FILENO);
-	//securiser dup2
 	return (0);
 }
 
@@ -33,9 +32,6 @@ int	main(int argc, char **argv)
 		exit(1);
 	}
 	redirect_in(fd, argv[1]);
-
-	printf("hello\n");
-
 	close(fd);
 	return (0);
 }

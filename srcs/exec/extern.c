@@ -63,8 +63,11 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 {
 	int		exec_out;
+	char	*cmd;
+
 
 	exec_out = 1;
+	cmd = cmd_node->cmd->cmd;
 	if (!cmd_node || !cmd_node->cmd->cmd)
 		return (-1);
 	if (is_executable_cmd(cmd_node) == -1)
@@ -74,7 +77,10 @@ int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 		exec_out = get_cmd_path_name(cmd_node);
 		if (exec_out == -2)
 		{
-			printf("minishell: %s: command not found\n", cmd_node->cmd->cmd);
+			write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
+			write(STDERR_FILENO, cmd, ft_strlen(cmd));
+			write(STDERR_FILENO, ": command not found\n", 20);
+			data->exit_status = 127;
 			return (exec_out);
 		}
 	}
@@ -95,7 +101,7 @@ int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 	exec_out = exec_redirections(cmd_node);
 	if (exec_out != 1)
 		return (exec_out);
-	exec_out = cmd_is_directory(cmd_node);
+	exec_out = cmd_is_directory(cmd_node, data);
 	if (exec_out != 1)
 		return (exec_out);
 	exec_out = exec_extern(cmd_node, data);

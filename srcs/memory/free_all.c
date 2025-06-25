@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include "minishell.h"
 
-void	free_all(t_data *data)
+void	free_all(t_data *data, int exit_code)
 {
 	delete_tmp_files(data);
 	if (data->env_copy)
@@ -24,6 +24,6 @@ void	free_all(t_data *data)
 		free_tokenlist(&data->tokenlist);
 	if (data->cmd_node)
 		free_cmd_list(&data->cmd_node);
-	exit(EXIT_SUCCESS);
+	exit(exit_code);
 	return ;
 }

@@ -18,8 +18,9 @@ int	init_data(t_data *data, char **env)
 {
 	data->env_list = get_env_list(data, env);
 	data->env_copy = get_env_copy(data->env_list);
+	data->exit_status = 0;
 	if (!data->env_copy)
-		free_and_exit(data);
+		free_and_exit(data, 1);
 	data->cmd_node = NULL;
 	data->tokenlist = NULL;
 	data->line = NULL;

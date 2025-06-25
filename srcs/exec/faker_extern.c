@@ -23,7 +23,7 @@ t_data *init_extern_simple_cmd(t_data *data)
 	cmd_node->type = EXTERN;
 	cmd_node->fd_in = 0;
 	cmd_node->fd_out = 1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->file_in = NULL;
 	cmd_node->file_out = NULL;
 	cmd_node->cmd = cmd;
@@ -66,7 +66,7 @@ t_data *init_extern_cmd_redir_in(t_data *data)
 	cmd_node->type = EXTERN | REDIRECT_IN;
 	cmd_node->fd_in = 0;
 	cmd_node->fd_out = 1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = NULL;
 	cmd_node->cmd = cmd;
@@ -122,7 +122,7 @@ t_data *init_extern_cmd_multi_redir_in(t_data *data)
 	cmd_node->type = EXTERN | REDIRECT_IN;
 	cmd_node->fd_in = 0;
 	cmd_node->fd_out = 1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = NULL;
 	cmd_node->cmd = cmd;
@@ -183,7 +183,7 @@ t_data *init_extern_cmd_multi_redir_in_heredoc(t_data *data)
 	cmd_node->type = EXTERN | REDIRECT_IN | HEREDOC;
 	cmd_node->fd_in = 0;
 	cmd_node->fd_out = 1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = NULL;
 	cmd_node->cmd = cmd;
@@ -252,7 +252,7 @@ t_data *init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data)
 	cmd_node->type = EXTERN | REDIRECT_IN | HEREDOC;
 	cmd_node->fd_in = 0;
 	cmd_node->fd_out = 1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = NULL;
 	cmd_node->cmd = cmd;
@@ -329,7 +329,7 @@ t_data *init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data)
 	cmd_node->type = EXTERN | REDIRECT_IN | HEREDOC | REDIRECT_OUT;
 	cmd_node->fd_in = 0;
 	cmd_node->fd_out = 1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = file_out1;
 	cmd_node->cmd = cmd;
@@ -414,7 +414,7 @@ t_data *init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *dat
 	cmd_node->type = EXTERN | REDIRECT_IN | HEREDOC | REDIRECT_OUT;
 	cmd_node->fd_in = 0;
 	cmd_node->fd_out = 1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = file_out1;
 	cmd_node->cmd = cmd;
@@ -499,7 +499,7 @@ t_data *init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_da
 	cmd_node->type = EXTERN | REDIRECT_IN | HEREDOC | REDIRECT_OUT | APPEND;
 	cmd_node->fd_in = 0;
 	cmd_node->fd_out = 1;
-	cmd_node->error_code = 0;
+	cmd_node->cmd_exit_status = 0;
 	cmd_node->file_in = file1;
 	cmd_node->file_out = file_out1;
 	cmd_node->cmd = cmd;

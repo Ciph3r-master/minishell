@@ -38,7 +38,7 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	{
 		exec_out = exec_simple_cmd_builtins(cmd_node, data);
 		if (exec_out == -1)
-			free_and_exit(data);
+			free_and_exit(data, 326);
 		if (exec_out == -2)
 			return (-2);
 	}
@@ -46,13 +46,16 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	{
 		exec_out = exec_simple_cmd_extern(cmd_node, data);
 		if (exec_out == -1)
-			free_and_exit(data);
+			free_and_exit(data, 326);
 		if (exec_out == -2)
 			return (-2);
 	}
 	return (1);
 }
 
+// je vais bosser avec exec_out
+// exec_out sera set a 0 au depart
+//
 int	exec(t_data *data)
 {
 	t_cmd_node	*cmd_node;
@@ -65,7 +68,7 @@ int	exec(t_data *data)
 	if (pipeline_has_heredoc(cmd_node))
 	{
 		if (-1 == exec_heredoc(cmd_node))
-			free_and_exit(data);
+			free_and_exit(data, 1);
 	}
 	if (!cmd_node->next)
 	{
@@ -76,7 +79,7 @@ int	exec(t_data *data)
 	else if (cmd_node->next)
 	{
 		if (exec_pipe(cmd_node, data) == -1)
-			free_and_exit(data);
+			free_and_exit(data, 1);
 	}
 	return (0);
 }

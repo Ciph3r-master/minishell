@@ -35,76 +35,86 @@ int	size_pids(t_cmd_node *cmd_node)
 	return (size_pids);
 }
 
-// on va dans une boucle, executer chaque commande suivi d'un pipe
-// on va faire les redirection des pipe avant celle
-// des redir_in et de redir_out, pour chaque commande
-// puis on fait les redir_in et out, ainsi on a les redir qui prennent
-// la priorité sur les pipes
+void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
+{
+	int	exit_code;
+
+	exit_code = 0;
+	if (data->old_pipe[0] != -1)
+	{
+		dup2(data->old_pipe[0], STDIN_FILENO);
+		close(data->old_pipe[0]);
+	}
+	if (cur_cmd->next)
+	{
+		dup2(data->new_pipe[1], STDOUT_FILENO);
+		close(data->new_pipe[0]);
+		close(data->new_pipe[1]);
+	}
+	if (data->old_pipe[1] != -1)
+		close(data->old_pipe[1]);
+	exec_redirections(cur_cmd);
+	exec_simple_cmd(cur_cmd, data);
+	free_and_exit(data, data->exit_status);
+}
+
+int	exec_pipe_loop_cmd(t_data *data, t_cmd_node *cur_cmd, int *pids, int *i)
+{
+	pid_t		pid;
+
+	if (cur_cmd->next)
+		pipe(data->new_pipe);
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
+		exec_pipe_child(cur_cmd, data);
+	pids[(*i)++] = pid;
+	if (data->old_pipe[0] != -1)
+		close(data->old_pipe[0]);
+	if (data->old_pipe[1] != -1)
+		close(data->old_pipe[1]);
+	data->old_pipe[0] = data->new_pipe[0];
+	data->old_pipe[1] = data->new_pipe[1];
+	return (1);
+}
+
+void	exec_pipe_get_exit_status(t_data *data, pid_t *pids, int i)
+{
+	int	status;
+	int	j;
+
+	j = 0;
+	data->exit_status = -1;
+	while (j < i)
+	{
+		waitpid(pids[j], &status, 0);
+		if (WIFEXITED(status) && j == i - 1)
+			data->exit_status = WEXITSTATUS(status);
+		j++;
+	}
+}
+
 int	exec_pipe(t_cmd_node *cmd_node, t_data *data)
 {
-	int			old_pipe[2];
-	int			new_pipe[2];
-	pid_t		pid;
-	pid_t		*pids;
-	int			status;
-	int			i;
-	int 		j;
-	int 		last_exit_code;
 	t_cmd_node	*cur_cmd;
+	pid_t		*pids;
+	int			i;
 
-	old_pipe[0] = -1;
-	old_pipe[1] = -1;
+	data->old_pipe[0] = -1;
+	data->old_pipe[1] = -1;
 	cur_cmd = cmd_node;
 	i = 0;
 	pids = malloc(sizeof(int) * size_pids(cmd_node));
 	if (!pids)
 		return (-1);
-
 	while (cur_cmd)
 	{
-		if (cur_cmd->next)
-			pipe(new_pipe);
-		pid = fork();
-		if (pid == -1)
+		if (exec_pipe_loop_cmd(data, cur_cmd, pids, &i) != 1)
 			return (-1);
-		if (pid == 0)
-		{
-			if (old_pipe[0] != -1)
-			{
-				dup2(old_pipe[0], STDIN_FILENO);
-				close(old_pipe[0]);
-			}
-			if (cur_cmd->next)
-			{
-				dup2(new_pipe[1], STDOUT_FILENO);
-				close(new_pipe[0]);
-				close(new_pipe[1]);
-			}
-			if (old_pipe[1] != -1)
-				close(old_pipe[1]);
-			exec_redirections(cur_cmd);
-			exec_simple_cmd(cur_cmd, data);
-			free_and_exit(data);
-		}
-		pids[i++] = pid;
-		if (old_pipe[0] != -1)
-			close(old_pipe[0]);
-		if (old_pipe[1] != -1)
-			close(old_pipe[1]);
-		old_pipe[0] = new_pipe[0];
-		old_pipe[1] = new_pipe[1];
 		cur_cmd = cur_cmd->next;
 	}
-	j = 0;
-	last_exit_code = -1;
-	while (j < i)
-	{
-		waitpid(pids[j], &status, 0);
-		if (WIFEXITED(status))
-			last_exit_code = WEXITSTATUS(status);
-		j++;
-	}
+	exec_pipe_get_exit_status(data, pids, i);
 	free(pids);
-	data->exit_status = last_exit_code;
 	return (1);
 }

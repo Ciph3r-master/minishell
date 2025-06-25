@@ -14,7 +14,7 @@ t_cmd_node *cmdlist_create_node(void)
 	node->fd_in = -1;
 	node->fd_out = -1;
 	node->type = 0;
-	node->error_code = 0;
+	node->cmd_exit_status = 0;
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);

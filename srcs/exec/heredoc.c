@@ -12,29 +12,9 @@
 
 #include <stdio.h>
 #include <readline/readline.h>
+#include <signal.h>
 #include "minishell.h"
 #include "libft.h"
-
-// au final c'est quoi un heredoc
-// c'est, on creer un fichier temporaire
-// il faudra le close et supprimer apres son execution dans
-// les execution des redir_in avec unlink()
-// ou a la sortie du programme
-// on utilise le nom du fichier temporaire
-// pour creer le fichier
-
-// on va ensuite ouvrir readline dans une boucle infinie
-// on va lire la ligne,
-// si la ligne est egale au delimiteur
-// :
-//	on vas ecrire la derniere line et ajouter '\0'
-//	on va fermer le fichier
-//	on sort de la boucle
-// si on as ctrl + D donc EOF, (\n ?)
-// on doit ecrire la phrase du ctrl d et quitter le readline
-// la ligne que j'ai ecrit dans ma line doit etre ecrite dans
-// le fd de mon fichier ouvert avec write(fd, , )
-//
 
 int	readline_heredoc(char *limiter, int fd)
 {
@@ -43,7 +23,10 @@ int	readline_heredoc(char *limiter, int fd)
 	here_line = readline("> ");
 	if (!here_line)
 	{
-		write(1, "ctrl+d in heredoc, EOF\n", 23);
+		write(STDERR_FILENO, "bash: warning: here-document ", 29);
+		write(STDERR_FILENO, "delimited by end-of-file (wanted `", 34);
+		write(STDERR_FILENO, limiter, ft_strlen(limiter));
+		write(STDERR_FILENO, "')\n", 3);
 		return (0);
 	}
 	if (ft_strcmp(limiter, here_line) == 0)
@@ -68,8 +51,10 @@ int	read_heredoc_fd(t_filelist *cur_file_in)
 	limiter = cur_file_in->limiter;
 	fd = cur_file_in->fd;
 	reading = 1;
+	signal(SIGINT, SIG_DFL);
 	while (reading)
 		reading = readline_heredoc(limiter, fd);
+	signal(SIGINT, sigint_handler);
 	if (close(fd) == -1)
 		return (-1);
 	cur_file_in->fd = -1;

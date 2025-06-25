@@ -32,14 +32,16 @@ int	main(int argc, char **argv, char **env)
 		{
 			write(1, "exit\n", 5);
 			rl_clear_history();
-			free_and_exit(&data);
+			free_and_exit(&data, data.exit_status);
 		}
 		free_cmd_list(&data.cmd_node);
 		free_tokenlist(&data.tokenlist);
 		add_history(data.line);
 		init_tokens(&data);
 		free(data.line);
+		printf("\n ---------- data -------\n\n");
 		exec(&data);
+		printf("exit status:%d\n", data.exit_status);
 	}
 	return (0);
 }

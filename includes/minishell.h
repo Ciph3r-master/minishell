@@ -99,7 +99,7 @@ typedef struct s_cmd_node
 	int			type;
 	int			fd_in;
 	int			fd_out;
-	int			error_code;
+	int			cmd_exit_status;
 	t_filelist	*file_in;
 	t_filelist	*file_out;
 	t_cmd		*cmd;
@@ -109,6 +109,8 @@ typedef struct s_cmd_node
 
 typedef struct s_data
 {
+	int			old_pipe[2];
+	int			new_pipe[2];
 	int			exit_status;
 	char		*pwd;
 	char		*line;
@@ -197,13 +199,13 @@ void		print_env_copy(char **env_copy);
 
 // error/
 	// free_and_exit.c
-void		free_and_exit(t_data *data);
+void		free_and_exit(t_data *data, int exit_code);
 
 // exec/
 	// builtins.c
 int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
 	// cmd_path.c
-int			cmd_is_directory(t_cmd_node *cmd_node);
+int			cmd_is_directory(t_cmd_node *cmd_node, t_data *data);
 int			is_executable_cmd(t_cmd_node *cmd_node);
 int			find_path_with_access(char **paths, char **pathname);
 int			get_cmd_path_name(t_cmd_node *cmd_node);
@@ -216,7 +218,6 @@ int			exec(t_data *data);
 int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	// extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
-int			cmd_is_directory(t_cmd_node *cmd_node);
 	// faker_extern.c
 t_data		*init_extern_simple_cmd(t_data *data);
 t_data		*init_extern_cmd_redir_in(t_data *data);
@@ -250,7 +251,7 @@ int			exec_redirections(t_cmd_node *cmd_node);
 	// delete_tmp_file.c
 void		delete_tmp_files(t_data *data);
 	// free_all.c
-void		free_all(t_data *data);
+void		free_all(t_data *data, int exit_code);
 	// free_env_copy.c
 void		free_env_copy(char **env_copy);
 	// free_env_list.c
@@ -268,6 +269,7 @@ void		free_matrix(char **split);
 	// init_signals.c
 void		init_signals(void);
 void		sigint_handler(int sig);
+void		sigint_handler_heredoc(int sig);
 
 
 
