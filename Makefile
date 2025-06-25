@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/17 22:12:41 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/22 14:52:54 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,8 +102,10 @@ SRCS_MEMORY	:=							\
 
 SRCS_PARSING :=							\
 	$(DIR_PARSING)/quotes.c 			\
-	$(DIR_PARSING)/token.c  			\
 	$(DIR_PARSING)/token_utils.c		\
+	$(DIR_PARSING)/cmd_utils.c			\
+	$(DIR_PARSING)/token_init.c			\
+	$(DIR_PARSING)/cmd_node.c			\
 	$(DIR_PARSING)/expand.c				\
 	$(DIR_PARSING)/extract_token.c		\
 	$(DIR_PARSING)/set_token_type.c		\

@@ -140,7 +140,6 @@ t_tokenlist *tokenlist_insert_after(t_tokenlist *node, void *content, t_tokentyp
 
 void tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node)
 {
-	//GERER ERROR
 	if (!head || !*head || !node)
 		return;
 	if (node->prev)

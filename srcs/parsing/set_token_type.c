@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_token_type.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:23:56 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/18 21:32:24 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/19 18:56:52 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	set_builtin(t_tokenlist *tl)
 		current = current->next;
 	}
 }
-//TODO GERER AUSSI LES COMMANDES IN QUOTES arg ...
+
 void	set_cmd(t_tokenlist *tl)
 {
 	t_tokenlist	*current;
