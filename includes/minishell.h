@@ -239,7 +239,7 @@ t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
 	// heredoc.c
-int			exec_heredoc(t_cmd_node *cmd_node);
+int			exec_heredoc(t_cmd_node *cmd_node, t_data *data);
 	// redir_in_and_hd.c
 int			exec_redir_in_and_hd(t_filelist	*cur_file_in);
 	// redir_out_and_append.c
