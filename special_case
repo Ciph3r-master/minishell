@@ -41,5 +41,3 @@ normalement il va kill,
 dans status du wait je peut recuperer le exit code qui sera celui du signal d'exit
 
 on dirais que mes retour d'erreur marchent
-
-

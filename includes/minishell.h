@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/25 14:50:09 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/26 21:04:36 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_data
 {
 	int			old_pipe[2];
 	int			new_pipe[2];
+	int			saved_stdin;
+	int			saved_stdout;
 	int			exit_status;
 	char		*pwd;
 	char		*line;
