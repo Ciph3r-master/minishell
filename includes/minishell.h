@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/26 21:04:36 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/26 22:10:17 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int			is_executable_cmd(t_cmd_node *cmd_node);
 int			find_path_with_access(char **paths, char **pathname);
 int			get_cmd_path_name(t_cmd_node *cmd_node);
 	// create_tmp_file.c
-int			create_tmp_file(t_filelist *cur_file_in);
+int			create_tmp_file(t_filelist *cur_file_in, t_data *data);
 	// exec_pipe.c
 int			exec_pipe(t_cmd_node *cmd_node, t_data *data);
 	// exec.c

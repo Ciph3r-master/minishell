@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/26 20:53:18 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/26 22:04:18 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ int	exec(t_data *data)
 	cmd_node = data->cmd_node;
 	exec_out = 0;
 	if (pipeline_has_heredoc(cmd_node))
-	{
-		if (-1 == exec_heredoc(cmd_node, data))
-			free_and_exit(data, 1);
-	}
+		exec_heredoc(cmd_node, data);
 	if (!cmd_node->next)
 	{
 		exec_out = exec_simple_cmd(cmd_node, data);
