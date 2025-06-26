@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:27:53 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 18:47:38 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 01:02:10 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,19 @@
 
 int	exec_redir_in(t_filelist *cur_file_in)
 {
+	char	*filename;
+
 	if (!cur_file_in || !cur_file_in->filename)
 		return (-1);
-	if (access(cur_file_in->filename, F_OK) == -1)
+	filename = cur_file_in->filename;
+	if (access(filename, F_OK) == -1)
 	{
-		printf("minishell: %s: ", cur_file_in->filename);
-		printf("No such file or directory\n");
+		write(STDERR_FILENO, "minishell: ", 11);
+		write(STDERR_FILENO, filename, ft_strlen(filename));
+		write(STDERR_FILENO, ": No such file or directory\n", 28);
 		return (-2);
 	}
-	cur_file_in->fd = open(cur_file_in->filename, O_RDONLY);
+	cur_file_in->fd = open(filename, O_RDONLY);
 	if (cur_file_in->fd == -1)
 		return (-1);
 	if (dup2(cur_file_in->fd, STDIN_FILENO) == -1)
