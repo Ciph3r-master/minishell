@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:11 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/25 14:49:13 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:42:45 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int init_tokens(t_data *data)
 			break;
 		data->tokenlist = tmp;
 	}
-	find_expand(&data->tokenlist, data->env_list);
+	find_expand(data);
 	merge_token(&data->tokenlist);
 	set_operator(data->tokenlist);
 	if (is_invalid_redir(data->tokenlist))

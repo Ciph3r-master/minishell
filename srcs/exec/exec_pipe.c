@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:39:46 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/25 15:59:28 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:24:36 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	size_pids(t_cmd_node *cmd_node)
 
 void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
 {
-	int	exit_code;
+	//int	exit_code;
 
-	exit_code = 0;
+	//exit_code = 0;
 	if (data->old_pipe[0] != -1)
 	{
 		dup2(data->old_pipe[0], STDIN_FILENO);

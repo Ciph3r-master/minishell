@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/25 14:50:09 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:42:19 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,11 +177,11 @@ void 		print_cmdlist(t_cmd_node *cmdlist);
 int		builtin_pwd(void);
 
 //expand
-void	find_expand(t_tokenlist **tl, t_env_list *env);
+void 	find_expand(t_data *data);
 
-// data/
-	//init_data.c
-int			init_data(t_data *data, char **env);
+	// data/
+	// init_data.c
+	int init_data(t_data *data, char **env);
 
 // env_copy/
 	// env_list.c
