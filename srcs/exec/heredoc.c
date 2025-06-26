@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/17 01:58:34 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/26 21:50:29 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,40 +49,18 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 	char		*limiter;
 	int			reading;
 	int			fd;
-	pid_t		pid;
-	int			status;
-	int			sig;
 
+	(void)data;
 	if (!cur_file_in || !cur_file_in->limiter)
 		return (-1);
 	limiter = cur_file_in->limiter;
 	fd = cur_file_in->fd;
 	reading = 1;
-	pid = fork();
-	if (pid == -1)
-		return (-1);
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		while (reading)
-			reading = readline_heredoc(limiter, fd);
-		exit(0);
-	}
+	while (reading)
+		reading = readline_heredoc(limiter, fd);
 	if (close(fd) == -1)
 		return (-1);
 	cur_file_in->fd = -1;
-	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
-	{
-		sig = WTERMSIG(status);
-		data->exit_status = 128 + sig;
-		if (sig == SIGINT)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			rl_replace_line("", 0);
-			rl_on_new_line();
-		}
-	}
 	return (1);
 }
 
@@ -126,7 +104,7 @@ int	exec_heredoc(t_cmd_node *cmd_node, t_data *data)
 	cur_cmd = cmd_node;
 	while (cur_cmd)
 	{
-		if (-1 == run_heredoc_in_file_in(cur_cmd->file_in, data))
+		if (run_heredoc_in_file_in(cur_cmd->file_in, data) == -1)
 			return (-1);
 		cur_cmd = cur_cmd->next;
 	}
