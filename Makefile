@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
+#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/22 14:52:54 by billcipher       ###   ########.fr        #
+#    Updated: 2025/06/27 21:51:40 by thibaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ SRCS_EXEC	:=							\
 	$(DIR_EXEC)/extern.c				\
 	$(DIR_EXEC)/faker_builtin.c			\
 	$(DIR_EXEC)/faker_extern.c			\
+	$(DIR_EXEC)/get_env.c				\
 	$(DIR_EXEC)/heredoc.c				\
 	$(DIR_EXEC)/redir_in_and_hd.c		\
 	$(DIR_EXEC)/redir_out_and_append.c	\

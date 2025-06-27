@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 20:00:34 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 21:06:53 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	pipeline_has_heredoc(t_cmd_node *cmd_node)
 int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 {
 	int	node_type;
-	int	exec_out;
 
 	node_type = cmd_node->type;
 	if (BUILTIN & node_type)
@@ -41,9 +40,7 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	else if (REDIRECT_IN & node_type || HEREDOC & node_type
 		|| REDIRECT_OUT & node_type || APPEND & node_type)
 	{
-		exec_out = exec_redirections(cmd_node, data);
-		if (exec_out != 1)
-			return (exec_out);
+		exec_redirections(cmd_node, data);
 		reset_stdin_stdout(data);
 	}
 	return (1);

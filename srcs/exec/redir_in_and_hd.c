@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:27:53 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 16:55:27 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 21:06:43 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	exec_redir_in_and_hd(t_filelist	*file_in, t_data *data)
 	if (!file_in)
 		free_and_exit(data, 1);
 	cur_file_in = file_in;
-	while (cur_file_in)
+	while (cur_file_in && data->exit_status == 0)
 	{
 		if (FILE_IN == cur_file_in->type)
 			exec_redir_in(cur_file_in, data);

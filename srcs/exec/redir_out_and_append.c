@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:08:37 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/27 17:00:09 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 21:08:18 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exec_redir_out_and_append(t_filelist *file_out, t_data *data)
 	if (!file_out)
 		free_and_exit(data, 1);
 	cur_file_out = file_out;
-	while (cur_file_out)
+	while (cur_file_out && data->exit_status == 0)
 	{
 		if (FILE_OUT == cur_file_out->type)
 			exec_redir_out(cur_file_out, data);

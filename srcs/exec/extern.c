@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 17:28:27 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 19:55:48 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 21:28:38 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (-1 != execve(pathname, args, data->env_copy))
+		if (execve(pathname, args, data->env_copy) == -1)
 			free_and_exit(data, 1);
 	}
 	else
@@ -77,6 +77,8 @@ int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 	if (!cmd_node)
 		free_and_exit(data, 1);
 	exec_redirections(cmd_node, data);
+	if (data->exit_status != 0)
+		return (0);
 	cmd_is_directory(cmd_node, data);
 	exec_extern(cmd_node, data);
 	reset_stdin_stdout(data);
