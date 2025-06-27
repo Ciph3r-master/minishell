@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 02:16:23 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 02:51:53 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	cmd_is_directory(t_cmd_node *cmd_node, t_data *data)
 	cmd = cmd_node->cmd->cmd;
 	special_case_directory(cmd_node, data);
 	if (stat(cmd, &info) != 0)
-		free_and_exit(data, 1);
+		return (0);
 	if (S_ISDIR(info.st_mode))
 	{
 		write(STDERR_FILENO, "minishell: ", 11);
@@ -68,7 +68,7 @@ int	is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data)
 	return (1);
 }
 
-int	find_path_with_access(char **paths, char **pathname)
+int	find_path_with_access(char **paths, char **pathname, t_data *data)
 {
 	int	i;
 
@@ -81,38 +81,34 @@ int	find_path_with_access(char **paths, char **pathname)
 			if (NULL == *pathname)
 			{
 				ft_free_char_tab_all(paths);
-				return (-1);
+				free_and_exit(data, 1);
 			}
 			return (1);
 		}
 		i++;
 	}
-	return (-2);
+	return (0);
 }
 
-int	get_cmd_path_name(t_cmd_node *cmd_node)
+int	get_cmd_path_name(t_cmd_node *cmd_node, t_data *data)
 {
 	char	*pathname;
 	char	*path;
 	char	**paths;
-	int		exec_out;
 
 	pathname = NULL;
 	path = getenv("PATH");
 	if (NULL == path)
-		return (-1);
+		free_and_exit(data, 1);
 	paths = ft_split_set(path, ":");
+	if (!paths)
+		free_and_exit(data, 1);
 	if (ft_add_string_to_strings(paths, "/") == NULL)
-		return (-1);
+		free_and_exit(data, 1);
 	if (ft_add_string_to_strings(paths, cmd_node->cmd->args[0]) == NULL)
-		return (-1);
-	exec_out = find_path_with_access(paths, &pathname);
-	if (exec_out != 1)
-	{
-		ft_free_char_tab_all(paths);
-		return (exec_out);
-	}
-	cmd_node->cmd->pathname = pathname;
+		free_and_exit(data, 1);
+	find_path_with_access(paths, &pathname, data);
 	ft_free_char_tab_all(paths);
+	cmd_node->cmd->pathname = pathname;
 	return (1);
 }

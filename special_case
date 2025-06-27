@@ -12,3 +12,9 @@ builtins
 
 les > sont casse quand il sont seul, ils ne cree pas de fichier, il marche
 dans un pipe ...
+
+dans int	get_cmd_path_name(t_cmd_node *cmd_node)
+je dois changer et ne plus utiliser getenv, je doit faire mon propre getenv pour trouver PATH
+dans l'env copie de minishell
+
+a faire : continuer le refactoring depuis exec_extern

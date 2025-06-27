@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 17:28:27 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 02:19:31 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 02:45:35 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 	is_cmd_name_executable(cmd_node, data);
 	if (pathname == NULL)
 	{
-		exec_out = get_cmd_path_name(cmd_node);
+		exec_out = get_cmd_path_name(cmd_node, data);
 		if (exec_out == -2)
 		{
 			write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
