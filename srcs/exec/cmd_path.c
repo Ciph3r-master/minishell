@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 02:51:53 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 19:39:25 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,13 @@ int	is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data)
 	return (1);
 }
 
-int	find_path_with_access(char **paths, char **pathname, t_data *data)
+int	find_path_with_access(char **paths, char **pathname,
+	t_data *data, t_cmd_node *cmd_node)
 {
-	int	i;
+	char	*cmd;
+	int		i;
 
+	cmd = cmd_node->cmd->cmd;
 	i = 0;
 	while (paths[i])
 	{
@@ -87,6 +90,10 @@ int	find_path_with_access(char **paths, char **pathname, t_data *data)
 		}
 		i++;
 	}
+	write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, ": command not found\n", 20);
+	data->exit_status = 127;
 	return (0);
 }
 
@@ -107,7 +114,7 @@ int	get_cmd_path_name(t_cmd_node *cmd_node, t_data *data)
 		free_and_exit(data, 1);
 	if (ft_add_string_to_strings(paths, cmd_node->cmd->args[0]) == NULL)
 		free_and_exit(data, 1);
-	find_path_with_access(paths, &pathname, data);
+	find_path_with_access(paths, &pathname, data, cmd_node);
 	ft_free_char_tab_all(paths);
 	cmd_node->cmd->pathname = pathname;
 	return (1);

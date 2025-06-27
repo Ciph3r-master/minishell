@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:24:41 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/27 01:53:42 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:57:11 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	save_stdin_stdout(int *saved_stdin, int *saved_stdout)
 int	reset_stdin_stdout(t_data *data)
 {
 	if (dup2(data->saved_stdin, STDIN_FILENO) == -1)
-		return (-1);
+		free_and_exit(data, 1);
 	if (dup2(data->saved_stdout, STDOUT_FILENO) == -1)
-		return (-1);
+		free_and_exit(data, 1);
 	return (1);
 }
 

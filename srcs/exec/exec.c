@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 02:17:23 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 19:58:41 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	if (BUILTIN & node_type)
 		exec_simple_cmd_builtins(cmd_node, data);
 	else if (EXTERN & node_type)
-		exec_out = exec_simple_cmd_extern(cmd_node, data);
+		exec_simple_cmd_extern(cmd_node, data);
 	else if (REDIRECT_IN & node_type || HEREDOC & node_type
 		|| REDIRECT_OUT & node_type || APPEND & node_type)
 	{
@@ -61,9 +61,7 @@ int	exec(t_data *data)
 	if (!cmd_node->next)
 		exec_simple_cmd(cmd_node, data);
 	else if (cmd_node->next)
-	{
 		if (exec_pipe(cmd_node, data) == -1)
 			free_and_exit(data, 1);
-	}
 	return (0);
 }

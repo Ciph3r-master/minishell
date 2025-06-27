@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 17:28:27 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 02:45:35 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 19:55:48 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 	args = cmd_node->cmd->args;
 	pid = fork();
 	if (-1 == pid)
-		return (-1);
+		free_and_exit(data, 1);
 	if (0 == pid)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (-1 != execve(pathname, args, data->env_copy))
-			return (-1);
+			free_and_exit(data, 1);
 	}
 	else
 		get_child_exit_status(data);
@@ -62,29 +62,14 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 
 int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 {
-	char	*cmd;
-	char	*pathname;
-	int 	exec_out;
-
 	if (!cmd_node || !cmd_node->cmd->cmd)
 		free_and_exit(data, 1);
-	cmd = cmd_node->cmd->cmd;
-	pathname = cmd_node->cmd->pathname;
 	is_cmd_name_executable(cmd_node, data);
-	if (pathname == NULL)
-	{
-		exec_out = get_cmd_path_name(cmd_node, data);
-		if (exec_out == -2)
-		{
-			write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
-			write(STDERR_FILENO, cmd, ft_strlen(cmd));
-			write(STDERR_FILENO, ": command not found\n", 20);
-			data->exit_status = 127;
-			return (exec_out);
-		}
-	}
-	exec_out = execute_cmd_in_child_process(cmd_node, data);
-	return (exec_out);
+	if (cmd_node->cmd->pathname == NULL)
+		get_cmd_path_name(cmd_node, data);
+	if (cmd_node->cmd->pathname != NULL)
+		execute_cmd_in_child_process(cmd_node, data);
+	return (1);
 }
 
 int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
