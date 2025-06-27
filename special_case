@@ -43,3 +43,7 @@ dans status du wait je peut recuperer le exit code qui sera celui du signal d'ex
 on dirais que mes retour d'erreur marchent
 
 
+// ERREUR EXEC
+
+"" -> bash: : command not found
+'' -> bash: : command not found
