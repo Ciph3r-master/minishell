@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-19 16:52:24 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/27 02:16:23 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,18 @@ int	special_case_directory(t_cmd_node *cmd_node, t_data *data)
 	char		*cmd;
 
 	if (!cmd_node || !cmd_node->cmd->cmd)
-		return (-1);
+		free_and_exit(data, 1);
 	cmd = cmd_node->cmd->cmd;
-
 	if (ft_strcmp(".", cmd) == 0)
 	{
 		write(STDERR_FILENO, "minishell: .: filename argument required\n", 41);
 		write(STDERR_FILENO, ".: usage: . filename [arguments]\n", 33);
 		data->exit_status = 2;
-		return (-2);
 	}
 	if (ft_strcmp("..", cmd) == 0)
 	{
 		write(STDERR_FILENO, "..: command not found\n", 22);
 		data->exit_status = 127;
-		return (-2);
 	}
 	return (1);
 }
@@ -45,36 +42,29 @@ int	cmd_is_directory(t_cmd_node *cmd_node, t_data *data)
 {
 	struct stat	info;
 	char		*cmd;
-	int			exec_out;
 
 	if (!cmd_node || !cmd_node->cmd->cmd)
-		return (-1);
+		free_and_exit(data, 1);
 	cmd = cmd_node->cmd->cmd;
-	exec_out = special_case_directory(cmd_node, data);
-	if (exec_out != 1)
-		return (exec_out);
+	special_case_directory(cmd_node, data);
 	if (stat(cmd, &info) != 0)
-		return (1);
+		free_and_exit(data, 1);
 	if (S_ISDIR(info.st_mode))
 	{
 		write(STDERR_FILENO, "minishell: ", 11);
 		write(STDERR_FILENO, cmd, strlen(cmd));
 		write(STDERR_FILENO, ": Is a directory\n", 17);
 		data->exit_status = 126;
-		return (-2);
 	}
 	return (1);
 }
 
-int	is_executable_cmd(t_cmd_node *cmd_node)
+int	is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data)
 {
 	if (!cmd_node || !cmd_node->cmd->cmd)
-		return (-1);
+		free_and_exit(data, 1);
 	if (0 == access(cmd_node->cmd->cmd, X_OK))
-	{
 		cmd_node->cmd->pathname = cmd_node->cmd->cmd;
-		return (1);
-	}
 	return (1);
 }
 

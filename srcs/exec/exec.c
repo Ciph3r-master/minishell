@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 01:10:17 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 02:17:23 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,16 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 
 	node_type = cmd_node->type;
 	if (BUILTIN & node_type)
-	{
-		exec_out = exec_simple_cmd_builtins(cmd_node, data);
-		if (exec_out == -1)
-			free_and_exit(data, 1);
-		if (exec_out == -2)
-			return (-2);
-	}
+		exec_simple_cmd_builtins(cmd_node, data);
 	else if (EXTERN & node_type)
-	{
 		exec_out = exec_simple_cmd_extern(cmd_node, data);
-		if (exec_out == -1)
-			free_and_exit(data, 1);
-		if (exec_out == -2)
-			return (-2);
-	}
 	else if (REDIRECT_IN & node_type || HEREDOC & node_type
 		|| REDIRECT_OUT & node_type || APPEND & node_type)
 	{
-		exec_out = exec_redirections(cmd_node);
+		exec_out = exec_redirections(cmd_node, data);
 		if (exec_out != 1)
 			return (exec_out);
-		if (reset_stdin_stdout(data->saved_stdin, data->saved_stdout) != 1)
-			return (-1);
+		reset_stdin_stdout(data);
 	}
 	return (1);
 }

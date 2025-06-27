@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:39:46 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/26 20:23:52 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 01:30:11 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
 	}
 	if (data->old_pipe[1] != -1)
 		close(data->old_pipe[1]);
-	exec_redirections(cur_cmd);
+	exec_redirections(cur_cmd, data);
 	exec_simple_cmd(cur_cmd, data);
 	free_and_exit(data, data->exit_status);
 }

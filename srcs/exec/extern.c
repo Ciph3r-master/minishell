@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extern.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-19 17:28:27 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-19 17:28:27 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/19 17:28:27 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/06/27 02:19:31 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,16 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 
 int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 {
-	int		exec_out;
 	char	*cmd;
+	char	*pathname;
+	int 	exec_out;
 
-
-	exec_out = 1;
-	cmd = cmd_node->cmd->cmd;
 	if (!cmd_node || !cmd_node->cmd->cmd)
-		return (-1);
-	if (is_executable_cmd(cmd_node) == -1)
-		return (-1);
-	if (cmd_node->cmd->pathname == NULL)
+		free_and_exit(data, 1);
+	cmd = cmd_node->cmd->cmd;
+	pathname = cmd_node->cmd->pathname;
+	is_cmd_name_executable(cmd_node, data);
+	if (pathname == NULL)
 	{
 		exec_out = get_cmd_path_name(cmd_node);
 		if (exec_out == -2)
@@ -90,24 +89,11 @@ int	exec_extern(t_cmd_node *cmd_node, t_data *data)
 
 int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 {
-	int	exec_out;
-	int	saved_stdin;
-	int	saved_stdout;
-
 	if (!cmd_node)
-		return (-1);
-	if (save_stdin_stdout(&saved_stdin, &saved_stdout) == -1)
-		return (-1);
-	exec_out = exec_redirections(cmd_node);
-	if (exec_out != 1)
-		return (exec_out);
-	exec_out = cmd_is_directory(cmd_node, data);
-	if (exec_out != 1)
-		return (exec_out);
-	exec_out = exec_extern(cmd_node, data);
-	if (exec_out != 1)
-		return (exec_out);
-	if (reset_stdin_stdout(saved_stdin, saved_stdout) != 1)
-		return (-1);
+		free_and_exit(data, 1);
+	exec_redirections(cmd_node, data);
+	cmd_is_directory(cmd_node, data);
+	exec_extern(cmd_node, data);
+	reset_stdin_stdout(data);
 	return (1);
 }
