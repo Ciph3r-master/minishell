@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/26 20:15:58 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/27 15:02:29 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static void	split_token(t_data *data, t_tokenlist *current)
 	while (i - 1 >= 0)
 	{
 		tokenlist_insert_after(current, ft_strdup(split[i - 1]), TARG);
-		if (i > 0)
+		if (i - 1 > 0)
 			tokenlist_insert_after(current, NULL, TSPACE);
 		i--;
 	}
