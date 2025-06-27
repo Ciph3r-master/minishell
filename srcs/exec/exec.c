@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/25 16:32:50 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:20:24 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,55 +31,33 @@ int	pipeline_has_heredoc(t_cmd_node *cmd_node)
 int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 {
 	int	node_type;
-	int	exec_out;
 
 	node_type = cmd_node->type;
 	if (BUILTIN & node_type)
+		exec_simple_cmd_builtins(cmd_node, data);
+	else if (EXTERN & node_type)
+		exec_simple_cmd_extern(cmd_node, data);
+	else if (REDIRECT_IN & node_type || HEREDOC & node_type
+		|| REDIRECT_OUT & node_type || APPEND & node_type)
 	{
-		exec_out = exec_simple_cmd_builtins(cmd_node, data);
-		if (exec_out == -1)
-			free_and_exit(data, 1);
-		if (exec_out == -2)
-			return (-2);
-	}
-	if (EXTERN & node_type)
-	{
-		exec_out = exec_simple_cmd_extern(cmd_node, data);
-		if (exec_out == -1)
-			free_and_exit(data, 1);
-		if (exec_out == -2)
-			return (-2);
+		exec_redirections(cmd_node, data);
+		reset_stdin_stdout(data);
 	}
 	return (1);
 }
 
-// je vais bosser avec exec_out
-// exec_out sera set a 0 au depart
-//
 int	exec(t_data *data)
 {
 	t_cmd_node	*cmd_node;
-	int			exec_out;
 
 	if (!data || !data->cmd_node)
 		return (-2);
 	cmd_node = data->cmd_node;
-	exec_out = 0;
 	if (pipeline_has_heredoc(cmd_node))
-	{
-		if (-1 == exec_heredoc(cmd_node))
-			free_and_exit(data, 1);
-	}
+		exec_heredoc(cmd_node, data);
 	if (!cmd_node->next)
-	{
-		exec_out = exec_simple_cmd(cmd_node, data);
-		if (exec_out != 1)
-			return (exec_out);
-	}
+		exec_simple_cmd(cmd_node, data);
 	else if (cmd_node->next)
-	{
-		if (exec_pipe(cmd_node, data) == -1)
-			free_and_exit(data, 1);
-	}
+		exec_pipe(cmd_node, data);
 	return (0);
 }

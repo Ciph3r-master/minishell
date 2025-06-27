@@ -59,45 +59,43 @@ char	*create_unique_id(void)
 	return (unique_id);
 }
 
-char	*create_pathname(t_filelist *cur_file_in)
+char	*create_pathname(t_filelist *cur_file_in, t_data *data)
 {
 	char	*unique_id;
 	char	*new_filename;
 	char	*pathname;
 
 	if (!cur_file_in)
-		return (NULL);
+		free_and_exit(data, 1);
 	unique_id = create_unique_id();
 	if (!unique_id)
-		return (NULL);
+		free_and_exit(data, 1);
 	new_filename = ft_strjoin(cur_file_in->filename, unique_id);
 	free(unique_id);
 	if (!new_filename)
-		return (NULL);
-	free(cur_file_in->filename);
+		free_and_exit(data, 1);
 	new_filename = ft_strjoin(new_filename, ".tmp");
 	if (!new_filename)
-		return (NULL);
+		free_and_exit(data, 1);
+	free(cur_file_in->filename);
 	cur_file_in->filename = new_filename;
 	pathname = ft_strjoin("/tmp/", cur_file_in->filename);
 	if (!pathname)
-		return (NULL);
+		free_and_exit(data, 1);
 	return (pathname);
 }
 
-int	create_tmp_file(t_filelist *cur_file_in)
+int	create_tmp_file(t_filelist *cur_file_in, t_data *data)
 {
 	int		fd;
 	char	*pathname;
 
 	if (!cur_file_in)
-		return (-1);
+		free_and_exit(data, 1);
 	fd = -1;
 	while (fd == -1)
 	{
-		pathname = create_pathname(cur_file_in);
-		if (!pathname)
-			return (-1);
+		pathname = create_pathname(cur_file_in, data);
 		fd = open(pathname, O_RDWR | O_CREAT | O_EXCL, 0644);
 		if (fd != -1)
 			cur_file_in->pathname = pathname;

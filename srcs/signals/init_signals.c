@@ -18,21 +18,11 @@
 #include <unistd.h>
 #include "minishell.h"
 
-void	sigint_handler_heredoc(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(STDOUT_FILENO, "signal\n", 7);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
 void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		(void)sig;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);

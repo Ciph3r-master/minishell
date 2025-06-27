@@ -1,49 +1,31 @@
-
 valgrind
 
 builtins
 
-executer avec le path ou avec le nom d executable
-dans mon execve si le cmd est un executable je l envoi
-directement
--- probleme de double free dans le code de quentin
-
-mettre une variable ? dans data c'est mon error code de la dernier code
-	traiter les erreur code
-	d'abort comprendre puis reflechir a l'implentation
-
-
-------- cd --------
-
-bash-5.1$ cd 0/1
-bash-5.1$ ls
-bash-5.1$ pwd
-pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
-bash-5.1$ cd
-chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
-bash-5.1$ cd ..
-
-
 --------- traiter SH level ------
------- avec is tty ------------
+----------- avec is tty ---------
 
 --------- UNSET PATH on verra c'est dans les buitlin--------
 --- si j'unset path il y aura des cas ou j'aurais un certain
 --- message et retour apres le execve qui aura echoue un truc comme ca
 
+dans int	get_cmd_path_name(t_cmd_node *cmd_node)
+je dois changer et ne plus utiliser getenv, je doit faire mon propre getenv pour trouver PATH
+dans l'env copie de minishell
 
-les > sont casse quand il sont seul, ils ne cree pas de fichier, il marche
-dans un pipe ...
+---- ajouter un compteur pour le readline du heredoc pour le write ------
 
-en fait je doit faire un fork pour le readline,
-comme ca quand je fait le control d il se fait
-normalement il va kill,
-dans status du wait je peut recuperer le exit code qui sera celui du signal d'exit
+----------------- eviter les write qui se superposent ---------------------
+char *msg;
+msg = ft_strjoin("minishell: ", cmd);               // "minishell: cmd"
+msg = ft_strjoin_free(msg, ": command not found\n"); // "minishell: cmd: command not found\n"
+write(STDERR_FILENO, msg, ft_strlen(msg));
+free(msg);
+-------------------------------------------------------------------------
 
-on dirais que mes retour d'erreur marchent
+probleme :
 
+minishell> cat <file1 <file2
 
-// ERREUR EXEC
-
-"" -> bash: : command not found
-'' -> bash: : command not found
+file1 : ls
+file2 : existe

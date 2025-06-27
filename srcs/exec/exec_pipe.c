@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:39:46 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/26 19:24:36 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/28 01:20:11 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ int	size_pids(t_cmd_node *cmd_node)
 
 void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
 {
-	//int	exit_code;
-
-	//exit_code = 0;
 	if (data->old_pipe[0] != -1)
 	{
 		dup2(data->old_pipe[0], STDIN_FILENO);
@@ -53,7 +50,7 @@ void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
 	}
 	if (data->old_pipe[1] != -1)
 		close(data->old_pipe[1]);
-	exec_redirections(cur_cmd);
+	exec_redirections(cur_cmd, data);
 	exec_simple_cmd(cur_cmd, data);
 	free_and_exit(data, data->exit_status);
 }
@@ -66,7 +63,7 @@ int	exec_pipe_loop_cmd(t_data *data, t_cmd_node *cur_cmd, int *pids, int *i)
 		pipe(data->new_pipe);
 	pid = fork();
 	if (pid == -1)
-		return (-1);
+		free_and_exit(data, 1);
 	if (pid == 0)
 	{
 		free(pids);
@@ -110,14 +107,10 @@ int	exec_pipe(t_cmd_node *cmd_node, t_data *data)
 	i = 0;
 	pids = malloc(sizeof(int) * size_pids(cmd_node));
 	if (!pids)
-		return (-1);
+		free_and_exit(data, 1);
 	while (cur_cmd)
 	{
-		if (exec_pipe_loop_cmd(data, cur_cmd, pids, &i) != 1)
-		{
-			free(pids);
-			return (-1);
-		}
+		exec_pipe_loop_cmd(data, cur_cmd, pids, &i);
 		cur_cmd = cur_cmd->next;
 	}
 	exec_pipe_get_exit_status(data, pids, i);

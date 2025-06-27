@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/26 19:42:19 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/28 01:18:24 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdio.h>
 # include <limits.h>
 # include <stdbool.h>
+# include <string.h>
+# include <signal.h>
 
 typedef enum e_cmdtype
 {
@@ -111,6 +113,8 @@ typedef struct s_data
 {
 	int			old_pipe[2];
 	int			new_pipe[2];
+	int			saved_stdin;
+	int			saved_stdout;
 	int			exit_status;
 	char		*pwd;
 	char		*line;
@@ -206,11 +210,11 @@ void		free_and_exit(t_data *data, int exit_code);
 int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
 	// cmd_path.c
 int			cmd_is_directory(t_cmd_node *cmd_node, t_data *data);
-int			is_executable_cmd(t_cmd_node *cmd_node);
-int			find_path_with_access(char **paths, char **pathname);
-int			get_cmd_path_name(t_cmd_node *cmd_node);
+int			is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data);
+int			find_path_with_access(char **paths, char **pathname, t_data *data, t_cmd_node *cmd_node);
+int			get_cmd_path_name(t_cmd_node *cmd_node, t_data *data);
 	// create_tmp_file.c
-int			create_tmp_file(t_filelist *cur_file_in);
+int			create_tmp_file(t_filelist *cur_file_in, t_data *data);
 	// exec_pipe.c
 int			exec_pipe(t_cmd_node *cmd_node, t_data *data);
 	// exec.c
@@ -218,15 +222,6 @@ int			exec(t_data *data);
 int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	// extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
-	// faker_extern.c
-t_data		*init_extern_simple_cmd(t_data *data);
-t_data		*init_extern_cmd_redir_in(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_heredoc(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
 	// faker_builtin.c
 t_data		*init_builtin_simple_cmd(t_data *data);
 t_data		*init_builtin_cmd_redir_in(t_data *data);
@@ -236,16 +231,27 @@ t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
+	// faker_extern.c
+t_data		*init_extern_simple_cmd(t_data *data);
+t_data		*init_extern_cmd_redir_in(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_heredoc(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
+t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
+	// get_env.c
+char		*ft_getenv(t_data *data, char *key);
 	// heredoc.c
-int			exec_heredoc(t_cmd_node *cmd_node);
+int			exec_heredoc(t_cmd_node *cmd_node, t_data *data);
 	// redir_in_and_hd.c
-int			exec_redir_in_and_hd(t_filelist	*cur_file_in);
+int			exec_redir_in_and_hd(t_filelist	*file_in, t_data *data);
 	// redir_out_and_append.c
-int			exec_redir_out_and_append(t_filelist *file_in);
+int			exec_redir_out_and_append(t_filelist *file_out, t_data *data);
 	// redirections.c
 int			save_stdin_stdout(int *saved_stdin, int *saved_stdout);
-int			reset_stdin_stdout(int saved_stdin, int saved_stdout);
-int			exec_redirections(t_cmd_node *cmd_node);
+int			reset_stdin_stdout(t_data *data);
+int			exec_redirections(t_cmd_node *cmd_node, t_data *data);
 
 // memory/
 	// delete_tmp_file.c
@@ -269,8 +275,5 @@ void		free_matrix(char **split);
 	// init_signals.c
 void		init_signals(void);
 void		sigint_handler(int sig);
-void		sigint_handler_heredoc(int sig);
-
-
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/25 16:37:53 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/06/28 01:20:00 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,18 @@ int	special_case_directory(t_cmd_node *cmd_node, t_data *data)
 	char		*cmd;
 
 	if (!cmd_node || !cmd_node->cmd->cmd)
-		return (-1);
+		free_and_exit(data, 1);
 	cmd = cmd_node->cmd->cmd;
-
 	if (ft_strcmp(".", cmd) == 0)
 	{
 		write(STDERR_FILENO, "minishell: .: filename argument required\n", 41);
 		write(STDERR_FILENO, ".: usage: . filename [arguments]\n", 33);
 		data->exit_status = 2;
-		return (-2);
 	}
 	if (ft_strcmp("..", cmd) == 0)
 	{
 		write(STDERR_FILENO, "..: command not found\n", 22);
 		data->exit_status = 127;
-		return (-2);
 	}
 	return (1);
 }
@@ -45,43 +42,39 @@ int	cmd_is_directory(t_cmd_node *cmd_node, t_data *data)
 {
 	struct stat	info;
 	char		*cmd;
-	int			exec_out;
 
 	if (!cmd_node || !cmd_node->cmd->cmd)
-		return (-1);
+		free_and_exit(data, 1);
 	cmd = cmd_node->cmd->cmd;
-	exec_out = special_case_directory(cmd_node, data);
-	if (exec_out != 1)
-		return (exec_out);
+	special_case_directory(cmd_node, data);
 	if (stat(cmd, &info) != 0)
-		return (1);
+		return (0);
 	if (S_ISDIR(info.st_mode))
 	{
 		write(STDERR_FILENO, "minishell: ", 11);
 		write(STDERR_FILENO, cmd, strlen(cmd));
 		write(STDERR_FILENO, ": Is a directory\n", 17);
 		data->exit_status = 126;
-		return (-2);
 	}
 	return (1);
 }
 
-int	is_executable_cmd(t_cmd_node *cmd_node)
+int	is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data)
 {
 	if (!cmd_node || !cmd_node->cmd->cmd)
-		return (-1);
+		free_and_exit(data, 1);
 	if (0 == access(cmd_node->cmd->cmd, X_OK))
-	{
-		cmd_node->cmd->pathname = ft_strdup(cmd_node->cmd->cmd);
-		return (1);
-	}
+		cmd_node->cmd->pathname = cmd_node->cmd->cmd;
 	return (1);
 }
 
-int	find_path_with_access(char **paths, char **pathname)
+int	find_path_with_access(char **paths, char **pathname,
+	t_data *data, t_cmd_node *cmd_node)
 {
-	int	i;
+	char	*cmd;
+	int		i;
 
+	cmd = cmd_node->cmd->cmd;
 	i = 0;
 	while (paths[i])
 	{
@@ -91,38 +84,38 @@ int	find_path_with_access(char **paths, char **pathname)
 			if (NULL == *pathname)
 			{
 				ft_free_char_tab_all(paths);
-				return (-1);
+				free_and_exit(data, 1);
 			}
 			return (1);
 		}
 		i++;
 	}
-	return (-2);
+	write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, ": command not found\n", 20);
+	data->exit_status = 127;
+	return (0);
 }
 
-int	get_cmd_path_name(t_cmd_node *cmd_node)
+int	get_cmd_path_name(t_cmd_node *cmd_node, t_data *data)
 {
 	char	*pathname;
 	char	*path;
 	char	**paths;
-	int		exec_out;
 
 	pathname = NULL;
 	path = getenv("PATH");
 	if (NULL == path)
-		return (-1);
+		free_and_exit(data, 1);
 	paths = ft_split_set(path, ":");
+	if (!paths)
+		free_and_exit(data, 1);
 	if (ft_add_string_to_strings(paths, "/") == NULL)
-		return (-1);
+		free_and_exit(data, 1);
 	if (ft_add_string_to_strings(paths, cmd_node->cmd->args[0]) == NULL)
-		return (-1);
-	exec_out = find_path_with_access(paths, &pathname);
-	if (exec_out != 1)
-	{
-		ft_free_char_tab_all(paths);
-		return (exec_out);
-	}
-	cmd_node->cmd->pathname = pathname;
+		free_and_exit(data, 1);
+	find_path_with_access(paths, &pathname, data, cmd_node);
 	ft_free_char_tab_all(paths);
+	cmd_node->cmd->pathname = pathname;
 	return (1);
 }
