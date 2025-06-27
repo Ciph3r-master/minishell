@@ -22,3 +22,20 @@ msg = ft_strjoin_free(msg, ": command not found\n"); // "minishell: cmd: command
 write(STDERR_FILENO, msg, ft_strlen(msg));
 free(msg);
 -------------------------------------------------------------------------
+
+
+minishell> echo < file
+[echo]-[EXTERN] -> [(null)]-[SPACE] -> [<]-[REDIRECT IN] -> [(null)]-[SPACE] -> [file]-[FILE] ->
+
+Command : [echo]
+FD in [-1] FD out [-1]
+REDIRECT in :
+[file] {(null)} [IN] ->
+Arguments :
+[echo]
+
+ ---------- data -------
+
+minishell: file: No such file or directory
+
+exit status:0

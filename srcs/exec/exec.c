@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 19:58:41 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 20:00:34 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	exec(t_data *data)
 	if (!cmd_node->next)
 		exec_simple_cmd(cmd_node, data);
 	else if (cmd_node->next)
-		if (exec_pipe(cmd_node, data) == -1)
-			free_and_exit(data, 1);
+		exec_pipe(cmd_node, data);
 	return (0);
 }
