@@ -18,3 +18,5 @@ je dois changer et ne plus utiliser getenv, je doit faire mon propre getenv pour
 dans l'env copie de minishell
 
 a faire : continuer le refactoring depuis exec_extern
+
+-- ajouter un compteur pour le readline du heredoc pour le write

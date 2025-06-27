@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/27 02:41:46 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 17:01:06 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,9 +243,9 @@ t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_
 	// heredoc.c
 int			exec_heredoc(t_cmd_node *cmd_node, t_data *data);
 	// redir_in_and_hd.c
-int			exec_redir_in_and_hd(t_filelist	*cur_file_in, t_data *data);
+int			exec_redir_in_and_hd(t_filelist	*file_in, t_data *data);
 	// redir_out_and_append.c
-int			exec_redir_out_and_append(t_filelist *file_in, t_data *data);
+int			exec_redir_out_and_append(t_filelist *file_out, t_data *data);
 	// redirections.c
 int			save_stdin_stdout(int *saved_stdin, int *saved_stdout);
 int			reset_stdin_stdout(t_data *data);
