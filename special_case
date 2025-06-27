@@ -23,19 +23,9 @@ write(STDERR_FILENO, msg, ft_strlen(msg));
 free(msg);
 -------------------------------------------------------------------------
 
+probleme :
 
-minishell> echo < file
-[echo]-[EXTERN] -> [(null)]-[SPACE] -> [<]-[REDIRECT IN] -> [(null)]-[SPACE] -> [file]-[FILE] ->
+minishell> cat <file1 <file2
 
-Command : [echo]
-FD in [-1] FD out [-1]
-REDIRECT in :
-[file] {(null)} [IN] ->
-Arguments :
-[echo]
-
- ---------- data -------
-
-minishell: file: No such file or directory
-
-exit status:0
+file1 : ls
+file2 : existe
