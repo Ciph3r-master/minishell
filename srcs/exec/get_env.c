@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:45:06 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/27 21:53:00 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/27 22:13:14 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 char	*ft_getenv(t_data *data, char *key)
 {
-
+	(void)data;
+	(void)key;
+	return (NULL);
 }
