@@ -92,6 +92,7 @@ SRCS_EXEC	:=							\
 	$(DIR_EXEC)/redirections.c
 
 SRCS_MEMORY	:=							\
+	$(DIR_MEMORY)/close_saved_fds.c		\
 	$(DIR_MEMORY)/delete_tmp_files.c	\
 	$(DIR_MEMORY)/free_all.c			\
 	$(DIR_MEMORY)/free_env_list.c		\

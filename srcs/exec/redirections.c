@@ -33,8 +33,12 @@ int	reset_stdin_stdout(t_data *data)
 		free_and_exit(data, 1);
 	if (dup2(data->saved_stdout, STDOUT_FILENO) == -1)
 		free_and_exit(data, 1);
-	close(data->saved_stdin);
-	close(data->saved_stdout);
+	if (close(data->saved_stdin) == -1)
+		free_and_exit(data, 1);
+	data->saved_stdin = -1;
+	if (close(data->saved_stdout) == -1)
+		free_and_exit(data, 1);
+	data->saved_stdout = -1;
 	return (1);
 }
 

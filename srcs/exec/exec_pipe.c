@@ -35,8 +35,9 @@ int	size_pids(t_cmd_node *cmd_node)
 	return (size_pids);
 }
 
-void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
+void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data, int *pids)
 {
+	free(pids);
 	if (data->old_pipe[0] != -1)
 	{
 		dup2(data->old_pipe[0], STDIN_FILENO);
@@ -51,6 +52,7 @@ void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data)
 	if (data->old_pipe[1] != -1)
 		close(data->old_pipe[1]);
 	exec_redirections(cur_cmd, data);
+	close_saved_fds(data);
 	exec_simple_cmd(cur_cmd, data);
 	free_and_exit(data, data->exit_status);
 }
@@ -65,7 +67,7 @@ int	exec_pipe_loop_cmd(t_data *data, t_cmd_node *cur_cmd, int *pids, int *i)
 	if (pid == -1)
 		free_and_exit(data, 1);
 	if (pid == 0)
-		exec_pipe_child(cur_cmd, data);
+		exec_pipe_child(cur_cmd, data, pids);
 	pids[(*i)++] = pid;
 	if (data->old_pipe[0] != -1)
 		close(data->old_pipe[0]);
@@ -111,6 +113,7 @@ int	exec_pipe(t_cmd_node *cmd_node, t_data *data)
 		cur_cmd = cur_cmd->next;
 	}
 	exec_pipe_get_exit_status(data, pids, i);
+	close_saved_fds(data);
 	free(pids);
 	return (1);
 }

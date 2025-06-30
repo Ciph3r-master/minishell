@@ -41,7 +41,7 @@ char	*create_random_alphanum(int fd)
 	return (random_alpha_num);
 }
 
-char	*create_unique_id(void)
+char	*create_unique_id(t_data *data)
 {
 	char	*unique_id;
 	int		fd;
@@ -53,7 +53,7 @@ char	*create_unique_id(void)
 	if (!unique_id)
 	{
 		close(fd);
-		return (NULL);
+		free_and_exit(data, 1);
 	}
 	close(fd);
 	return (unique_id);
@@ -64,17 +64,18 @@ char	*create_pathname(t_filelist *cur_file_in, t_data *data)
 	char	*unique_id;
 	char	*new_filename;
 	char	*pathname;
+	char	*tmp;
 
 	if (!cur_file_in)
 		free_and_exit(data, 1);
-	unique_id = create_unique_id();
-	if (!unique_id)
-		free_and_exit(data, 1);
+	unique_id = create_unique_id(data);
 	new_filename = ft_strjoin(cur_file_in->filename, unique_id);
 	free(unique_id);
 	if (!new_filename)
 		free_and_exit(data, 1);
+	tmp = new_filename;
 	new_filename = ft_strjoin(new_filename, ".tmp");
+	free(tmp);
 	if (!new_filename)
 		free_and_exit(data, 1);
 	free(cur_file_in->filename);

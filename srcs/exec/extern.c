@@ -52,6 +52,7 @@ int	execute_cmd_in_child_process(t_cmd_node *cmd_node, t_data *data)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
+		close_saved_fds(data);
 		if (execve(pathname, args, data->env_copy) == -1)
 			free_and_exit(data, 1);
 	}

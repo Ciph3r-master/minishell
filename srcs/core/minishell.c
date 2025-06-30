@@ -20,7 +20,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data					data;
+	t_data	data;
 
 	(void)argc;
 	(void)argv;
