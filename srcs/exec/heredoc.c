@@ -78,9 +78,7 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 		data->exit_status = 128 + sig;
 		if (sig == SIGINT)
 		{
-			write(STDOUT_FILENO, "\n", 1);
-			rl_replace_line("", 0);
-			rl_on_new_line();
+			printf("nique ta mere\n");
 		}
 	}
 	return (1);

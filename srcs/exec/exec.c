@@ -42,13 +42,19 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 		if (exec_out == -2)
 			return (-2);
 	}
-	if (EXTERN & node_type)
+	else if (EXTERN & node_type)
 	{
 		exec_out = exec_simple_cmd_extern(cmd_node, data);
 		if (exec_out == -1)
 			free_and_exit(data, 326);
 		if (exec_out == -2)
 			return (-2);
+	}
+	else if (REDIRECT_IN & node_type || HEREDOC & node_type
+		|| REDIRECT_OUT & node_type || APPEND & node_type)
+	{
+		exec_redirections(cmd_node);
+		return (1);
 	}
 	return (1);
 }

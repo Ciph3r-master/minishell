@@ -55,7 +55,9 @@ int	exec_redirections(t_cmd_node *cmd_node)
 	{
 		exec_out = exec_redir_out_and_append(cmd_node->file_out);
 		if (exec_out == -1)
+		{
 			return (exec_out);
+		}
 	}
 	return (1);
 }
