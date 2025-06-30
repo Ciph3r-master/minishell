@@ -74,14 +74,12 @@ char	*create_pathname(t_filelist *cur_file_in)
 	free(unique_id);
 	if (!new_filename)
 		return (NULL);
-	free(cur_file_in->filename);
 	new_filename = ft_strjoin(new_filename, ".tmp");
 	if (!new_filename)
 		return (NULL);
+	free(cur_file_in->filename);
 	cur_file_in->filename = new_filename;
 	pathname = ft_strjoin("/tmp/", cur_file_in->filename);
-	if (!pathname)
-		return (NULL);
 	return (pathname);
 }
 

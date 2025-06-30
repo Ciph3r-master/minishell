@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/18 23:36:53 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/06/26 20:53:18 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 {
 	int	node_type;
 	int	exec_out;
+	int	saved_stdin;
+	int	saved_stdout;
 
 	node_type = cmd_node->type;
 	if (BUILTIN & node_type)
 	{
 		exec_out = exec_simple_cmd_builtins(cmd_node, data);
 		if (exec_out == -1)
-			free_and_exit(data, 326);
+			free_and_exit(data, 1);
 		if (exec_out == -2)
 			return (-2);
 	}
@@ -46,15 +48,28 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	{
 		exec_out = exec_simple_cmd_extern(cmd_node, data);
 		if (exec_out == -1)
-			free_and_exit(data, 326);
+			free_and_exit(data, 1);
 		if (exec_out == -2)
 			return (-2);
 	}
+<<<<<<< HEAD
 	else if (REDIRECT_IN & node_type || HEREDOC & node_type
 		|| REDIRECT_OUT & node_type || APPEND & node_type)
 	{
 		exec_redirections(cmd_node);
 		return (1);
+=======
+	if (REDIRECT_IN & node_type || HEREDOC & node_type
+		|| REDIRECT_OUT & node_type || APPEND & node_type)
+	{
+		if (save_stdin_stdout(&saved_stdin, &saved_stdout) == -1)
+			return (-1);
+		exec_out = exec_redirections(cmd_node);
+		if (exec_out != 1)
+			return (exec_out);
+		if (reset_stdin_stdout(saved_stdin, saved_stdout) != 1)
+			return (-1);
+>>>>>>> cd79e4ba3cc0bcf72b39eaa95d9be030038ff282
 	}
 	return (1);
 }
