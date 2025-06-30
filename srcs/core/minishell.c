@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(data.line);
 		init_tokens(&data);
 		free(data.line);
-		printf("\n ---------- data -------\n\n");
+		printf("\n ---------- exec -------\n\n");
 		exec(&data);
 		printf("exit status:%d\n", data.exit_status);
 	}

@@ -31,7 +31,10 @@ int	exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data)
 		free_and_exit(data, 1);
 	exec_redirections(cmd_node, data);
 	if (data->exit_status != 0)
+	{
+		reset_stdin_stdout(data);
 		return (0);
+	}
 	exec_builtins(cmd_node, data);
 	reset_stdin_stdout(data);
 	return (1);

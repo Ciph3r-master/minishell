@@ -28,4 +28,4 @@ probleme :
 minishell> cat <file1 <file2
 
 file1 : ls
-file2 : existe
+file2 : existe pas
