@@ -28,6 +28,8 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	while (1)
 	{
+		if (save_stdin_stdout(&data.saved_stdin, &data.saved_stdout) == -1)
+			free_and_exit(&data, 1);
 		data.line = readline("minishell> ");
 		if (!data.line)
 		{
