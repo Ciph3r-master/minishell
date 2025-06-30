@@ -14,13 +14,17 @@ static char	*get_filetype_name(t_filetype type)
 	return "UNKNOWN";
 }
 
-t_filelist	*filelist_create_node(void	*content, t_filetype type)
+t_filelist *filelist_create_node(t_data *data, void *content, t_filetype type)
 {
 	t_filelist	*node;
 
 	node = malloc(sizeof(t_filelist));
 	if (!node)
-		return (NULL);
+	{
+		if (content)
+			free(content);
+		free_and_exit(data, 1);
+	}
 	node->prev = NULL;
 	node->next = NULL;
 	node->filename = content;
@@ -29,14 +33,14 @@ t_filelist	*filelist_create_node(void	*content, t_filetype type)
 	return (node);
 }
 
-t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype type)
+t_filelist	*filelist_push_front(t_data *data, t_filelist **filelist, void *content, t_filetype type)
 {
 	t_filelist *tmp;
 	t_filelist	*new_node;
 
 	if (!filelist)
 		return (NULL);
-	new_node = filelist_create_node(content, type);
+	new_node = filelist_create_node(data, content, type);
 	if (!new_node)
 		return (NULL);
 	if (!*filelist)
@@ -51,14 +55,14 @@ t_filelist	*filelist_push_front(t_filelist **filelist, void *content, t_filetype
 	return (*filelist);
 }
 
-t_filelist	*filelist_push_back(t_filelist **filelist, void *content, t_filetype type)
+t_filelist *filelist_push_back(t_data *data, t_filelist **filelist, void *content, t_filetype type)
 {
 	t_filelist	*new_node;
 	t_filelist	*current;
 
 	if (!filelist)
 		return (NULL);
-	new_node = filelist_create_node(content, type);
+	new_node = filelist_create_node(data, content, type);
 	if (!new_node)
 		return (NULL);
 	if (*filelist == NULL)

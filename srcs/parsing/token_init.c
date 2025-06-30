@@ -6,18 +6,18 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:11 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/27 15:02:40 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/30 21:07:37 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void extract_cmds(t_data *data)
+void	extract_cmds(t_data *data)
 {
-	t_tokenlist *current;
-	t_tokenlist *cmd_start;
-	t_cmd_node *new_node;
-	t_tokenlist *cmd_end;
+	t_tokenlist	*current;
+	t_tokenlist	*cmd_start;
+	t_cmd_node	*new_node;
+	t_tokenlist	*cmd_end;
 
 	current = data->tokenlist;
 	cmd_start = current;
@@ -26,7 +26,7 @@ void extract_cmds(t_data *data)
 		cmd_end = NULL;
 		if (current->type == TPIPE || current->next == NULL)
 		{
-			cmdlist_push_back(&data->cmd_node);
+			cmdlist_push_back(data, &data->cmd_node);
 			new_node = cmdlist_getlast(data->cmd_node);
 			if (current->type == TPIPE)
 				cmd_end = current;
@@ -42,21 +42,20 @@ void extract_cmds(t_data *data)
 	}
 }
 
-t_tokenlist *get_token(char *line, int *pos, t_tokenlist *tl)
+t_tokenlist	*get_token(t_data *data, char *line, int *pos, t_tokenlist *tl)
 {
-	extract_space(tl, line, pos);
+	extract_space(data, tl, line, pos);
 	if (!line[*pos])
 		return (NULL);
-
 	if (is_operator(&line[*pos]))
-		return (extract_operator(tl, line, pos));
+		return (extract_operator(data, tl, line, pos));
 	if (line[*pos] == '"' || line[*pos] == '\'')
-		return (extract_quotes(tl, line, pos));
+		return (extract_quotes(data, tl, line, pos));
 	else
-		return (extract_word(tl, line, pos));
+		return (extract_word(data, tl, line, pos));
 }
 
-void set_token_type(t_data *data)
+void	set_token_type(t_data *data)
 {
 	set_file(data->tokenlist);
 	set_cmds(data->tokenlist);
@@ -65,18 +64,18 @@ void set_token_type(t_data *data)
 	set_args(data->tokenlist);
 }
 
-int init_tokens(t_data *data)
+int	init_tokens(t_data *data)
 {
-	int pos;
-	t_tokenlist *tmp;
+	int			pos;
+	t_tokenlist	*tmp;
 
 	pos = 0;
 	data->tokenlist = NULL;
 	while (data->line[pos])
 	{
-		tmp = get_token(data->line, &pos, data->tokenlist);
+		tmp = get_token(data, data->line, &pos, data->tokenlist);
 		if (!tmp)
-			break;
+			break ;
 		data->tokenlist = tmp;
 	}
 	find_expand(data);

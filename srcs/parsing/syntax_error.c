@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 21:29:56 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/19 03:54:14 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/30 19:11:24 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_syntax_error(char *token)
 	printf("minishell: syntax error near unexpected token `%s'\n", token);
 }
 
-bool is_invalid_redir(t_tokenlist *tl)
+bool	is_invalid_redir(t_tokenlist *tl)
 {
 	t_tokenlist	*current;
 	t_tokenlist	*next;
@@ -44,10 +44,10 @@ bool is_invalid_redir(t_tokenlist *tl)
 	return (false);
 }
 
-bool is_invalid_pipe(t_tokenlist *tl)
+bool	is_invalid_pipe(t_tokenlist *tl)
 {
-	t_tokenlist *current;
-	t_tokenlist *next;
+	t_tokenlist	*current;
+	t_tokenlist	*next;
 
 	current = tl;
 	if (current && current->type == TPIPE)
@@ -74,8 +74,6 @@ bool is_invalid_pipe(t_tokenlist *tl)
 			}
 		}
 		current = current->next;
-		
 	}
 	return (false);
 }
-

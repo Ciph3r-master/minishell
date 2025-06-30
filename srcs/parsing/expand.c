@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/27 15:02:29 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/30 19:22:11 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static void	replace_token(t_data *data, t_tokenlist *token)
 	while (token->token && token->token[len] != '$')
 		len++;
 	prefix = ft_substr(token->token, start, len);
+	if (!prefix)
+		free_and_exit(data, 1);
 	tmp = find_value(&token->token[len + 1], data->env_list);
 	pos = len + varlen(&token->token[len + 1]) + 1;
 	join = ft_strjoin3(prefix, tmp, &token->token[pos]);
@@ -116,9 +118,9 @@ static void	split_token(t_data *data, t_tokenlist *current)
 		i++;
 	while (i - 1 >= 0)
 	{
-		tokenlist_insert_after(current, ft_strdup(split[i - 1]), TARG);
+		tokenlist_insert_after(data, current, ft_strdup(split[i - 1]), TARG);
 		if (i - 1 > 0)
-			tokenlist_insert_after(current, NULL, TSPACE);
+			tokenlist_insert_after(data, current, NULL, TSPACE);
 		i--;
 	}
 	free_matrix(split);
