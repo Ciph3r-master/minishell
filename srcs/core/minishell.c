@@ -66,9 +66,6 @@ int	main(int argc, char **argv, char **env)
 		exec(&data);
 		printf("exit status:%d\n", data.exit_status);
 		print_sh_lvl(&data);
-		// print_env_list(&data.env_list);
-		// printf("\n\n\n");
-		// print_env_copy(data.env_copy);
 	}
 	return (0);
 }

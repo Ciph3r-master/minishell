@@ -2,8 +2,7 @@ valgrind
 
 builtins
 
---------- traiter SH level ------
------------ avec is tty ---------
+heredoc tout pete
 
 --------- UNSET PATH on verra c'est dans les buitlin--------
 --- si j'unset path il y aura des cas ou j'aurais un certain
