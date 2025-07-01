@@ -15,7 +15,7 @@ dans l'env copie de minishell
 
 ---- ajouter un compteur pour le readline du heredoc pour le write ------
 
------------------ eviter les write qui se superposent ---------------------
+----------------- eviter les write qui se superposent -------------------
 char *msg;
 msg = ft_strjoin("minishell: ", cmd);               // "minishell: cmd"
 msg = ft_strjoin_free(msg, ": command not found\n"); // "minishell: cmd: command not found\n"
