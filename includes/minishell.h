@@ -254,6 +254,8 @@ int			reset_stdin_stdout(t_data *data);
 int			exec_redirections(t_cmd_node *cmd_node, t_data *data);
 
 // memory/
+	// close_saved_fds.c
+int			close_saved_fds(t_data *data);
 	// delete_tmp_file.c
 void		delete_tmp_files(t_data *data);
 	// free_all.c

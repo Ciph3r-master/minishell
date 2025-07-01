@@ -51,7 +51,7 @@ int	exec(t_data *data)
 	t_cmd_node	*cmd_node;
 
 	if (!data || !data->cmd_node)
-		return (-2);
+		return (1);
 	cmd_node = data->cmd_node;
 	if (pipeline_has_heredoc(cmd_node))
 		exec_heredoc(cmd_node, data);

@@ -25,8 +25,10 @@ t_filelist *filelist_create_node(t_data *data, void *content, t_filetype type)
 			free(content);
 		free_and_exit(data, 1);
 	}
+	node->fd = -1;
 	node->prev = NULL;
 	node->next = NULL;
+	node->pathname = NULL;
 	node->filename = content;
 	node->limiter = NULL;
 	node->type = type;

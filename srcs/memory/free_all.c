@@ -24,6 +24,8 @@ void	free_all(t_data *data, int exit_code)
 		free_tokenlist(&data->tokenlist);
 	if (data->cmd_node)
 		free_cmd_list(&data->cmd_node);
+	if (data->saved_stdin != -1 || data->saved_stdout != -1)
+		close_saved_fds(data);
 	exit(exit_code);
 	return ;
 }

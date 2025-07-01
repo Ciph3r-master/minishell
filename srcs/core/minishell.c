@@ -20,7 +20,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data					data;
+	t_data	data;
 
 	(void)argc;
 	(void)argv;
@@ -28,6 +28,8 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	while (1)
 	{
+		if (save_stdin_stdout(&data.saved_stdin, &data.saved_stdout) == -1)
+			free_and_exit(&data, 1);
 		data.line = readline("minishell> ");
 		if (!data.line)
 		{
@@ -41,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(data.line);
 		init_tokens(&data);
 		free(data.line);
-		printf("\n ---------- data -------\n\n");
+		printf("\n ---------- exec -------\n\n");
 		exec(&data);
 		printf("exit status:%d\n", data.exit_status);
 	}

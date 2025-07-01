@@ -47,3 +47,8 @@ minishell> echo test t'"frezdfsd
 ==25590==      possibly lost: 0 bytes in 0 blocks
 ==25590==    still reachable: 0 bytes in 0 blocks
 ==25590==         suppressed: 208,444 bytes in 225 blocks
+file2 : existe pas
+
+
+"" = bash: : command not found
+'' = bash: : command not found

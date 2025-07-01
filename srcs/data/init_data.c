@@ -20,8 +20,6 @@ int	init_data(t_data *data, char **env)
 	data->env_copy = get_env_copy(data->env_list);
 	if (!data->env_copy)
 		free_and_exit(data, 1);
-	if (save_stdin_stdout(&data->saved_stdin, &data->saved_stdout) == -1)
-		free_and_exit(data, 1);
 	data->exit_status = 0;
 	data->cmd_node = NULL;
 	data->tokenlist = NULL;
