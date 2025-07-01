@@ -29,7 +29,7 @@ void	delete_tmps(t_filelist *cur_file_in)
 			}
 			if (cur_file_in->pathname)
 			{
-				// printf("unlinking %s\n", cur_file_in->pathname);
+				printf("unlinking %s\n", cur_file_in->pathname);
 				if (unlink(cur_file_in->pathname) == -1)
 					perror("unlink");
 				free(cur_file_in->pathname);

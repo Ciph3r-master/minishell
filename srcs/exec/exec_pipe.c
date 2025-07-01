@@ -53,6 +53,7 @@ void	exec_pipe_child(t_cmd_node *cur_cmd, t_data *data, int *pids)
 		close(data->old_pipe[1]);
 	exec_redirections(cur_cmd, data);
 	close_saved_fds(data);
+	fprintf(stderr, "data->exit_status :%d\n", data->exit_status);
 	exec_simple_cmd(cur_cmd, data);
 	free_and_exit(data, data->exit_status);
 }
@@ -84,7 +85,7 @@ void	exec_pipe_get_exit_status(t_data *data, pid_t *pids, int i)
 	int	j;
 
 	j = 0;
-	data->exit_status = -1;
+	data->exit_status = 0;
 	while (j < i)
 	{
 		waitpid(pids[j], &status, 0);

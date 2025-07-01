@@ -106,3 +106,14 @@ quand on excute minishell dans minishell puis qu'on ctrl D jusqua sortir des deu
 
 
 ----------------------------------------------------------------------
+
+
+minishell> cat < file1 | cat < file1
+
+fait une eit error 1,
+ce n'est pas normal
+c'est ce qui fait crash les supression de heredoc puisque
+ca fait un free_and_exit avant de ctrl D
+
+on dirais que mes pipe sortent toujours 1
+a demain
