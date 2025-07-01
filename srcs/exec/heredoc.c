@@ -58,6 +58,7 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 		reading = readline_heredoc(limiter, fd);
 	if (close(fd) == -1)
 		free_and_exit(data, 1);
+	free(cur_file_in->pathname);
 	cur_file_in->fd = -1;
 	return (1);
 }

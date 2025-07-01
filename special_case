@@ -23,9 +23,9 @@ write(STDERR_FILENO, msg, ft_strlen(msg));
 free(msg);
 -------------------------------------------------------------------------
 
-probleme :
+unintialised values
 
-minishell> cat <file1 <file2
-
-file1 : ls
-file2 : existe pas
+close: Bad file descriptor
+close: Bad file descriptor
+exit status:1
+minishell> cat < file1 | << EOF1 << EOF2
