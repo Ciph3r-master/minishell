@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 21:29:56 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/30 19:11:24 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/01 18:28:37 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,21 @@ bool	is_invalid_redir(t_tokenlist *tl)
 	return (false);
 }
 
+bool	check_pipe_error(t_tokenlist *next)
+{
+	if (!next)
+	{
+		print_syntax_error("|");
+		return (true);
+	}
+	if (next->type == TPIPE)
+	{
+		print_syntax_error("|");
+		return (true);
+	}
+	return (false);
+}
+
 bool	is_invalid_pipe(t_tokenlist *tl)
 {
 	t_tokenlist	*current;
@@ -62,16 +77,8 @@ bool	is_invalid_pipe(t_tokenlist *tl)
 			next = current->next;
 			if (next && next->type == TSPACE)
 				next = next->next;
-			if (!next)
-			{
-				print_syntax_error("|");
+			if (check_pipe_error(next))
 				return (true);
-			}
-			if (next->type == TPIPE)
-			{
-				print_syntax_error("|");
-				return (true);
-			}
 		}
 		current = current->next;
 	}
