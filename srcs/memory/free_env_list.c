@@ -21,7 +21,7 @@ void	free_env_list(t_env_list *env_list)
 	current = env_list;
 	if (env_list == NULL)
 		return ;
-	while (current->next)
+	while (current)
 	{
 		next = current->next;
 		if (current->key)
@@ -31,10 +31,5 @@ void	free_env_list(t_env_list *env_list)
 		free(current);
 		current = next;
 	}
-	if (next->key)
-		free(next->key);
-	if (next->value)
-		free(next->value);
-	free(next);
 	return ;
 }

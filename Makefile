@@ -85,11 +85,12 @@ SRCS_EXEC	:=							\
 	$(DIR_EXEC)/extern.c				\
 	$(DIR_EXEC)/faker_builtin.c			\
 	$(DIR_EXEC)/faker_extern.c			\
-	$(DIR_EXEC)/get_env.c				\
+	$(DIR_EXEC)/env.c					\
 	$(DIR_EXEC)/heredoc.c				\
 	$(DIR_EXEC)/redir_in_and_hd.c		\
 	$(DIR_EXEC)/redir_out_and_append.c	\
-	$(DIR_EXEC)/redirections.c
+	$(DIR_EXEC)/redirections.c			\
+	$(DIR_EXEC)/sh_level.c
 
 SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/close_saved_fds.c		\

@@ -71,7 +71,6 @@ void	get_value_size(int *value_size, char *env_line)
 	return ;
 }
 
-
 char	*get_env_value(char *env_line)
 {
 	char	*value;
@@ -85,7 +84,10 @@ char	*get_env_value(char *env_line)
 		return (NULL);
 	env_line = ft_strchr(env_line, '=');
 	if (!env_line)
+	{
+		free(value);
 		return (NULL);
+	}
 	i = 1;
 	j = 0;
 	while (env_line[i])

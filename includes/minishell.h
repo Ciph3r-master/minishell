@@ -127,102 +127,113 @@ typedef struct s_data
 
 //	srcs/parsing/quotes.c
 int			is_open_quotes(char *line, char quote);
-t_tokenlist *get_token(t_data *data, char *line, int *pos, t_tokenlist *tl);
+t_tokenlist	*get_token(t_data *data, char *line, int *pos, t_tokenlist *tl);
 int			init_tokens(t_data *data);
 
 int			init_args(t_tokenlist *start, t_cmd *cmd);
 t_cmd		*init_cmd(void);
 
 	// extract_token.c
-	t_tokenlist *extract_word(t_data *data, t_tokenlist *tl, char *line, int *pos);
-t_tokenlist *extract_quotes(t_data *data, t_tokenlist *tl, char *line, int *pos);
-t_tokenlist *extract_operator(t_data *data, t_tokenlist *tl, char *line, int *pos);
-t_tokenlist *extract_space(t_data *data, t_tokenlist *tl, char *line, int *pos);
-void extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_tokenlist *end);
+t_tokenlist	*extract_word(t_data *data, t_tokenlist *tl, char *line, int *pos);
+t_tokenlist	*extract_quotes(t_data *data, t_tokenlist *tl,
+				char *line, int *pos);
+t_tokenlist	*extract_operator(t_data *data, t_tokenlist *tl,
+				char *line, int *pos);
+t_tokenlist	*extract_space(t_data *data, t_tokenlist *tl,
+				char *line, int *pos);
+void		extract_cmd_node(t_data *data, t_cmd_node *node,
+				t_tokenlist *start, t_tokenlist *end);
+void		merge_token(t_tokenlist **tl);
 
-void merge_token(t_tokenlist **tl);
 // set_token_type.c
-void 	set_operator(t_tokenlist *tl);
-void	set_builtin(t_tokenlist *tl);
-void	set_cmd(t_tokenlist *tl);
-void	set_file(t_tokenlist *tl);
-void	set_limiter(t_tokenlist *tl);
-void	set_args(t_tokenlist *tl);
-void 	set_cmds(t_tokenlist *tl);
+void		set_operator(t_tokenlist *tl);
+void		set_builtin(t_tokenlist *tl);
+void		set_cmd(t_tokenlist *tl);
+void		set_file(t_tokenlist *tl);
+void		set_limiter(t_tokenlist *tl);
+void		set_args(t_tokenlist *tl);
+void		set_cmds(t_tokenlist *tl);
 
 // token utils
-int 		is_builtin(char *word);
+int			is_builtin(char *word);
 int			is_operator(char *line);
-bool 		is_redirection(t_tokentype type);
+bool		is_redirection(t_tokentype type);
 
 //syntax_error.c
-bool is_invalid_redir(t_tokenlist *tl);
-bool is_invalid_pipe(t_tokenlist *tl);
+bool		is_invalid_redir(t_tokenlist *tl);
+bool		is_invalid_pipe(t_tokenlist *tl);
 	// DLIST
-t_tokenlist *tokenlist_create_node(t_data *data, void *content, t_tokentype type);
-t_tokenlist *tokenlist_push_front(t_data *data, t_tokenlist **tokenlist, void *content, t_tokentype type);
+t_tokenlist	*tokenlist_create_node(t_data *data,
+				void *content, t_tokentype type);
+t_tokenlist	*tokenlist_push_front(t_data *data, t_tokenlist **tokenlist,
+				void *content, t_tokentype type);
 void		print_tokenlist(t_tokenlist *tokenlist, bool reverse);
-t_tokenlist *tokenlist_push_back(t_data *data, t_tokenlist **tokenlist, void *content, t_tokentype type);
-t_tokenlist *tokenlist_insert_after(t_data *data, t_tokenlist *node, void *content, t_tokentype type);
-void 		tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node);
-t_filelist *filelist_create_node(t_data *data, void *content, t_filetype type);
-t_filelist *filelist_push_front(t_data *data, t_filelist **filelist, void *content, t_filetype type);
+t_tokenlist	*tokenlist_push_back(t_data *data, t_tokenlist **tokenlist,
+				void *content, t_tokentype type);
+t_tokenlist	*tokenlist_insert_after(t_data *data, t_tokenlist *node,
+				void *content, t_tokentype type);
+void		tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node);
+t_filelist	*filelist_create_node(t_data *data, void *content, t_filetype type);
+t_filelist	*filelist_push_front(t_data *data, t_filelist **filelist,
+				void *content, t_filetype type);
 void		print_filelist(t_filelist *filelist, bool reverse);
-t_filelist *filelist_push_back(t_data *data, t_filelist **filelist, void *content, t_filetype type);
+t_filelist	*filelist_push_back(t_data *data, t_filelist **filelist,
+				void *content, t_filetype type);
 t_filelist	*filelist_getlast(t_filelist *filelist);
 t_cmd_node	*cmdlist_create_node(t_data *data);
 t_cmd_node	*cmdlist_push_front(t_data *data, t_cmd_node **cmdlist);
 t_cmd_node	*cmdlist_push_back(t_data *data, t_cmd_node **cmdlist);
-t_cmd_node 	*cmdlist_getlast(t_cmd_node *cmdlist);
-void 		print_cmdlist(t_cmd_node *cmdlist);
+t_cmd_node	*cmdlist_getlast(t_cmd_node *cmdlist);
+void		print_cmdlist(t_cmd_node *cmdlist);
 
-// builtins/
-	// pwd.c
-int		builtin_pwd(void);
+//	builtins/
+	//	pwd.c
+int			builtin_pwd(void);
 
-//expand
-void 	find_expand(t_data *data);
+//	expand
+void		find_expand(t_data *data);
 
-	// data/
-	// init_data.c
-	int init_data(t_data *data, char **env);
+	//	data/
+	//	init_data.c
+int			init_data(t_data *data, char **env);
 
-// env_copy/
-	// env_list.c
+//	env_copy/
+	//	env_list.c
 t_env_list	*new_node_env_list(char *key, char *value);
 void		push_back_env_list(t_env_list **env_list, t_env_list *new_node);
 void		print_env_list(t_env_list **env_list);
 int			get_env_list_size(t_env_list *env_list);
-	// get_env_list.c
+	//	get_env_list.c
 char		*get_env_key(char *env_line);
 char		*get_env_value(char *env_line);
 t_env_list	*get_env_list(t_data *data, char **env);
-	// get_env_copy.c
+	//	get_env_copy.c
 char		**get_env_copy(t_env_list *env_list);
 void		print_env_copy(char **env_copy);
 
-// error/
-	// free_and_exit.c
+//	error/
+	//	free_and_exit.c
 void		free_and_exit(t_data *data, int exit_code);
 
-// exec/
-	// builtins.c
+//	exec/
+	//	builtins.c
 int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
-	// cmd_path.c
+	//	cmd_path.c
 int			cmd_is_directory(t_cmd_node *cmd_node, t_data *data);
 int			is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data);
-int			find_path_with_access(char **paths, char **pathname, t_data *data, t_cmd_node *cmd_node);
+int			find_path_with_access(char **paths, char **pathname,
+				t_data *data, t_cmd_node *cmd_node);
 int			get_cmd_path_name(t_cmd_node *cmd_node, t_data *data);
-	// create_tmp_file.c
+	//	create_tmp_file.c
 int			create_tmp_file(t_filelist *cur_file_in, t_data *data);
-	// exec_pipe.c
+	//	exec_pipe.c
 int			exec_pipe(t_cmd_node *cmd_node, t_data *data);
-	// exec.c
+	//	exec.c
 int			exec(t_data *data);
 int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
-	// extern.c
+	//	extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
-	// faker_builtin.c
+	//	faker_builtin.c
 t_data		*init_builtin_simple_cmd(t_data *data);
 t_data		*init_builtin_cmd_redir_in(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in(t_data *data);
@@ -231,7 +242,7 @@ t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
 t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
-	// faker_extern.c
+	//	faker_extern.c
 t_data		*init_extern_simple_cmd(t_data *data);
 t_data		*init_extern_cmd_redir_in(t_data *data);
 t_data		*init_extern_cmd_multi_redir_in(t_data *data);
@@ -240,41 +251,44 @@ t_data		*init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data);
 t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
 t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
 t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
-	// get_env.c
+	//	env.c
 char		*ft_getenv(t_data *data, char *key);
-	// heredoc.c
+int			set_sh_lvl(t_data *data, char *str_sh_lvl);
+	//	heredoc.c
 int			exec_heredoc(t_cmd_node *cmd_node, t_data *data);
-	// redir_in_and_hd.c
+	//	redir_in_and_hd.c
 int			exec_redir_in_and_hd(t_filelist	*file_in, t_data *data);
-	// redir_out_and_append.c
+	//	redir_out_and_append.c
 int			exec_redir_out_and_append(t_filelist *file_out, t_data *data);
-	// redirections.c
+	//	redirections.c
 int			save_stdin_stdout(int *saved_stdin, int *saved_stdout);
 int			reset_stdin_stdout(t_data *data);
 int			exec_redirections(t_cmd_node *cmd_node, t_data *data);
+	//	sh_level.c
+int			sh_level(t_data *data);
 
-// memory/
-	// close_saved_fds.c
+//	memory/
+	//	close_saved_fds.c
 int			close_saved_fds(t_data *data);
-	// delete_tmp_file.c
+	//	delete_tmp_file.c
 void		delete_tmp_files(t_data *data);
-	// free_all.c
+	//	free_all.c
 void		free_all(t_data *data, int exit_code);
-	// free_env_copy.c
+	//	free_env_copy.c
 void		free_env_copy(char **env_copy);
-	// free_env_list.c
+	//	free_env_list.c
 void		free_env_list(t_env_list *env_list);
-	// free_pathname.c
+	//	free_pathname.c
 void		free_pathname(t_filelist *cur_file_in);
-	// free_tokens.c
+	//	free_tokens.c
 void		free_tokenlist(t_tokenlist **tl);
-	// free_cmd_node.c
+	//	free_cmd_node.c
 void		free_cmd_list(t_cmd_node **cmd_node);
 	//	free_utils.c
 void		free_matrix(char **split);
 
-// signals/
-	// init_signals.c
+//	signals/
+	//	init_signals.c
 void		init_signals(void);
 void		sigint_handler(int sig);
 
