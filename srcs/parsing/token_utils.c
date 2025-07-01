@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 20:30:06 by billcipher        #+#    #+#             */
+/*   Updated: 2025/06/30 20:41:12 by billcipher       ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "libft.h"
 
-bool is_redirection(t_tokentype type)
+bool	is_redirection(t_tokentype type)
 {
-	return (type == TRD_IN || type == TRD_OUT || type == TAPPEND || type == THD);
+	return (type == TRD_IN || type == TRD_OUT
+		|| type == TAPPEND || type == THD);
 }
 
 int	is_operator(char *line)
@@ -33,7 +46,7 @@ int	is_builtin(char *word)
 	int			i;
 
 	i = 0;
-	builtin[0] = "ECHO"; //ECHO
+	builtin[0] = "ECHO"; //DISABLE ECHO
 	builtin[1] = "cd";
 	builtin[2] = "pwd";
 	builtin[3] = "export";

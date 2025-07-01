@@ -36,13 +36,17 @@ static char	*get_tokentype_name(t_tokentype type)
 	return "UNKNOWN";
 }
 
-t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type)
+t_tokenlist	*tokenlist_create_node(t_data *data, void *content, t_tokentype type)
 {
 	t_tokenlist	*node;
 
 	node = malloc(sizeof(t_tokenlist));
 	if (!node)
-		return (NULL);
+	{
+		if (content)
+			free(content);
+		free_and_exit(data, 1);
+	}
 	node->prev = NULL;
 	node->next = NULL;
 	node->token = content;
@@ -50,14 +54,14 @@ t_tokenlist	*tokenlist_create_node(void	*content, t_tokentype type)
 	return (node);
 }
 
-t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_tokentype type)
+t_tokenlist *tokenlist_push_front(t_data *data, t_tokenlist **tokenlist, void *content, t_tokentype type)
 {
 	t_tokenlist *tmp;
 	t_tokenlist	*new_node;
 
 	if (!tokenlist)
 		return (NULL);
-	new_node = tokenlist_create_node(content, type);
+	new_node = tokenlist_create_node(data, content, type);
 	if (!new_node)
 		return (NULL);
 	if (!*tokenlist)
@@ -72,14 +76,14 @@ t_tokenlist	*tokenlist_push_front(t_tokenlist **tokenlist, void *content, t_toke
 	return (*tokenlist);
 }
 
-t_tokenlist	*tokenlist_push_back(t_tokenlist **tokenlist, void *content, t_tokentype type)
+t_tokenlist *tokenlist_push_back(t_data *data, t_tokenlist **tokenlist, void *content, t_tokentype type)
 {
 	t_tokenlist	*new_node;
 	t_tokenlist	*current;
 
 	if (!tokenlist)
 		return (NULL);
-	new_node = tokenlist_create_node(content, type);
+	new_node = tokenlist_create_node(data, content, type);
 	if (!new_node)
 		return (NULL);
 	if (*tokenlist == NULL)
@@ -121,13 +125,13 @@ void	print_tokenlist(t_tokenlist *tokenlist, bool reverse)
 	printf("\n");
 }
 
-t_tokenlist *tokenlist_insert_after(t_tokenlist *node, void *content, t_tokentype type)
+t_tokenlist *tokenlist_insert_after(t_data *data, t_tokenlist *node, void *content, t_tokentype type)
 {
 	t_tokenlist *new_node;
 
 	if (!node)
 		return (NULL);
-	new_node = tokenlist_create_node(content, type);
+	new_node = tokenlist_create_node(data, content, type);
 	if (!new_node)
 		return (NULL);
 	new_node->next = node->next;

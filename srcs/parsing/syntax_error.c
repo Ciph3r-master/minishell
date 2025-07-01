@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 21:29:56 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/19 03:54:14 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/01 18:28:37 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_syntax_error(char *token)
 	printf("minishell: syntax error near unexpected token `%s'\n", token);
 }
 
-bool is_invalid_redir(t_tokenlist *tl)
+bool	is_invalid_redir(t_tokenlist *tl)
 {
 	t_tokenlist	*current;
 	t_tokenlist	*next;
@@ -44,10 +44,25 @@ bool is_invalid_redir(t_tokenlist *tl)
 	return (false);
 }
 
-bool is_invalid_pipe(t_tokenlist *tl)
+bool	check_pipe_error(t_tokenlist *next)
 {
-	t_tokenlist *current;
-	t_tokenlist *next;
+	if (!next)
+	{
+		print_syntax_error("|");
+		return (true);
+	}
+	if (next->type == TPIPE)
+	{
+		print_syntax_error("|");
+		return (true);
+	}
+	return (false);
+}
+
+bool	is_invalid_pipe(t_tokenlist *tl)
+{
+	t_tokenlist	*current;
+	t_tokenlist	*next;
 
 	current = tl;
 	if (current && current->type == TPIPE)
@@ -62,20 +77,10 @@ bool is_invalid_pipe(t_tokenlist *tl)
 			next = current->next;
 			if (next && next->type == TSPACE)
 				next = next->next;
-			if (!next)
-			{
-				print_syntax_error("|");
+			if (check_pipe_error(next))
 				return (true);
-			}
-			if (next->type == TPIPE)
-			{
-				print_syntax_error("|");
-				return (true);
-			}
 		}
 		current = current->next;
-		
 	}
 	return (false);
 }
-

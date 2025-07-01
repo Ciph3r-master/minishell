@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:17:18 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/14 23:07:46 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/06/30 19:55:46 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 //TODO GERER LES FREE
 void	merge_token(t_tokenlist **tl)
 {
-	t_tokenlist *current;
+	t_tokenlist	*current;
 
 	current = *tl;
 	while (current && current->next)
 	{
 		if (current->type != TSPACE && current->next->type != TSPACE
-		&& current->type != TOPERATOR && current->next->type != TOPERATOR)
+			&& current->type != TOPERATOR && current->next->type != TOPERATOR)
 		{
 			current->token = ft_strjoin(current->token, current->next->token);
 			tokenlist_remove_node(tl, current->next);
@@ -32,8 +32,7 @@ void	merge_token(t_tokenlist **tl)
 	}
 }
 
-
-t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos)
+t_tokenlist	*extract_space(t_data *data, t_tokenlist *tl, char *line, int *pos)
 {
 	int			len;
 
@@ -42,22 +41,22 @@ t_tokenlist	*extract_space(t_tokenlist *tl, char *line, int *pos)
 		len++;
 	*pos += len;
 	if (len > 0)
-		return (tokenlist_push_back(&tl, NULL, TSPACE));
+		return (tokenlist_push_back(data, &tl, NULL, TSPACE));
 	return (tl);
 }
 
-t_tokenlist	*extract_operator(t_tokenlist *tl, char *line, int *pos)
+t_tokenlist	*extract_operator(t_data *data, t_tokenlist *tl, char *line, int *pos)
 {
 	int			len;
 	t_tokenlist	*ntl;
 
 	len = is_operator(&line[*pos]);
-	ntl = tokenlist_push_back(&tl, ft_strndup(&line[*pos], len), TOPERATOR);
+	ntl = tokenlist_push_back(data, &tl, ft_strndup(&line[*pos], len), TOPERATOR);
 	*pos += len;
 	return (ntl);
 }
 
-t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos)
+t_tokenlist	*extract_quotes(t_data *data, t_tokenlist *tl, char *line, int *pos)
 {
 	int		len;
 	char	in_quote;
@@ -70,18 +69,18 @@ t_tokenlist	*extract_quotes(t_tokenlist *tl, char *line, int *pos)
 	if (line[start] == in_quote)
 	{
 		(*pos)++;
-		return (tokenlist_push_back(&tl, ft_strndup("", 1), TDQUOTES));
+		return (tokenlist_push_back(data, &tl, ft_strndup("", 1), TDQUOTES));
 	}
 	while (line[start + len] && line[start + len] != in_quote)
 		len++;
 	*pos = start + len + 1;
 	if (in_quote == '"')
-		return (tokenlist_push_back(&tl, ft_strndup(&line[start], len), TDQUOTES));
+		return (tokenlist_push_back(data, &tl, ft_strndup(&line[start], len), TDQUOTES));
 	else
-		return (tokenlist_push_back(&tl, ft_strndup(&line[start], len), TQUOTES));
+		return (tokenlist_push_back(data, &tl, ft_strndup(&line[start], len), TQUOTES));
 }
 
-t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos)
+t_tokenlist	*extract_word(t_data *data, t_tokenlist *tl, char *line, int *pos)
 {
 	int	start;
 	int	len;
@@ -97,5 +96,5 @@ t_tokenlist	*extract_word(t_tokenlist *tl, char *line, int *pos)
 		len++;
 	}
 	*pos = start + len;
-	return (tokenlist_push_back(&tl, ft_strndup(&line[start], len), TWORD));
+	return (tokenlist_push_back(data, &tl, ft_strndup(&line[start], len), TWORD));
 }

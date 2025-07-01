@@ -1,13 +1,13 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-t_cmd_node *cmdlist_create_node(void)
+t_cmd_node *cmdlist_create_node(t_data *data)
 {
 	t_cmd_node *node;
 
 	node = malloc(sizeof(t_cmd_node));
 	if (!node)
-		return (NULL);
+		free_and_exit(data, 1);
 	node->cmd = NULL;
 	node->file_in = NULL;
 	node->file_out = NULL;
@@ -20,14 +20,14 @@ t_cmd_node *cmdlist_create_node(void)
 	return (node);
 }
 
-t_cmd_node *cmdlist_push_front(t_cmd_node **cmdlist)
+t_cmd_node *cmdlist_push_front(t_data *data, t_cmd_node **cmdlist)
 {
 	t_cmd_node *tmp;
 	t_cmd_node *new_node;
 
 	if (!cmdlist)
 		return (NULL);
-	new_node = cmdlist_create_node();
+	new_node = cmdlist_create_node(data);
 	if (!new_node)
 		return (NULL);
 	if (!*cmdlist)
@@ -42,14 +42,14 @@ t_cmd_node *cmdlist_push_front(t_cmd_node **cmdlist)
 	return (*cmdlist);
 }
 
-t_cmd_node *cmdlist_push_back(t_cmd_node **cmdlist)
+t_cmd_node *cmdlist_push_back(t_data *data, t_cmd_node **cmdlist)
 {
 	t_cmd_node *new_node;
 	t_cmd_node *current;
 
 	if (!cmdlist)
 		return (NULL);
-	new_node = cmdlist_create_node();
+	new_node = cmdlist_create_node(data);
 	if (!new_node)
 		return (NULL);
 	if (*cmdlist == NULL)

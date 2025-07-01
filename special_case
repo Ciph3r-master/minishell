@@ -29,3 +29,29 @@ close: Bad file descriptor
 close: Bad file descriptor
 exit status:1
 minishell> cat < file1 | << EOF1 << EOF2
+
+------------------------------------------------------------------------
+
+minishell> echo test t'"frezdfsd
+
+==25590== 2 bytes in 1 blocks are definitely lost in loss record 1 of 67
+==25590==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==25590==    by 0x112407: ft_strdup (in /home/billcipher/Documents/newminishell/minishell)
+==25590==    by 0x11022A: split_token (expand.c:121)
+==25590==    by 0x110308: find_expand (expand.c:147)
+==25590==    by 0x10F950: init_tokens (token_init.c:82)
+==25590==    by 0x1096CB: main (minishell.c:42)
+==25590==
+==25590== LEAK SUMMARY:
+==25590==    definitely lost: 2 bytes in 1 blocks
+==25590==    indirectly lost: 0 bytes in 0 blocks
+==25590==      possibly lost: 0 bytes in 0 blocks
+==25590==    still reachable: 0 bytes in 0 blocks
+==25590==         suppressed: 208,444 bytes in 225 blocks
+
+
+
+
+
+"" = bash: : command not found
+'' = bash: : command not found

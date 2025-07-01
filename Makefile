@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/27 21:51:40 by thibaud          ###   ########.fr        #
+#    Updated: 2025/06/30 20:50:38 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,16 +102,16 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_cmds_node.c		\
 	$(DIR_MEMORY)/free_utils.c			\
 
-SRCS_PARSING :=							\
-	$(DIR_PARSING)/quotes.c 			\
-	$(DIR_PARSING)/token_utils.c		\
-	$(DIR_PARSING)/cmd_utils.c			\
-	$(DIR_PARSING)/token_init.c			\
-	$(DIR_PARSING)/cmd_node.c			\
-	$(DIR_PARSING)/expand.c				\
-	$(DIR_PARSING)/extract_token.c		\
-	$(DIR_PARSING)/set_token_type.c		\
-	$(DIR_PARSING)/syntax_error.c		\
+SRCS_PARSING :=								\
+	$(DIR_PARSING)/token_utils.c			\
+	$(DIR_PARSING)/cmd_utils.c				\
+	$(DIR_PARSING)/token_init.c				\
+	$(DIR_PARSING)/cmd_node.c				\
+	$(DIR_PARSING)/expand.c					\
+	$(DIR_PARSING)/extract_token.c			\
+	$(DIR_PARSING)/set_token_type.c			\
+	$(DIR_PARSING)/syntax_error.c			\
+	$(DIR_PARSING)/set_token_type_cmds.c	\
 
 SRCS_PARSING_UTILS :=				  \
 	$(DIR_PARSING_UTILS)/tokendlist.c \
