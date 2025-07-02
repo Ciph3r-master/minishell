@@ -233,24 +233,6 @@ int			exec(t_data *data);
 int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	//	extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
-	//	faker_builtin.c
-t_data		*init_builtin_simple_cmd(t_data *data);
-t_data		*init_builtin_cmd_redir_in(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_heredoc(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
-	//	faker_extern.c
-t_data		*init_extern_simple_cmd(t_data *data);
-t_data		*init_extern_cmd_redir_in(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_heredoc(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
 	//	env.c
 char		*ft_getenv(t_data *data, char *key);
 int			set_sh_lvl(t_data *data, char *str_sh_lvl);
@@ -286,6 +268,10 @@ void		free_tokenlist(t_tokenlist **tl);
 void		free_cmd_list(t_cmd_node **cmd_node);
 	//	free_utils.c
 void		free_matrix(char **split);
+
+//	messsage/
+	//	redir_in_message.c
+void		redir_in_message(char *filename, int err);
 
 //	signals/
 	//	init_signals.c

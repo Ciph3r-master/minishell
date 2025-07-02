@@ -27,6 +27,7 @@ int	exec_builtins(t_cmd_node *cmd_node, t_data *data)
 
 int	exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data)
 {
+	printf("hell---------------------\n");
 	if (!cmd_node)
 		free_and_exit(data, 1);
 	exec_redirections(cmd_node, data);
