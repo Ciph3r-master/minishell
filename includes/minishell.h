@@ -213,7 +213,9 @@ void		print_env_copy(char **env_copy);
 
 //	error/
 	//	free_and_exit.c
-void		free_and_exit(t_data *data, int exit_code);
+void		free_and_exit_debug(t_data *data, int exit_code, const char *file, int line);
+
+# define free_and_exit(data, exit_code) free_and_exit_debug(data, exit_code, __FILE__, __LINE__)
 
 //	exec/
 	//	builtins.c
