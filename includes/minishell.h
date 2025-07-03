@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/30 20:25:45 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/02 17:46:55 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void 		print_cmdlist(t_cmd_node *cmdlist);
 // builtins/
 	// pwd.c
 int		builtin_pwd(void);
-
+int		builtin_echo(t_cmd_node *cmd_node);
 //expand
 void 	find_expand(t_data *data);
 
@@ -222,24 +222,6 @@ int			exec(t_data *data);
 int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	// extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
-	// faker_builtin.c
-t_data		*init_builtin_simple_cmd(t_data *data);
-t_data		*init_builtin_cmd_redir_in(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_heredoc(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
-t_data		*init_builtin_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
-	// faker_extern.c
-t_data		*init_extern_simple_cmd(t_data *data);
-t_data		*init_extern_cmd_redir_in(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_heredoc(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_redir_out(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out(t_data *data);
-t_data		*init_extern_cmd_multi_redir_in_multi_heredoc_multi_redir_out_append(t_data *data);
 	// get_env.c
 char		*ft_getenv(t_data *data, char *key);
 	// heredoc.c
