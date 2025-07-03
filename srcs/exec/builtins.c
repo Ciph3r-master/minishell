@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:41:52 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/02 17:47:07 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/03 21:16:06 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	exec_builtins(t_cmd_node *cmd_node, t_data *data)
 		builtin_pwd();
 	if (ft_strcmp("echo", cmd) == 0)
 		builtin_echo(cmd_node);
+	if (ft_strcmp("env", cmd) == 0)
+		builtin_env(data);
 	return (1);
 }
 
