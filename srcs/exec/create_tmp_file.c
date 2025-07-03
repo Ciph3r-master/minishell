@@ -99,7 +99,13 @@ int	create_tmp_file(t_filelist *cur_file_in, t_data *data)
 		pathname = create_pathname(cur_file_in, data);
 		fd = open(pathname, O_RDWR | O_CREAT | O_EXCL, 0644);
 		if (fd != -1)
+		{
+			if (cur_file_in->pathname)
+				free(cur_file_in->pathname);
 			cur_file_in->pathname = pathname;
+		}
+		else
+			free(pathname);
 	}
 	return (fd);
 }
