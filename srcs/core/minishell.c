@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/27 22:33:11 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/03 19:16:57 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		if (save_stdin_stdout(&data.saved_stdin, &data.saved_stdout) == -1)
-			free_and_exit(&data, 1);
+		free_and_exit(&data, 1);
 		data.line = readline("minishell> ");
 		if (!data.line)
 		{
@@ -37,11 +37,11 @@ int	main(int argc, char **argv, char **env)
 			rl_clear_history();
 			free_and_exit(&data, data.exit_status);
 		}
-		data.exit_status = 0;
 		free_cmd_list(&data.cmd_node);
 		free_tokenlist(&data.tokenlist);
 		add_history(data.line);
 		init_tokens(&data);
+		data.exit_status = 0;
 		free(data.line);
 		printf("\n ---------- exec -------\n\n");
 		exec(&data);
