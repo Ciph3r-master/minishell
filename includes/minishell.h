@@ -258,6 +258,7 @@ int			close_saved_fds(t_data *data);
 void		delete_tmp_files(t_data *data);
 	//	free_all.c
 void		free_all(t_data *data, int exit_code);
+void		free_all_no_exit(t_data *data);
 	//	free_env_copy.c
 void		free_env_copy(char **env_copy);
 	//	free_env_list.c
@@ -279,5 +280,6 @@ void		redir_in_message(char *filename, int err);
 	//	init_signals.c
 void		init_signals(void);
 void		sigint_handler(int sig);
+void		heredoc_handler(int sig);
 
 #endif
