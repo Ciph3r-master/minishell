@@ -20,6 +20,8 @@ int	exec_redir_out(t_filelist *cur_file_out, t_data *data)
 		free_and_exit(data, 1);
 	cur_file_out->fd = open(cur_file_out->filename, O_WRONLY
 			| O_CREAT | O_TRUNC, 0644);
+	// VERIFIER SI PATH VALIDE (SI LE FOLDER EXIST) ERROR CODE 1
+	// bash: salut/test: No such file or directory : EXIT CODE 1
 	if (cur_file_out->fd == -1)
 		free_and_exit(data, 1);
 	if (dup2(cur_file_out->fd, STDOUT_FILENO) == -1)

@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:30:06 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/30 20:41:12 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/02 17:48:58 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	is_builtin(char *word)
 	int			i;
 
 	i = 0;
-	builtin[0] = "ECHO"; //DISABLE ECHO
+	builtin[0] = "echo"; //DISABLE ECHO
 	builtin[1] = "cd";
 	builtin[2] = "pwd";
 	builtin[3] = "export";

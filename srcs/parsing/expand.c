@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/30 19:22:11 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/03 19:15:49 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int	varlen(char *var)
 	int	i;
 
 	i = 1;
+	if (!var[0])
+		return (0);
 	while (var[i])
 	{
 		if (!ft_isalnum(var[i]) && var[i] != '_')
@@ -80,14 +82,26 @@ static void	replace_token(t_data *data, t_tokenlist *token)
 	prefix = ft_substr(token->token, start, len);
 	if (!prefix)
 		free_and_exit(data, 1);
-	tmp = find_value(&token->token[len + 1], data->env_list);
-	pos = len + varlen(&token->token[len + 1]) + 1;
+	if (token->token[len + 1] == '?')
+	{
+		tmp = ft_itoa(data->exit_status);
+		pos = len + 2;
+	}
+	else
+	{
+		tmp = find_value(&token->token[len + 1], data->env_list);
+		pos = len + varlen(&token->token[len + 1]) + 1;
+	}
 	join = ft_strjoin3(prefix, tmp, &token->token[pos]);
 	if (!join)
 	{
 		free(prefix);
+		if (token->token[len + 1] == '?')
+			free(tmp);	
 		free_and_exit(data, 1);
 	}
+	if (token->token[len + 1] == '?')
+		free(tmp);
 	free(token->token);
 	token->token = join;
 	free(prefix);

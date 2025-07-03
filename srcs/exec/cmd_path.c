@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/28 01:20:00 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/03 19:08:14 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	find_path_with_access(char **paths, char **pathname,
 
 	cmd = cmd_node->cmd->cmd;
 	i = 0;
-	while (paths[i])
+	while (paths[i] && cmd[0])
 	{
 		if (0 == access(paths[i], X_OK))
 		{

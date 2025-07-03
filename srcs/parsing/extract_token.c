@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:17:18 by qutruche          #+#    #+#             */
-/*   Updated: 2025/06/30 19:55:46 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/02 18:42:18 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void	merge_token(t_tokenlist **tl)
 {
 	t_tokenlist	*current;
+	char		*tmp;
 
 	current = *tl;
 	while (current && current->next)
@@ -24,8 +25,10 @@ void	merge_token(t_tokenlist **tl)
 		if (current->type != TSPACE && current->next->type != TSPACE
 			&& current->type != TOPERATOR && current->next->type != TOPERATOR)
 		{
+			tmp = current->token;
 			current->token = ft_strjoin(current->token, current->next->token);
 			tokenlist_remove_node(tl, current->next);
+			free(tmp);
 		}
 		else
 			current = current->next;

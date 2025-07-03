@@ -3,87 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 21:27:33 by thibaud           #+#    #+#             */
-/*   Updated: 2025/05/27 23:56:28 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/02 18:36:13 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
+#include "minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	check_option(char *arg)
 {
-	size_t			i;
-	unsigned char	*u_s1;
-	unsigned char	*u_s2;
+	int	i;
+
+	if (!arg || *arg != '-')
+		return (0);
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	get_start(char **args)
+{
+	int	i;
 
 	i = 0;
-	u_s1 = (unsigned char *)s1;
-	u_s2 = (unsigned char *)s2;
-	while ((u_s1[i] || u_s2[i]))
+	while (args[i])
 	{
-		if (u_s1[i] != u_s2[i])
-			return (u_s1[i] - u_s2[i]);
+		if (check_option(args[i]) == 0)
+			return (i);
 		i++;
 	}
-	return (0);
+	return (i);
 }
 
-int	echo_no_args(void)
-{
-	write(1, "\n", 1);
-	return (0);
-}
-
-int	echo_n_arg(char **argv)
+void	echo_args(char **args, int start)
 {
 	int	i;
 
-	i = 2;
-	while (argv[i])
+	i = start;
+	while (args[i] && args[i + 1])
 	{
-		printf("%s", argv[i]);
-		if (argv[i + 1])
-			printf(" ");
+		printf("%s ", args[i]);
 		i++;
 	}
-	return (0);
+	if (start == 0)
+		printf("%s\n", args[i]);
+	else if (args[i])
+		printf("%s", args[i]);
 }
 
-int	echo_simple(char **argv)
+int	builtin_echo(t_cmd_node *cmd_node)
 {
-	int	i;
+	int	ac;
 
-	i = 2;
-	while (argv[i])
+	ac = 0;
+	while (cmd_node->cmd->args && cmd_node->cmd->args[ac + 1])
+		ac++;
+	if (ac == 0)
 	{
-		printf("%s", argv[i]);
-		if (argv[i + 1])
-			printf(" ");
-		i++;
-	}
-	printf("\n");
-	return (0);
-}
-
-int	builtin_echo(int argc, char **argv)
-{
-	if (argc == 1)
-	{
-		echo_no_args();
+		printf("\n");
 		return (0);
 	}
-	if (0 == ft_strcmp(argv[1], "-n"))
-		echo_n_arg(argv);
-	else
-		echo_simple(argv);
-	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	builtin_echo(argc, argv);
+	echo_args(&cmd_node->cmd->args[1], get_start(&cmd_node->cmd->args[1]));
 	return (0);
 }
