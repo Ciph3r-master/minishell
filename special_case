@@ -27,24 +27,6 @@ minishell> cat < file1 | << EOF1 << EOF2
 
 ------------------------------------------------------------------------
 
-minishell> echo test t'"frezdfsd
-
-==25590== 2 bytes in 1 blocks are definitely lost in loss record 1 of 67
-==25590==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==25590==    by 0x112407: ft_strdup (in /home/billcipher/Documents/newminishell/minishell)
-==25590==    by 0x11022A: split_token (expand.c:121)
-==25590==    by 0x110308: find_expand (expand.c:147)
-==25590==    by 0x10F950: init_tokens (token_init.c:82)
-==25590==    by 0x1096CB: main (minishell.c:42)
-==25590==
-==25590== LEAK SUMMARY:
-==25590==    definitely lost: 2 bytes in 1 blocks
-==25590==    indirectly lost: 0 bytes in 0 blocks
-==25590==      possibly lost: 0 bytes in 0 blocks
-==25590==    still reachable: 0 bytes in 0 blocks
-==25590==         suppressed: 208,444 bytes in 225 blocks
-
-----------------------------------------------------------------------------
 quand on excute minishell dans minishell puis qu'on ctrl D jusqua sortir des deux minishell
 
 
@@ -96,59 +78,3 @@ quand on excute minishell dans minishell puis qu'on ctrl D jusqua sortir des deu
 ==30513==
 ==30513== For lists of detected and suppressed errors, rerun with: -s
 ==30513== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
-
-
-----------------------------------------------------------------------
-
-"" = bash: : command not found
-'' = bash: : command not found
-
-
-echo $""HOME
-
-==19321== Invalid read of size 1
-==19321==    at 0x10D046: varlen (expand.c:41)
-==19321==    by 0x10D074: find_value (expand.c:55)
-==19321==    by 0x10D180: replace_token (expand.c:83)
-==19321==    by 0x10D25E: expand (expand.c:103)
-==19321==    by 0x10D3C8: find_expand (expand.c:143)
-==19321==    by 0x10CA42: init_tokens (token_init.c:81)
-==19321==    by 0x109956: main (minishell.c:44)
-==19321==  Address 0x4b5c992 is 0 bytes after a block of size 2 alloc'd
-==19321==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==19321==    by 0x10F93F: ft_strndup (in /home/billcipher/Documents/newminishell/minishell)
-==19321==    by 0x10D83F: extract_word (extract_token.c:99)
-==19321==    by 0x10C94C: get_token (token_init.c:55)
-==19321==    by 0x10CA05: init_tokens (token_init.c:76)
-==19321==    by 0x109956: main (minishell.c:44)
-==19321==
-==19321== Invalid read of size 1
-==19321==    at 0x10D046: varlen (expand.c:41)
-==19321==    by 0x10D19F: replace_token (expand.c:84)
-==19321==    by 0x10D25E: expand (expand.c:103)
-==19321==    by 0x10D3C8: find_expand (expand.c:143)
-==19321==    by 0x10CA42: init_tokens (token_init.c:81)
-==19321==    by 0x109956: main (minishell.c:44)
-==19321==  Address 0x4b5c992 is 0 bytes after a block of size 2 alloc'd
-==19321==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==19321==    by 0x10F93F: ft_strndup (in /home/billcipher/Documents/newminishell/minishell)
-==19321==    by 0x10D83F: extract_word (extract_token.c:99)
-==19321==    by 0x10C94C: get_token (token_init.c:55)
-==19321==    by 0x10CA05: init_tokens (token_init.c:76)
-==19321==    by 0x109956: main (minishell.c:44)
-==19321==
-==19321== Invalid read of size 1
-==19321==    at 0x10F6EA: ft_strlen (in /home/billcipher/Documents/newminishell/minishell)
-==19321==    by 0x10CF32: ft_strjoin3 (expand.c:25)
-==19321==    by 0x10D1CC: replace_token (expand.c:85)
-==19321==    by 0x10D25E: expand (expand.c:103)
-==19321==    by 0x10D3C8: find_expand (expand.c:143)
-==19321==    by 0x10CA42: init_tokens (token_init.c:81)
-==19321==    by 0x109956: main (minishell.c:44)
-==19321==  Address 0x4b5c992 is 0 bytes after a block of size 2 alloc'd
-==19321==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==19321==    by 0x10F93F: ft_strndup (in /home/billcipher/Documents/newminishell/minishell)
-==19321==    by 0x10D83F: extract_word (extract_token.c:99)
-==19321==    by 0x10C94C: get_token (token_init.c:55)
-==19321==    by 0x10CA05: init_tokens (token_init.c:76)
-==19321==    by 0x109956: main (minishell.c:44)
