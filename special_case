@@ -2,13 +2,13 @@ valgrind
 
 builtins
 
-heredoc tout pete
-
 --------- UNSET PATH on verra c'est dans les buitlin--------
 --- si j'unset path il y aura des cas ou j'aurais un certain
 --- message et retour apres le execve qui aura echoue un truc comme ca
 
 ---- ajouter un compteur pour le readline du heredoc pour le write ------
+
+----------------signal heredoc-----------------------------------------
 
 ----------------- eviter les write qui se superposent -------------------
 char *msg;
@@ -18,17 +18,7 @@ write(STDERR_FILENO, msg, ft_strlen(msg));
 free(msg);
 -------------------------------------------------------------------------
 
-unintialised values
-
-close: Bad file descriptor
-close: Bad file descriptor
-exit status:1
-minishell> cat < file1 | << EOF1 << EOF2
-
-------------------------------------------------------------------------
-
 quand on excute minishell dans minishell puis qu'on ctrl D jusqua sortir des deux minishell
-
 
 ==30532== Memcheck, a memory error detector
 ==30532== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
