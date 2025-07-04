@@ -58,6 +58,11 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 	pid = fork();
 	if (pid == -1)
 		free_and_exit(data, 1);
+// il faut que j'ai une variable globale pour mon handler,
+// dans mon handler je passe la variable a 127 et je close(0)
+// ce qui va fermer le readline,
+// si la variable est a 127 apres ma fonction readline je peut
+// free_and_exit(data, 127)
 	if (pid == 0)
 	{
 		signal(SIGINT, heredoc_handler);
