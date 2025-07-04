@@ -18,6 +18,9 @@ void free_filelist(t_filelist **fl)
 		current->filename = NULL;
 		if (current->limiter)
 			free(current->limiter);
+		if (current->pathname)
+			free(current->pathname);
+		current->pathname = NULL;
 		current->limiter = NULL;
 		free(current);
 		current = tmp;

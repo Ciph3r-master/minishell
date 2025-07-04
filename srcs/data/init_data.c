@@ -17,6 +17,7 @@
 int	init_data(t_data *data, char **env)
 {
 	data->env_list = get_env_list(data, env);
+	sh_level(data);
 	data->env_copy = get_env_copy(data->env_list);
 	if (!data->env_copy)
 		free_and_exit(data, 1);

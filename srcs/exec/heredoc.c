@@ -48,14 +48,26 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 	char		*limiter;
 	int			reading;
 	int			fd;
+	int			pid;
 
 	if (!cur_file_in || !cur_file_in->limiter)
 		free_and_exit(data, 1);
 	limiter = cur_file_in->limiter;
 	fd = cur_file_in->fd;
 	reading = 1;
-	while (reading)
-		reading = readline_heredoc(limiter, fd);
+	pid = fork();
+	if (pid == -1)
+		free_and_exit(data, 1);
+	if (pid == 0)
+	{
+		signal(SIGINT, heredoc_handler);
+		free_all_no_exit(data);
+		while (reading)
+			reading = readline_heredoc(limiter, fd);
+		close(fd);
+		exit(0);
+	}
+	signal(SIGINT, sigint_handler);
 	if (close(fd) == -1)
 		free_and_exit(data, 1);
 	cur_file_in->fd = -1;
@@ -96,7 +108,8 @@ int	exec_heredoc(t_cmd_node *cmd_node, t_data *data)
 	cur_cmd = cmd_node;
 	while (cur_cmd)
 	{
-		run_heredoc_in_file_in(cur_cmd->file_in, data);
+		if (cur_cmd->type & HEREDOC)
+			run_heredoc_in_file_in(cur_cmd->file_in, data);
 		cur_cmd = cur_cmd->next;
 	}
 	return (1);

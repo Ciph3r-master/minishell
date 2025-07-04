@@ -23,14 +23,12 @@ void	delete_tmps(t_filelist *cur_file_in)
 		{
 			if (cur_file_in->fd != -1)
 			{
-				if (close(cur_file_in->fd) == -1)
-					perror("close");
+				close(cur_file_in->fd);
 				cur_file_in->fd = -1;
 			}
 			if (cur_file_in->pathname)
 			{
-				if (unlink(cur_file_in->pathname) == -1)
-					perror("unlink");
+				unlink(cur_file_in->pathname);
 				free(cur_file_in->pathname);
 				cur_file_in->pathname = NULL;
 			}

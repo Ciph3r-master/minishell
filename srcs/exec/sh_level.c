@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fork.c                                             :+:      :+:    :+:   */
+/*   sh_level.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-28 12:27:34 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-05-28 12:27:34 by thmaitre         ###   ########.fr       */
+/*   Created: 2025-07-01 17:40:20 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-07-01 17:40:20 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
-#include <sys/wait.h>
+#include "minishell.h"
+#include "libft.h"
 
-int	main(void)
+int	sh_level(t_data *data)
 {
-	int	pid;
+	char	*str_sh_lvl;
+	int		sh_lvl;
 
-	pid = fork();
-	if (-1 == pid)
+	str_sh_lvl = NULL;
+	if (isatty(STDIN_FILENO))
 	{
-		perror("fork");
-		return (0);
+		str_sh_lvl = ft_getenv(data, "SHLVL");
 	}
-	if (0 == pid)
+	if (str_sh_lvl)
 	{
-		sleep(15);
-		write(1, "enfant\n", 7);
+		sh_lvl = ft_atoi(str_sh_lvl);
+		sh_lvl++;
+		str_sh_lvl = ft_itoa(sh_lvl);
+		set_sh_lvl(data, str_sh_lvl);
 	}
-	else
-	{
-		wait(NULL);
-		sleep(10);
-		write(1, "parent\n", 7);
-	}
-	return (0);
+	return (1);
 }

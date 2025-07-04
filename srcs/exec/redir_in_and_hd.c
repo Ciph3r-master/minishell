@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -23,11 +24,9 @@ int	exec_redir_in(t_filelist *cur_file_in, t_data *data)
 	if (!cur_file_in || !cur_file_in->filename)
 		free_and_exit(data, 1);
 	filename = cur_file_in->filename;
-	if (access(filename, F_OK) == -1)
+	if (access(filename, R_OK) == -1)
 	{
-		write(STDERR_FILENO, "minishell: ", 11);
-		write(STDERR_FILENO, filename, ft_strlen(filename));
-		write(STDERR_FILENO, ": No such file or directory\n", 28);
+		redir_in_message(filename, errno);
 		data->exit_status = 1;
 		return (0);
 	}

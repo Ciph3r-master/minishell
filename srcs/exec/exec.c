@@ -18,9 +18,9 @@ int	pipeline_has_heredoc(t_cmd_node *cmd_node)
 	int			node_type;
 
 	cur_cmd_node = cmd_node;
-	node_type = cmd_node->type;
 	while (cur_cmd_node)
 	{
+		node_type = cur_cmd_node->type;
 		if (HEREDOC & node_type)
 			return (1);
 		cur_cmd_node = cur_cmd_node->next;

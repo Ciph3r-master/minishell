@@ -30,6 +30,19 @@ void	sigint_handler(int sig)
 	}
 }
 
+void	heredoc_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		(void)sig;
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		exit(130);
+	}
+}
+
 void	init_signals(void)
 {
 	struct sigaction	sa;

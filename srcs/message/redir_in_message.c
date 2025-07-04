@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_in_append.c                               :+:      :+:    :+:   */
+/*   redir_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-02 20:03:53 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-02 20:03:53 by thmaitre         ###   ########.fr       */
+/*   Created: 2025-07-02 19:00:32 by thmaitre          #+#    #+#             */
+/*   Updated: 2025-07-02 19:00:32 by thmaitre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <sys/stat.h>
+#include <errno.h>
 #include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "minishell.h"
+#include "libft.h"
 
-int	redirect_out_append(int fd, char *filename)
+void	redir_in_message(char *filename, int err)
 {
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	dup2(fd, STDOUT_FILENO);
-	// securiser dup2
-	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	int	fd;
-
-	if (argc != 2)
-	{
-		printf("Usage: ./a.out <filename>");
-		exit(1);
-	}
-	redirect_out_append(fd, argv[1]);
-	close(fd);
-	return (0);
+	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, filename, ft_strlen(filename));
+	if (err == ENOENT)
+		write(STDERR_FILENO, ": No such file or directory\n", 28);
+	else if (err == EACCES)
+		write(STDERR_FILENO, ": Permission denied\n", 20);
+	else
+		write(STDERR_FILENO, ": Error\n", 8);
+	return ;
 }

@@ -13,6 +13,18 @@
 #include "minishell.h"
 #include "libft.h"
 
+void	free_partial_env_copy(char **env_copy, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		free(env_copy[i]);
+		i++;
+	}
+}
+
 char	**strdup_keys(char **env_copy, t_env_list *env_list)
 {
 	t_env_list	*current;
@@ -24,7 +36,10 @@ char	**strdup_keys(char **env_copy, t_env_list *env_list)
 	{
 		env_copy[i] = ft_strdup(current->key);
 		if (!env_copy[i])
+		{
+			free_partial_env_copy(env_copy, i);
 			return (NULL);
+		}
 		current = current->next;
 		i++;
 	}

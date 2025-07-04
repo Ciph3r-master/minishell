@@ -52,6 +52,7 @@ DIR_ENV_COPY		:= $(DIR_SRCS)/env_copy
 DIR_ERROR			:= $(DIR_SRCS)/error
 DIR_EXEC			:= $(DIR_SRCS)/exec
 DIR_MEMORY			:= $(DIR_SRCS)/memory
+DIR_MESSAGE			:= $(DIR_SRCS)/message
 DIR_PARSING  		:= $(DIR_SRCS)/parsing
 DIR_PARSING_UTILS	:= $(DIR_SRCS)/parsing_utils
 DIR_SIGNALS			:= $(DIR_SRCS)/signals
@@ -84,11 +85,12 @@ SRCS_EXEC	:=							\
 	$(DIR_EXEC)/exec_pipe.c				\
 	$(DIR_EXEC)/exec.c					\
 	$(DIR_EXEC)/extern.c				\
-	$(DIR_EXEC)/get_env.c				\
+	$(DIR_EXEC)/env.c					\
 	$(DIR_EXEC)/heredoc.c				\
 	$(DIR_EXEC)/redir_in_and_hd.c		\
 	$(DIR_EXEC)/redir_out_and_append.c	\
-	$(DIR_EXEC)/redirections.c
+	$(DIR_EXEC)/redirections.c			\
+	$(DIR_EXEC)/sh_level.c
 
 SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/close_saved_fds.c		\
@@ -100,6 +102,9 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_tokens.c			\
 	$(DIR_MEMORY)/free_cmds_node.c		\
 	$(DIR_MEMORY)/free_utils.c			\
+
+SRCS_MESSAGE	:=							\
+	$(DIR_MESSAGE)/redir_in_message.c		\
 
 SRCS_PARSING :=								\
 	$(DIR_PARSING)/token_utils.c			\
@@ -127,6 +132,7 @@ SRCS := $(SRCS_BUILTINS) 				\
         $(SRCS_ERROR) 					\
         $(SRCS_EXEC) 					\
         $(SRCS_MEMORY) 					\
+        $(SRCS_MESSAGE) 				\
         $(SRCS_PARSING) 				\
         $(SRCS_PARSING_UTILS)			\
         $(SRCS_SIGNALS)
@@ -141,6 +147,7 @@ OBJS_ENV_COPY		:= $(SRCS_ENV_COPY:$(DIR_ENV_COPY)/%.c=$(DIR_OBJS)/%.o)
 OBJS_ERROR			:= $(SRCS_ERROR:$(DIR_ERROR)/%.c=$(DIR_OBJS)/%.o)
 OBJS_EXEC			:= $(SRCS_EXEC:$(DIR_EXEC)/%.c=$(DIR_OBJS)/%.o)
 OBJS_MEMORY			:= $(SRCS_MEMORY:$(DIR_MEMORY)/%.c=$(DIR_OBJS)/%.o)
+OBJS_MESSAGE		:= $(SRCS_MESSAGE:$(DIR_MESSAGE)/%.c=$(DIR_OBJS)/%.o)
 OBJS_PARSING 		:= $(SRCS_PARSING:$(DIR_PARSING)/%.c=$(DIR_OBJS)/%.o)
 OBJS_PARSING_UTILS	:= $(SRCS_PARSING_UTILS:$(DIR_PARSING_UTILS)/%.c=$(DIR_OBJS)/%.o)
 OBJS_SIGNALS		:= $(SRCS_SIGNALS:$(DIR_SIGNALS)/%.c=$(DIR_OBJS)/%.o)
@@ -152,6 +159,7 @@ OBJS := $(OBJS_BUILTINS)		\
         $(OBJS_ERROR) 			\
         $(OBJS_EXEC) 			\
         $(OBJS_MEMORY)			\
+        $(OBJS_MESSAGE)			\
         $(OBJS_PARSING)			\
         $(OBJS_PARSING_UTILS)	\
         $(OBJS_SIGNALS)
@@ -200,6 +208,11 @@ $(DIR_OBJS)/%.o: $(DIR_EXEC)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(DIR_OBJS)/%.o: $(DIR_MEMORY)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(DIR_OBJS)/%.o: $(DIR_MESSAGE)/%.c
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@

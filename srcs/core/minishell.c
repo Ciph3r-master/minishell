@@ -18,6 +18,25 @@
 #include <signal.h>
 #include "minishell.h"
 
+// fonction a enlever quand on aurai le builtin env
+#include "libft.h"
+int	print_sh_lvl(t_data *data)
+{
+	t_env_list	*cur_env_list;
+
+	cur_env_list = data->env_list;
+	while (cur_env_list)
+	{
+		if (ft_strcmp(cur_env_list->key, "SHLVL") == 0)
+		{
+			printf("sh_lvl :%s\n", cur_env_list->value);
+			return (1);
+		}
+		cur_env_list = cur_env_list->next;
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
@@ -29,7 +48,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		if (save_stdin_stdout(&data.saved_stdin, &data.saved_stdout) == -1)
-		free_and_exit(&data, 1);
+			free_and_exit(&data, 1);
 		data.line = readline("minishell> ");
 		if (!data.line)
 		{
@@ -46,6 +65,7 @@ int	main(int argc, char **argv, char **env)
 		printf("\n ---------- exec -------\n\n");
 		exec(&data);
 		printf("exit status:%d\n", data.exit_status);
+		print_sh_lvl(&data);
 	}
 	return (0);
 }

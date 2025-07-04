@@ -104,7 +104,7 @@ int	get_cmd_path_name(t_cmd_node *cmd_node, t_data *data)
 	char	**paths;
 
 	pathname = NULL;
-	path = getenv("PATH");
+	path = ft_getenv(data, "PATH");
 	if (NULL == path)
 		free_and_exit(data, 1);
 	paths = ft_split_set(path, ":");
