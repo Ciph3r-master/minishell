@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/02 17:46:55 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/06 18:44:55 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,11 +190,12 @@ void		print_cmdlist(t_cmd_node *cmdlist);
 	// pwd.c
 int			builtin_pwd(void);
 int			builtin_echo(t_cmd_node *cmd_node);
-//	expand
-void		find_expand(t_data *data);
+int 		builtin_env(t_data *data);
+	//	expand
+	void find_expand(t_data *data);
 
-	//	data/
-	//	init_data.c
+//	data/
+//	init_data.c
 int			init_data(t_data *data, char **env);
 
 //	env_copy/

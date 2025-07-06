@@ -6,7 +6,7 @@
 #    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/02 17:47:43 by billcipher       ###   ########.fr        #
+#    Updated: 2025/07/06 18:46:34 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ DIR_OBJS			:= .objs
 
 SRCS_BUILTINS	:=						\
 	$(DIR_BUILTINS)/pwd.c				\
-	$(DIR_BUILTINS)/echo.c
+	$(DIR_BUILTINS)/echo.c				\
+	$(DIR_BUILTINS)/env.c				\
 
 SRCS_CORE	:=							\
 	$(DIR_CORE)/minishell.c
@@ -85,7 +86,7 @@ SRCS_EXEC	:=							\
 	$(DIR_EXEC)/exec_pipe.c				\
 	$(DIR_EXEC)/exec.c					\
 	$(DIR_EXEC)/extern.c				\
-	$(DIR_EXEC)/env.c					\
+	$(DIR_EXEC)/get_env.c					\
 	$(DIR_EXEC)/heredoc.c				\
 	$(DIR_EXEC)/redir_in_and_hd.c		\
 	$(DIR_EXEC)/redir_out_and_append.c	\
