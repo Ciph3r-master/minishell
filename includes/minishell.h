@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/07 18:09:10 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/07 18:38:08 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,6 @@ int			close_saved_fds(t_data *data);
 void		delete_tmp_files(t_data *data);
 	//	free_all.c
 void		free_all(t_data *data, int exit_code);
-void		free_all_no_exit(t_data *data);
 	//	free_env_copy.c
 void		free_env_copy(char **env_copy);
 	//	free_env_list.c

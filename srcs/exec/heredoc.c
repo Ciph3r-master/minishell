@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/26 22:48:12 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/07 18:49:28 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	readline_heredoc(char *limiter, int fd)
 	char	*here_line;
 
 	here_line = readline("> ");
+	if (g_exit_status == 130)
+		return (0);
 	if (!here_line)
 	{
 		write(STDERR_FILENO, "bash: warning: here-document ", 29);
@@ -48,29 +50,19 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 	char		*limiter;
 	int			reading;
 	int			fd;
-	int			pid;
 
 	if (!cur_file_in || !cur_file_in->limiter)
 		free_and_exit(data, 1);
 	limiter = cur_file_in->limiter;
 	fd = cur_file_in->fd;
 	reading = 1;
-	pid = fork();
-	if (pid == -1)
-		free_and_exit(data, 1);
-// il faut que j'ai une variable globale pour mon handler,
-// dans mon handler je passe la variable a 127 et je close(0)
-// ce qui va fermer le readline,
-// si la variable est a 127 apres ma fonction readline je peut
-// free_and_exit(data, 127)
-	if (pid == 0)
+	signal(SIGINT, heredoc_handler);
+	while (reading)
+		reading = readline_heredoc(limiter, fd);
+	if (g_exit_status == 130)
 	{
-		signal(SIGINT, heredoc_handler);
-		free_all_no_exit(data);
-		while (reading)
-			reading = readline_heredoc(limiter, fd);
-		close(fd);
-		exit(0);
+		g_exit_status = 0;
+		data->exit_status = 130;
 	}
 	signal(SIGINT, sigint_handler);
 	if (close(fd) == -1)
