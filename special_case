@@ -80,3 +80,7 @@ exit_code : 1 at srcs/data/init_data.c:23
 si env -i:
 
 	SHLVL = 1;
+
+
+
+---------- exit code 130 quand ctrl ^C -----------
