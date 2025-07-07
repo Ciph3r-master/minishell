@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 18:53:04 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/16 21:44:41 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/07 18:09:40 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	sigint_handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_exit_status = 1;
 	}
 }
 

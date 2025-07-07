@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/03 19:16:57 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:28:28 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <readline/readline.h>
 #include <signal.h>
 #include "minishell.h"
+
+int g_exit_status = 0;
 
 // fonction a enlever quand on aurai le builtin env
 #include "libft.h"
@@ -59,6 +61,11 @@ int	main(int argc, char **argv, char **env)
 		free_cmd_list(&data.cmd_node);
 		free_tokenlist(&data.tokenlist);
 		add_history(data.line);
+		if (g_exit_status == 1)
+		{
+			data.exit_status = g_exit_status;
+			g_exit_status = 0;
+		}
 		init_tokens(&data);
 		data.exit_status = 0;
 		free(data.line);
