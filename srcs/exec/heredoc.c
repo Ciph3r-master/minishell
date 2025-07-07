@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 00:03:54 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 00:15:35 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 			data->exit_status = 130;
 			write(STDOUT_FILENO, "\n", 1);
 		}
+		signal(SIGINT, sigint_handler);
 		if (close(fd) == -1)
 			free_and_exit(data, 1);
 		cur_file_in->fd = -1;
