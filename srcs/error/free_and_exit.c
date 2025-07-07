@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:38:08 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/13 17:39:01 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/07 22:17:17 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 
 void	free_and_exit_debug(t_data *data, int exit_code, const char *file, int line)
 {
-	printf("exit_code : %d at %s:%d\n", exit_code, file, line);
+	(void)file;
+	(void)line;
+	// printf("exit_code : %d at %s:%d\n", exit_code, file, line);
 	free_all(data, exit_code);
 	return ;
 }

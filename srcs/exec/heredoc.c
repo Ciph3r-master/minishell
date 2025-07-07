@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/07 18:49:28 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 00:03:54 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,45 @@ int	readline_heredoc(char *limiter, int fd)
 int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 {
 	char		*limiter;
-	int			reading;
 	int			fd;
+	pid_t		pid;
+	int			status;
 
 	if (!cur_file_in || !cur_file_in->limiter)
 		free_and_exit(data, 1);
 	limiter = cur_file_in->limiter;
 	fd = cur_file_in->fd;
-	reading = 1;
-	signal(SIGINT, heredoc_handler);
-	while (reading)
-		reading = readline_heredoc(limiter, fd);
-	if (g_exit_status == 130)
-	{
-		g_exit_status = 0;
-		data->exit_status = 130;
-	}
-	signal(SIGINT, sigint_handler);
-	if (close(fd) == -1)
+	pid = fork();
+	if (pid < 0)
 		free_and_exit(data, 1);
-	cur_file_in->fd = -1;
+	if (pid == 0)
+	{
+		signal(SIGINT, heredoc_handler);
+		while (data->exec_heredoc && readline_heredoc(limiter, fd))
+			;
+		close(fd);
+		if (g_exit_status == 130)
+		{
+			g_exit_status = 0;
+			data->exec_heredoc = 0;
+			free_and_exit(data, 130);
+		}
+		exit(0);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		{
+			data->exec_heredoc = 0;
+			data->exit_status = 130;
+			write(STDOUT_FILENO, "\n", 1);
+		}
+		if (close(fd) == -1)
+			free_and_exit(data, 1);
+		cur_file_in->fd = -1;
+	}
 	return (1);
 }
 

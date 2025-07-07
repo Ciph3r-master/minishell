@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/07 18:28:28 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/07 22:16:40 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (save_stdin_stdout(&data.saved_stdin, &data.saved_stdout) == -1)
 			free_and_exit(&data, 1);
+		g_exit_status = 0;
+		data.exec_heredoc = 1;
 		data.line = readline("minishell> ");
 		if (!data.line)
 		{
@@ -71,8 +73,8 @@ int	main(int argc, char **argv, char **env)
 		free(data.line);
 		printf("\n ---------- exec -------\n\n");
 		exec(&data);
-		printf("exit status:%d\n", data.exit_status);
-		print_sh_lvl(&data);
+		// printf("exit status:%d\n", data.exit_status);
+		// print_sh_lvl(&data);
 	}
 	return (0);
 }

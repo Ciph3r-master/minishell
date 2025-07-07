@@ -6,7 +6,7 @@
 /*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/07 18:38:08 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/07 20:49:21 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_data
 	int			saved_stdin;
 	int			saved_stdout;
 	int			exit_status;
+	int			exec_heredoc;
 	char		*pwd;
 	char		*line;
 	char		*old_pwd;
