@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:45:06 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/27 22:13:14 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 05:42:56 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*ft_getenv(t_data *data, char *key)
 {
 	t_env_list	*cur_env_list;
 
+	if (!data->env_list)
+		free_and_exit(data, 1);
 	cur_env_list = data->env_list;
 	while (cur_env_list)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/07 22:16:40 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 05:51:47 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	while (1)
 	{
-		if (save_stdin_stdout(&data.saved_stdin, &data.saved_stdout) == -1)
-			free_and_exit(&data, 1);
+		save_stdin_stdout(&data);
 		g_exit_status = 0;
 		data.exec_heredoc = 1;
 		data.line = readline("minishell> ");
@@ -63,16 +62,14 @@ int	main(int argc, char **argv, char **env)
 		free_cmd_list(&data.cmd_node);
 		free_tokenlist(&data.tokenlist);
 		add_history(data.line);
-		if (g_exit_status == 1)
-		{
+		if (g_exit_status != 0)
 			data.exit_status = g_exit_status;
-			g_exit_status = 0;
-		}
 		init_tokens(&data);
 		data.exit_status = 0;
 		free(data.line);
 		printf("\n ---------- exec -------\n\n");
 		exec(&data);
+		// print_env_copy(data.env_copy);
 		// printf("exit status:%d\n", data.exit_status);
 		// print_sh_lvl(&data);
 	}

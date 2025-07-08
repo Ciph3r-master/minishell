@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/03 19:08:14 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/08 06:36:44 by thibaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	cmd_is_directory(t_cmd_node *cmd_node, t_data *data)
 		free_and_exit(data, 1);
 	cmd = cmd_node->cmd->cmd;
 	special_case_directory(cmd_node, data);
-	if (stat(cmd, &info) != 0)
+	if (stat(cmd, &info) != 0 || data->exit_status != 0)
 		return (0);
 	if (S_ISDIR(info.st_mode))
 	{

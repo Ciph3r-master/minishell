@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 00:24:41 by thibaud           #+#    #+#             */
-/*   Updated: 2025/07/07 21:22:51 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 04:53:13 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "minishell.h"
 
-int	save_stdin_stdout(int *saved_stdin, int *saved_stdout)
+int	save_stdin_stdout(t_data *data)
 {
-	*saved_stdin = dup(STDIN_FILENO);
-	if (*saved_stdin == -1)
-		return (-1);
-	*saved_stdout = dup(STDOUT_FILENO);
-	if (*saved_stdout == -1)
+	data->saved_stdin = dup(STDIN_FILENO);
+	if (data->saved_stdin == -1)
+		free_and_exit(data, 1);
+	data->saved_stdout = dup(STDOUT_FILENO);
+	if (data->saved_stdout == -1)
 	{
-		close(*saved_stdin);
-		return (-1);
+		close(data->saved_stdin);
+		free_and_exit(data, 1);
 	}
 	return (1);
 }

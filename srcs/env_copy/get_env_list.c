@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:12:35 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/18 17:18:40 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/08 05:24:08 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ t_env_list	*get_env_list(t_data *data, char **env)
 
 	data->env_list = NULL;
 	i = 0;
+	if (!*env)
+		return (create_dfl_env_list(data));
 	while (env[i])
 	{
 		key = get_env_key(env[i]);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
+#    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/02 17:47:43 by billcipher       ###   ########.fr        #
+#    Updated: 2025/07/08 05:30:39 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ else
 	READLINE_LIB :=
 endif
 
-CFLAGS       := -g3 -Wall -Wextra -Werror -MMD -MP -I./includes -I./libft $(READLINE_INC)
+CFLAGS       := -g3 -Wall -Wextra -Werror -fdiagnostics-color=always -MMD -MP -I./includes -I./libft $(READLINE_INC)
 LDFLAGS      := $(READLINE_LIB) -lreadline
 
 # === Libraries ===
@@ -82,6 +82,7 @@ SRCS_EXEC	:=							\
 	$(DIR_EXEC)/builtins.c				\
 	$(DIR_EXEC)/cmd_path.c				\
 	$(DIR_EXEC)/create_tmp_file.c		\
+	$(DIR_EXEC)/dfl_env_list.c			\
 	$(DIR_EXEC)/exec_pipe.c				\
 	$(DIR_EXEC)/exec.c					\
 	$(DIR_EXEC)/extern.c				\

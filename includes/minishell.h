@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/07 20:49:21 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 05:14:40 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,8 @@ int			find_path_with_access(char **paths, char **pathname,
 int			get_cmd_path_name(t_cmd_node *cmd_node, t_data *data);
 	//	create_tmp_file.c
 int			create_tmp_file(t_filelist *cur_file_in, t_data *data);
+	//	dfl_env_list.c
+t_env_list	*create_dfl_env_list(t_data *data);
 	//	exec_pipe.c
 int			exec_pipe(t_cmd_node *cmd_node, t_data *data);
 	//	exec.c
@@ -248,7 +250,7 @@ int			exec_redir_in_and_hd(t_filelist	*file_in, t_data *data);
 	//	redir_out_and_append.c
 int			exec_redir_out_and_append(t_filelist *file_out, t_data *data);
 	//	redirections.c
-int			save_stdin_stdout(int *saved_stdin, int *saved_stdout);
+int			save_stdin_stdout(t_data *data);
 int			reset_stdin_stdout(t_data *data);
 int			exec_redirections(t_cmd_node *cmd_node, t_data *data);
 	//	sh_level.c
