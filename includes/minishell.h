@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 19:45:03 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/08 20:45:18 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,11 +193,14 @@ void		print_cmdlist(t_cmd_node *cmdlist);
 	// pwd.c
 int			builtin_pwd(void);
 int			builtin_echo(t_cmd_node *cmd_node);
-//	expand
-void		find_expand(t_data *data);
+int 		builtin_env(t_data *data);
+int 		builtin_unset(t_data *data, t_cmd_node *cmd_node);
+int			builtin_exit(t_data *data, t_cmd_node *cmd_node);
+	//	expand
+	void find_expand(t_data *data);
 
-	//	data/
-	//	init_data.c
+//	data/
+//	init_data.c
 int			init_data(t_data *data, char **env);
 
 //	env_copy/

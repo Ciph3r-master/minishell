@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/08 05:51:47 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/08 20:46:28 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,6 @@
 #include <readline/readline.h>
 #include <signal.h>
 #include "minishell.h"
-
-int g_exit_status = 0;
-
-// fonction a enlever quand on aurai le builtin env
-#include "libft.h"
-int	print_sh_lvl(t_data *data)
-{
-	t_env_list	*cur_env_list;
-
-	cur_env_list = data->env_list;
-	while (cur_env_list)
-	{
-		if (ft_strcmp(cur_env_list->key, "SHLVL") == 0)
-		{
-			printf("sh_lvl :%s\n", cur_env_list->value);
-			return (1);
-		}
-		cur_env_list = cur_env_list->next;
-	}
-	return (1);
-}
 
 int	main(int argc, char **argv, char **env)
 {
