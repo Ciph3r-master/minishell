@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/08 20:46:28 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/08 20:54:55 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <readline/readline.h>
 #include <signal.h>
 #include "minishell.h"
+
+int g_exit_status = 0;
 
 int	main(int argc, char **argv, char **env)
 {
