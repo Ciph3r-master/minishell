@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 20:43:24 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/08 21:04:41 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	exec_heredoc(t_cmd_node *cmd_node, t_data *data)
 	cur_cmd = cmd_node;
 	while (cur_cmd)
 	{
-		if (cur_cmd->type & HEREDOC)
+		if ((cur_cmd->type & HEREDOC) && (data->exec_heredoc == 1))
 			run_heredoc_in_file_in(cur_cmd->file_in, data);
 		cur_cmd = cur_cmd->next;
 	}

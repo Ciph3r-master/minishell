@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 20:58:31 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/08 21:02:29 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	exec(t_data *data)
 		exec_heredoc(cmd_node, data);
 	if (!cmd_node->next)
 		exec_simple_cmd(cmd_node, data);
-	else if (cmd_node->next && data->exec_heredoc == 1)
+	printf("data->exec_heredoc :%d\n", data->exec_heredoc);
+	if (cmd_node->next && data->exec_heredoc == 1)
 		exec_pipe(cmd_node, data);
 	return (0);
 }
