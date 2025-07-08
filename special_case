@@ -2,13 +2,13 @@ valgrind
 
 builtins
 
+env -i
+
 --------- UNSET PATH on verra c'est dans les buitlin--------
 --- si j'unset path il y aura des cas ou j'aurais un certain
 --- message et retour apres le execve qui aura echoue un truc comme ca
 
 ---- ajouter un compteur pour le readline du heredoc pour le write ------
-
-----------------signal heredoc-----------------------------------------
 
 ----------------- eviter les write qui se superposent -------------------
 char *msg;
@@ -17,70 +17,3 @@ msg = ft_strjoin_free(msg, ": command not found\n"); // "minishell: cmd: command
 write(STDERR_FILENO, msg, ft_strlen(msg));
 free(msg);
 -------------------------------------------------------------------------
-
-quand on excute minishell dans minishell puis qu'on ctrl D jusqua sortir des deux minishell
-
-==30532== Memcheck, a memory error detector
-==30532== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==30532== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==30532== Command: ./minishell
-==30532== Parent PID: 30513
-==30532==
-==30513== Invalid free() / delete / delete[] / realloc()
-==30513==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30513==    by 0x407481: free_cmd (free_cmds_node.c:39)
-==30513==    by 0x4075A2: free_cmd_list (free_cmds_node.c:67)
-==30513==    by 0x4070E7: free_all (free_all.c:26)
-==30513==    by 0x401EAA: free_and_exit (free_and_exit.c:18)
-==30513==    by 0x4014CF: main (minishell.c:57)
-==30513==  Address 0x4b76230 is 0 bytes inside a block of size 12 free'd
-==30513==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30513==    by 0x407452: free_cmd (free_cmds_node.c:36)
-==30513==    by 0x4075A2: free_cmd_list (free_cmds_node.c:67)
-==30513==    by 0x4070E7: free_all (free_all.c:26)
-==30513==    by 0x401EAA: free_and_exit (free_and_exit.c:18)
-==30513==    by 0x4014CF: main (minishell.c:57)
-==30513==  Block was alloc'd at
-==30513==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30513==    by 0x40B21B: ft_strdup (in /home/thmaitre/Documents/project42/4_cercle/minishell/minishell)
-==30513==    by 0x407F09: cmd_node_set_cmd (cmd_node.c:48)
-==30513==    by 0x4080DF: extract_cmd_node (cmd_node.c:87)
-==30513==    by 0x407A4C: extract_cmds (token_init.c:33)
-==30513==    by 0x407D16: init_tokens (token_init.c:90)
-==30513==    by 0x401502: main (minishell.c:63)
-==30513==
-==30513==
-==30513== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==30513== Open file descriptor 3: /home/thmaitre/Documents/project42/4_cercle/minishell/valgrind.log
-==30513==    <inherited from parent>
-==30513==
-==30513==
-==30513== HEAP SUMMARY:
-==30513==     in use at exit: 208,181 bytes in 222 blocks
-==30513==   total heap usage: 853 allocs, 632 frees, 273,315 bytes allocated
-==30513==
-==30513== LEAK SUMMARY:
-==30513==    definitely lost: 0 bytes in 0 blocks
-==30513==    indirectly lost: 0 bytes in 0 blocks
-==30513==      possibly lost: 0 bytes in 0 blocks
-==30513==    still reachable: 0 bytes in 0 blocks
-==30513==         suppressed: 208,181 bytes in 222 blocks
-==30513==
-==30513== For lists of detected and suppressed errors, rerun with: -s
-==30513== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
-
-
--------------------------
-
-➜  minishell git:(exec) env -i ./minishell
-exit_code : 1 at srcs/data/init_data.c:23
-
---------------------------
-
-si env -i:
-
-	SHLVL = 1;
-
-
-
----------- exit code 130 quand ctrl ^C -----------

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 06:36:44 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 19:46:58 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,10 @@ int	get_cmd_path_name(t_cmd_node *cmd_node, t_data *data)
 	pathname = NULL;
 	path = ft_getenv(data, "PATH");
 	if (NULL == path)
-		free_and_exit(data, 1);
+	{
+		env_no_path_msg(data, cmd_node->cmd->cmd);
+		return (1);
+	}
 	paths = ft_split_set(path, ":");
 	if (!paths)
 		free_and_exit(data, 1);

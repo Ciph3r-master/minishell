@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 05:14:40 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/08 19:45:03 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,7 @@ void		free_matrix(char **split);
 //	messsage/
 	//	redir_in_message.c
 void		redir_in_message(char *filename, int err);
+void		env_no_path_msg(t_data *data, char *cmd);
 
 //	signals/
 	//	init_signals.c

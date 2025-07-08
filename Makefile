@@ -6,7 +6,7 @@
 #    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/08 05:30:39 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/08 19:46:02 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,8 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_utils.c			\
 
 SRCS_MESSAGE	:=							\
-	$(DIR_MESSAGE)/redir_in_message.c		\
+	$(DIR_MESSAGE)/redir_in_msg.c			\
+	$(DIR_MESSAGE)/cmd_path_msg.c			\
 
 SRCS_PARSING :=								\
 	$(DIR_PARSING)/token_utils.c			\
