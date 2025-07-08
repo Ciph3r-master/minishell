@@ -6,7 +6,7 @@
 #    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/08 03:25:16 by billcipher       ###   ########.fr        #
+#    Updated: 2025/07/08 04:58:43 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRCS_BUILTINS	:=						\
 	$(DIR_BUILTINS)/echo.c				\
 	$(DIR_BUILTINS)/env.c				\
 	$(DIR_BUILTINS)/unset.c				\
+	$(DIR_BUILTINS)/exit.c				\
 
 SRCS_CORE	:=							\
 	$(DIR_CORE)/minishell.c
