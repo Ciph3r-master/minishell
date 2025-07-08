@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:03:29 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/07 18:37:59 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 20:36:51 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 #include "minishell.h"
 
 void	free_all(t_data *data, int exit_code)
