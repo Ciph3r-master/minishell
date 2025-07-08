@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/07/03 19:15:49 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/08 02:02:33 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	varlen(char *var)
 	int	i;
 
 	i = 1;
-	if (!var[0])
+	if (!var[0] || (!ft_isalpha(var[0]) && var[0] != '_'))
 		return (0);
 	while (var[i])
 	{
