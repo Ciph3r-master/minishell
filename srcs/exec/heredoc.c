@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 00:15:35 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/08 06:21:20 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 		{
 			g_exit_status = 0;
 			data->exec_heredoc = 0;
+			close_saved_fds(data);
 			free_and_exit(data, 130);
 		}
 		exit(0);
@@ -81,6 +82,7 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 		{
 			data->exec_heredoc = 0;
 			data->exit_status = 130;
+			close_saved_fds(data);
 			write(STDOUT_FILENO, "\n", 1);
 		}
 		signal(SIGINT, sigint_handler);
