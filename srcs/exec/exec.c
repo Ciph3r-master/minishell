@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:58:30 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 21:02:29 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/09 19:43:41 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	exec_simple_cmd(t_cmd_node *cmd_node, t_data *data)
 	int	node_type;
 
 	node_type = cmd_node->type;
+	if (data->exec_heredoc == 0)
+		return (1);
 	if (BUILTIN & node_type)
 		exec_simple_cmd_builtins(cmd_node, data);
 	else if (EXTERN & node_type)
@@ -54,10 +56,9 @@ int	exec(t_data *data)
 		return (1);
 	cmd_node = data->cmd_node;
 	if (pipeline_has_heredoc(cmd_node))
-		exec_heredoc(cmd_node, data);
+		create_heredoc(cmd_node, data);
 	if (!cmd_node->next)
 		exec_simple_cmd(cmd_node, data);
-	printf("data->exec_heredoc :%d\n", data->exec_heredoc);
 	if (cmd_node->next && data->exec_heredoc == 1)
 		exec_pipe(cmd_node, data);
 	return (0);

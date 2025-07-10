@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 21:04:41 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/10 00:36:12 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 #include "minishell.h"
 #include "libft.h"
 
-int	readline_heredoc(char *limiter, int fd)
+int	readline_heredoc(t_data *data, char *limiter, int fd)
 {
 	char	*here_line;
 
+	(void)data;
 	here_line = readline("> ");
 	if (g_exit_status == 130)
 		return (0);
@@ -62,16 +63,13 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 	if (pid == 0)
 	{
 		signal(SIGINT, heredoc_handler);
-		while (data->exec_heredoc && readline_heredoc(limiter, fd))
+		while (readline_heredoc(data, limiter, fd))
 			;
-		close(fd);
+		if (close(fd) == -1)
+			free_and_exit(data, 1);
 		if (g_exit_status == 130)
-		{
-			g_exit_status = 0;
-			data->exec_heredoc = 0;
 			free_and_exit(data, 130);
-		}
-		exit(0);
+		free_and_exit(data, -1);
 	}
 	else
 	{
@@ -81,6 +79,7 @@ int	read_heredoc_fd(t_filelist *cur_file_in, t_data *data)
 		{
 			data->exec_heredoc = 0;
 			data->exit_status = 130;
+			close_saved_fds(data);
 			write(STDOUT_FILENO, "\n", 1);
 		}
 		signal(SIGINT, sigint_handler);
@@ -109,14 +108,14 @@ int	run_heredoc_in_file_in(t_filelist *file_in, t_data *data)
 	cur_file_in = file_in;
 	while (cur_file_in)
 	{
-		if (cur_file_in->type == FILE_HD)
+		if (cur_file_in->type == FILE_HD && data->exec_heredoc == 1)
 			run_heredoc(cur_file_in, data);
 		cur_file_in = cur_file_in->next;
 	}
 	return (1);
 }
 
-int	exec_heredoc(t_cmd_node *cmd_node, t_data *data)
+int	create_heredoc(t_cmd_node *cmd_node, t_data *data)
 {
 	t_cmd_node	*cur_cmd;
 
