@@ -6,7 +6,7 @@
 #    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/08 20:45:00 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/10 01:46:25 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,8 +89,9 @@ SRCS_EXEC	:=							\
 	$(DIR_EXEC)/exec_pipe.c				\
 	$(DIR_EXEC)/exec.c					\
 	$(DIR_EXEC)/extern.c				\
-	$(DIR_EXEC)/get_env.c					\
+	$(DIR_EXEC)/get_env.c				\
 	$(DIR_EXEC)/heredoc.c				\
+	$(DIR_EXEC)/read_heredoc_fd.c		\
 	$(DIR_EXEC)/redir_in_and_hd.c		\
 	$(DIR_EXEC)/redir_out_and_append.c	\
 	$(DIR_EXEC)/redirections.c			\

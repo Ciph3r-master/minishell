@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/09 19:20:36 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/10 01:48:05 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ char		*ft_getenv(t_data *data, char *key);
 int			set_sh_lvl(t_data *data, char *str_sh_lvl);
 	//	heredoc.c
 int			create_heredoc(t_cmd_node *cmd_node, t_data *data);
+	//	read_heredoc_fd.c
+int			read_heredoc_fd(t_filelist *cur_file_in, t_data *data);
 	//	redir_in_and_hd.c
 int			exec_redir_in_and_hd(t_filelist	*file_in, t_data *data);
 	//	redir_out_and_append.c
