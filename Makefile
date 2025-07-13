@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/08 20:45:00 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/11 00:04:36 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRCS_BUILTINS	:=						\
 	$(DIR_BUILTINS)/env.c				\
 	$(DIR_BUILTINS)/unset.c				\
 	$(DIR_BUILTINS)/exit.c				\
+	$(DIR_BUILTINS)/export.c				\
 
 SRCS_CORE	:=							\
 	$(DIR_CORE)/minishell.c

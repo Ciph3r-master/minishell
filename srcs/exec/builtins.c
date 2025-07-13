@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:41:52 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 04:58:34 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/11 00:05:52 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	exec_builtins(t_cmd_node *cmd_node, t_data *data)
 		builtin_unset(data, cmd_node);
 	if (ft_strcmp("exit", cmd) == 0)
 		builtin_exit(data, cmd_node);
+	if (ft_strcmp("export", cmd) == 0)
+		builtin_export(cmd_node);
 	return (1);
 }
 

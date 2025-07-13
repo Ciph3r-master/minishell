@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/08 03:58:23 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/11 00:02:36 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	print_unset_err(char *arg, char *err_msg)
 	write(STDERR_FILENO, "\n", 1);
 }
 
-bool	is_valid(char *id)
+static bool	is_valid(char *id)
 {
 	int	i;
 
@@ -40,7 +40,7 @@ bool	is_valid(char *id)
 	return (true);
 }
 
-void	remove_node(t_env_list **head, char *arg)
+static void	remove_node(t_env_list **head, char *arg)
 {
 	t_env_list	*current;
 	t_env_list	*prev;
