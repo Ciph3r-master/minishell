@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:08:37 by thibaud           #+#    #+#             */
-/*   Updated: 2025/07/14 14:41:23 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/14 23:16:25 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ int	exec_redir_out_and_append(t_filelist *file_out, t_data *data)
 	cur_file_out = file_out;
 	while (cur_file_out && data->exit_status == 0)
 	{
-		// if (filename_not_file_or_dir(cur_file_out->filename))
-		// 	msg_no_such_file_or_directory(data, 1, cur_file_out->filename);
+		if (!is_filename_file_or_dir(data, cur_file_out))
+		{
+			cur_file_out = cur_file_out->next;
+			continue ;
+		}
 		if (cur_file_out->type == FILE_OUT)
 			exec_redir_out(cur_file_out, data);
 		else if (cur_file_out->type == FILE_APPEND)
