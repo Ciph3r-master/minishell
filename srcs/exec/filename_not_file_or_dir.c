@@ -105,7 +105,7 @@ int	filename_not_file_or_dir(t_data *data, t_filelist *cur_file_out)
 	if (ft_strchr(filename, '/') != NULL)
 	{
 		printf("il y a un /\n");
-		extract_dir(data, pathname, filename);
+		extract_pathname(data, pathname, filename);
 		extract_filename(data, pathname, filename);
 	}
 	return (1);
