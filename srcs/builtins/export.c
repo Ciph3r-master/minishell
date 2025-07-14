@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/11 22:39:17 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/14 04:40:11 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,33 @@ static void print_export_err(char *arg, char *err_msg)
 	write(STDERR_FILENO, "' ", 2);
 	write(STDERR_FILENO, err_msg, ft_strlen(err_msg));
 	write(STDERR_FILENO, "\n", 1);
+}
+
+static void add_var_to_env(t_data *data, char *arg)
+{
+	char		*value;
+	char		*key;
+	int			len;
+	t_env_list	*new_node;
+
+	value = ft_strchr(arg, '=') + 1;
+	if (!value)
+		return ;
+	len = 0;
+	while (value[len] && value[len] != '=')
+		len++;
+	key = ft_substr(arg, 0, len);
+	if (!key)
+		free_and_exit(data, 1);
+	//SI NODE EXISTE DEJA JUSTE SET LA NOUVELLE KEY
+	new_node = new_node_env_list(key, ft_strdup(value));
+	if (!new_node)
+	{
+		free(key);
+		free_and_exit(data, 1);
+	}
+	push_back_env_list(&data->env_list, new_node);
+	return ;
 }
 
 static bool	is_valid(char *arg)
@@ -40,7 +67,7 @@ static bool	is_valid(char *arg)
 	return (true);
 }
 
-int builtin_export(t_cmd_node *cmd)
+int builtin_export(t_data *data, t_cmd_node *cmd)
 {
 	char **args;
 
@@ -51,5 +78,6 @@ int builtin_export(t_cmd_node *cmd)
 		print_export_err(args[1], "not a valid identifier");
 		return (1);
 	}
+	add_var_to_env(data, args[1]);
 	return (0);
 }
