@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:11 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/30 21:07:37 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/14 04:44:46 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	init_tokens(t_data *data)
 	if (is_invalid_pipe(data->tokenlist))
 		return (1);
 	set_token_type(data);
-	print_tokenlist(data->tokenlist, false);
 	extract_cmds(data);
-	print_cmdlist(data->cmd_node);
 	return (0);
 }
