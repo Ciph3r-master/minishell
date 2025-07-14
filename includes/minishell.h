@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/10 03:11:28 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/14 00:40:40 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,8 @@ int			exec(t_data *data);
 int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	//	extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
+	//	filename_not_file_or_dir.c
+int			filename_not_file_or_dir(char *filename);
 	//	env.c
 char		*ft_getenv(t_data *data, char *key);
 int			set_sh_lvl(t_data *data, char *str_sh_lvl);
