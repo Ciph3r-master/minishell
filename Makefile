@@ -6,7 +6,7 @@
 #    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/10 01:46:25 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/10 03:12:29 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,7 +110,7 @@ SRCS_MEMORY	:=							\
 
 SRCS_MESSAGE	:=							\
 	$(DIR_MESSAGE)/redir_in_msg.c			\
-	$(DIR_MESSAGE)/cmd_path_msg.c			\
+	$(DIR_MESSAGE)/no_such_file_or_dir.c	\
 
 SRCS_PARSING :=								\
 	$(DIR_PARSING)/token_utils.c			\

@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_path_msg.c                                     :+:      :+:    :+:   */
+/*   filename_not_file_or_dir.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 19:13:37 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/08 19:46:16 by vscode           ###   ########.fr       */
+/*   Created: 2025/07/10 03:24:55 by vscode            #+#    #+#             */
+/*   Updated: 2025/07/14 00:36:15 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "minishell.h"
-#include "libft.h"
 
-void	env_no_path_msg(t_data *data, char *cmd)
+//retourne 1 si invalie
+//0 si on peut creer le fichier
+//extraire le nom
+//si il y a pas de slach on retourne 0
+//si c'est un directory on retourne
+
+//si il y a un slash nouvelle fonction qui vas
+//decouper jusqu au dernier slash
+int	filename_not_file_or_dir(char *filename)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, cmd, ft_strlen(cmd));
-	write(STDERR_FILENO, ": No such file or directory\n", 28);
-	data->exit_status = 127;
+	return (0);
 }

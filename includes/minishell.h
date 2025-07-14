@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/10 01:48:05 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/10 03:11:28 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # include <signal.h>
 
-extern int g_exit_status;
+extern int	g_exit_status;
 
 typedef enum e_cmdtype
 {
@@ -193,14 +193,14 @@ void		print_cmdlist(t_cmd_node *cmdlist);
 	// pwd.c
 int			builtin_pwd(void);
 int			builtin_echo(t_cmd_node *cmd_node);
-int 		builtin_env(t_data *data);
-int 		builtin_unset(t_data *data, t_cmd_node *cmd_node);
+int			builtin_env(t_data *data);
+int			builtin_unset(t_data *data, t_cmd_node *cmd_node);
 int			builtin_exit(t_data *data, t_cmd_node *cmd_node);
 	//	expand
-	void find_expand(t_data *data);
+void		find_expand(t_data *data);
 
 //	data/
-//	init_data.c
+	//	init_data.c
 int			init_data(t_data *data, char **env);
 
 //	env_copy/
@@ -284,7 +284,8 @@ void		free_matrix(char **split);
 //	messsage/
 	//	redir_in_message.c
 void		redir_in_message(char *filename, int err);
-void		env_no_path_msg(t_data *data, char *cmd);
+void		msg_no_such_file_or_directory(t_data *data,
+				int exit_code, char *cmd);
 
 //	signals/
 	//	init_signals.c

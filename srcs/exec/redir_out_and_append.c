@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   redir_out_and_append.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:08:37 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/27 21:08:18 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/13 21:29:38 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "minishell.h"
 
 int	exec_redir_out(t_filelist *cur_file_out, t_data *data)
@@ -20,8 +22,6 @@ int	exec_redir_out(t_filelist *cur_file_out, t_data *data)
 		free_and_exit(data, 1);
 	cur_file_out->fd = open(cur_file_out->filename, O_WRONLY
 			| O_CREAT | O_TRUNC, 0644);
-	// VERIFIER SI PATH VALIDE (SI LE FOLDER EXIST) ERROR CODE 1
-	// bash: salut/test: No such file or directory : EXIT CODE 1
 	if (cur_file_out->fd == -1)
 		free_and_exit(data, 1);
 	if (dup2(cur_file_out->fd, STDOUT_FILENO) == -1)
@@ -63,9 +63,11 @@ int	exec_redir_out_and_append(t_filelist *file_out, t_data *data)
 	cur_file_out = file_out;
 	while (cur_file_out && data->exit_status == 0)
 	{
-		if (FILE_OUT == cur_file_out->type)
+		if (filename_not_file_or_dir(cur_file_out->filename))
+			msg_no_such_file_or_directory(data, 1, cur_file_out->filename);
+		if (cur_file_out->type == FILE_OUT)
 			exec_redir_out(cur_file_out, data);
-		if (FILE_APPEND == cur_file_out->type)
+		else if (cur_file_out->type == FILE_APPEND)
 			exec_redir_append(cur_file_out, data);
 		cur_file_out = cur_file_out->next;
 	}
