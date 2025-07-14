@@ -244,7 +244,7 @@ int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	//	extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
 	//	filename_not_file_or_dir.c
-int			filename_not_file_or_dir(char *filename);
+int			filename_not_file_or_dir(t_data *data, t_filelist *cur_file_out);
 	//	env.c
 char		*ft_getenv(t_data *data, char *key);
 int			set_sh_lvl(t_data *data, char *str_sh_lvl);

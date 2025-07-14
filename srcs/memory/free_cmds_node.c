@@ -67,8 +67,7 @@ void free_cmd_list(t_cmd_node **cmd_node)
 		tmp = current->next;
 		free_filelist(&current->file_in);
 		free_filelist(&current->file_out);
-		if (&current->cmd)
-			free_cmd(&current->cmd);
+		free_cmd(&current->cmd);
 		free(current);
 		current = tmp;
 	}
