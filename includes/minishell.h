@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/15 18:25:20 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/15 18:58:53 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,8 @@ void		free_matrix(char **split);
 //	messsage/
 	//	is_a_directory.c
 void		msg_is_a_directory(t_data *data, int exit_code, char *name);
+	//	error.c
+void		msg_error(t_data *data, int exit_code, char *name);
 	//	not_a_directory.c
 void		msg_not_a_directory(t_data *data, int exit_code, char *name);
 	//	redir_in_message.c

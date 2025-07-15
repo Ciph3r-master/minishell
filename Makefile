@@ -6,7 +6,7 @@
 #    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/15 18:28:04 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/15 18:57:41 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,6 +110,7 @@ SRCS_MEMORY	:=							\
 
 SRCS_MESSAGE	:=							\
 	$(DIR_MESSAGE)/is_a_directory.c			\
+	$(DIR_MESSAGE)/error.c					\
 	$(DIR_MESSAGE)/no_such_file_or_dir.c	\
 	$(DIR_MESSAGE)/not_a_directory.c		\
 	$(DIR_MESSAGE)/permission_denied.c		\

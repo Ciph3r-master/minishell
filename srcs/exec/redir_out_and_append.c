@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:08:37 by thibaud           #+#    #+#             */
-/*   Updated: 2025/07/15 18:46:13 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/15 18:55:37 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	open_redir_out(t_data *data, t_filelist *cur_file_out, int type)
 			msg_permission_denied(data, 1, filename);
 		else if (errno == ENOENT)
 			msg_no_such_file_or_directory(data, 1, filename);
+		else
+			msg_error(data, 1, filename);
 	}
 	return (1);
 }
