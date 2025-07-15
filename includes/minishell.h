@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/14 23:08:46 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/15 18:25:20 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,8 +243,6 @@ int			exec(t_data *data);
 int			exec_simple_cmd(t_cmd_node *cmd_node, t_data *data);
 	//	extern.c
 int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
-	//	filename_not_file_or_dir.c
-int			is_filename_file_or_dir(t_data *data, t_filelist *cur_file_out);
 	//	env.c
 char		*ft_getenv(t_data *data, char *key);
 int			set_sh_lvl(t_data *data, char *str_sh_lvl);
@@ -284,6 +282,10 @@ void		free_cmd_list(t_cmd_node **cmd_node);
 void		free_matrix(char **split);
 
 //	messsage/
+	//	is_a_directory.c
+void		msg_is_a_directory(t_data *data, int exit_code, char *name);
+	//	not_a_directory.c
+void		msg_not_a_directory(t_data *data, int exit_code, char *name);
 	//	redir_in_message.c
 void		redir_in_message(char *filename, int err);
 	//	msg_no_such_file_or_dir.c
