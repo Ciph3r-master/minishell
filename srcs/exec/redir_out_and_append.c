@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 18:08:37 by thibaud           #+#    #+#             */
-/*   Updated: 2025/07/15 18:26:43 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/15 18:46:13 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@
 #include <errno.h>
 #include "minishell.h"
 
-int	open_redir_out(t_data *data, t_filelist *cur_file_out)
+int	open_redir_out(t_data *data, t_filelist *cur_file_out, int type)
 {
 	char	*filename;
 
 	filename = cur_file_out->filename;
-	cur_file_out->fd = open(filename, O_WRONLY
-			| O_CREAT | O_TRUNC, 0644);
+	if (type == 1)
+		cur_file_out->fd = open(filename, O_WRONLY
+				| O_CREAT | O_TRUNC, 0644);
+	if (type == 2)
+		cur_file_out->fd = open(cur_file_out->filename, O_WRONLY
+				| O_CREAT | O_APPEND, 0644);
 	if (cur_file_out->fd == -1)
 	{
 		if (errno == 0)
@@ -44,7 +48,7 @@ int	exec_redir_out(t_filelist *cur_file_out, t_data *data)
 {
 	if (!cur_file_out || !cur_file_out->filename)
 		free_and_exit(data, 1);
-	open_redir_out(data, cur_file_out);
+	open_redir_out(data, cur_file_out, 1);
 	if (cur_file_out->fd == -1)
 		return (0);
 	if (dup2(cur_file_out->fd, STDOUT_FILENO) == -1)
@@ -62,10 +66,9 @@ int	exec_redir_append(t_filelist *cur_file_out, t_data *data)
 {
 	if (!cur_file_out || !cur_file_out->filename)
 		free_and_exit(data, 1);
-	cur_file_out->fd = open(cur_file_out->filename, O_WRONLY
-			| O_CREAT | O_APPEND, 0644);
+	open_redir_out(data, cur_file_out, 2);
 	if (cur_file_out->fd == -1)
-		free_and_exit(data, 1);
+		return (0);
 	if (dup2(cur_file_out->fd, STDOUT_FILENO) == -1)
 	{
 		close(cur_file_out->fd);
