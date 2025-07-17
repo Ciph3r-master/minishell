@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/08 20:54:55 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/16 22:33:59 by bill             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ int	main(int argc, char **argv, char **env)
 		free(data.line);
 		printf("\n ---------- exec -------\n\n");
 		exec(&data);
-		// print_env_copy(data.env_copy);
-		// printf("exit status:%d\n", data.exit_status);
-		// print_sh_lvl(&data);
 	}
 	return (0);
 }

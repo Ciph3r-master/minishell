@@ -63,7 +63,6 @@ static void	remove_node(t_env_list **head, char *arg)
 		prev = current;
 		current = current->next;
 	}
-	// TODO A VOIR SI ON VEUT AFFICHER LE NOT FOUND (SUR POSIX JE L'AI PAS)
 	print_unset_err(arg, "not found");
 	return ;
 }

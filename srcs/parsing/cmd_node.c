@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:49:38 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/30 21:15:01 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/16 22:22:29 by bill             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	cmd_node_set_hd(t_data *data, t_cmd_node *node, t_tokenlist *current)
 	node->type |= HEREDOC;
 }
 
-void	extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_tokenlist *end)
+void	extract_cmd_node(t_data *data, t_cmd_node *node,
+	t_tokenlist *start, t_tokenlist *end)
 {
 	t_tokenlist	*current;
 	int			ac;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/14 04:37:18 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/16 22:08:50 by bill             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,11 @@ int 		builtin_env(t_data *data);
 int 		builtin_unset(t_data *data, t_cmd_node *cmd_node);
 int			builtin_exit(t_data *data, t_cmd_node *cmd_node);
 int			builtin_export(t_data *data, t_cmd_node *cmd_node);
+
+//export_utils.c
+char		*get_key(t_data *data, char *arg);
+void		sort_env(t_data *data, char **env);
+t_env_list	*get_env_by_key(t_data *data, char *key);
 //	expand
 void find_expand(t_data *data);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/07/08 02:02:33 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/16 22:37:23 by bill             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	replace_token(t_data *data, t_tokenlist *token)
 	{
 		free(prefix);
 		if (token->token[len + 1] == '?')
-			free(tmp);	
+			free(tmp);
 		free_and_exit(data, 1);
 	}
 	if (token->token[len + 1] == '?')

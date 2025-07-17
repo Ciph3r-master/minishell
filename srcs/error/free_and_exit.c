@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:38:08 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 20:39:26 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/16 22:30:45 by bill             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <unistd.h>
 #include "minishell.h"
 
-void	free_and_exit_debug(t_data *data, int exit_code, const char *file, int line)
+void	free_and_exit_debug(t_data *data, int exit_code,
+	const char *file, int line)
 {
 	(void)file;
 	(void)line;

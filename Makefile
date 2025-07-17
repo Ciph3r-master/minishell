@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
+#    By: bill <bill@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/11 00:04:36 by billcipher       ###   ########.fr        #
+#    Updated: 2025/07/16 22:02:12 by bill             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ else
 	READLINE_LIB :=
 endif
 
-CFLAGS       := -g3 -Wall -Wextra -Werror -fdiagnostics-color=always -MMD -MP -I./includes -I./libft $(READLINE_INC)
+CFLAGS       := -g -gdwarf-4 -Wall -Wextra -Werror -fdiagnostics-color=always -MMD -MP -I./includes -I./libft $(READLINE_INC)
 LDFLAGS      := $(READLINE_LIB) -lreadline
 
 # === Libraries ===
@@ -66,7 +66,8 @@ SRCS_BUILTINS	:=						\
 	$(DIR_BUILTINS)/env.c				\
 	$(DIR_BUILTINS)/unset.c				\
 	$(DIR_BUILTINS)/exit.c				\
-	$(DIR_BUILTINS)/export.c				\
+	$(DIR_BUILTINS)/export.c			\
+	$(DIR_BUILTINS)/export_utils.c		\
 
 SRCS_CORE	:=							\
 	$(DIR_CORE)/minishell.c

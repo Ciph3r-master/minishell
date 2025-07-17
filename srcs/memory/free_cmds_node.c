@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_cmds_node.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/16 22:32:10 by bill              #+#    #+#             */
+/*   Updated: 2025/07/16 22:33:13 by bill             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdlib.h>
 
-
-void free_filelist(t_filelist **fl)
+void	free_filelist(t_filelist **fl)
 {
-	t_filelist *current;
-	t_filelist *tmp;
+	t_filelist	*current;
+	t_filelist	*tmp;
 
 	if (!fl || !*fl)
-		return;
+		return ;
 	current = *fl;
 	while (current)
 	{
@@ -28,7 +39,7 @@ void free_filelist(t_filelist **fl)
 	*fl = NULL;
 }
 
-void free_cmd(t_cmd **cmd)
+void	free_cmd(t_cmd **cmd)
 {
 	int		i;
 
@@ -54,13 +65,14 @@ void free_cmd(t_cmd **cmd)
 	free((*cmd));
 	*cmd = NULL;
 }
-void free_cmd_list(t_cmd_node **cmd_node)
+
+void	free_cmd_list(t_cmd_node **cmd_node)
 {
-	t_cmd_node *current;
-	t_cmd_node *tmp;
+	t_cmd_node	*current;
+	t_cmd_node	*tmp;
 
 	if (!cmd_node || !*cmd_node)
-		return;
+		return ;
 	current = *cmd_node;
 	while (current)
 	{
