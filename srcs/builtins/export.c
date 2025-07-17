@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/14 04:40:11 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/17 19:40:35 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int	builtin_export(t_data *data, t_cmd_node *cmd)
 			print_export_err(args[i], "not a valid identifier");
 			exit_code = 1;
 		}
-		add_var_to_env(data, args[i]);
+		else
+			add_var_to_env(data, args[i]);
 		i++;
 	}
 	return (exit_code);
