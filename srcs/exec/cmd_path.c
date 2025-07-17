@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:52:24 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 20:46:50 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/10 03:10:47 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	get_cmd_path_name(t_cmd_node *cmd_node, t_data *data)
 	path = ft_getenv(data, "PATH");
 	if (NULL == path)
 	{
-		env_no_path_msg(data, cmd_node->cmd->cmd);
+		msg_no_such_file_or_directory(data, 127, cmd_node->cmd->cmd);
 		return (1);
 	}
 	paths = ft_split_set(path, ":");

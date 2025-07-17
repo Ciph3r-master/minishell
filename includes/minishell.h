@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/16 22:08:50 by bill             ###   ########.fr       */
+/*   Updated: 2025/07/17 19:43:25 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # include <signal.h>
 
-extern int g_exit_status;
+extern int	g_exit_status;
 
 typedef enum e_cmdtype
 {
@@ -193,8 +193,8 @@ void		print_cmdlist(t_cmd_node *cmdlist);
 	// pwd.c
 int			builtin_pwd(void);
 int			builtin_echo(t_cmd_node *cmd_node);
-int 		builtin_env(t_data *data);
-int 		builtin_unset(t_data *data, t_cmd_node *cmd_node);
+int			builtin_env(t_data *data);
+int			builtin_unset(t_data *data, t_cmd_node *cmd_node);
 int			builtin_exit(t_data *data, t_cmd_node *cmd_node);
 int			builtin_export(t_data *data, t_cmd_node *cmd_node);
 
@@ -206,7 +206,7 @@ t_env_list	*get_env_by_key(t_data *data, char *key);
 void find_expand(t_data *data);
 
 //	data/
-//	init_data.c
+	//	init_data.c
 int			init_data(t_data *data, char **env);
 
 //	env_copy/
@@ -253,7 +253,9 @@ int			exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data);
 char		*ft_getenv(t_data *data, char *key);
 int			set_sh_lvl(t_data *data, char *str_sh_lvl);
 	//	heredoc.c
-int			exec_heredoc(t_cmd_node *cmd_node, t_data *data);
+int			create_heredoc(t_cmd_node *cmd_node, t_data *data);
+	//	read_heredoc_fd.c
+int			read_heredoc_fd(t_filelist *cur_file_in, t_data *data);
 	//	redir_in_and_hd.c
 int			exec_redir_in_and_hd(t_filelist	*file_in, t_data *data);
 	//	redir_out_and_append.c
@@ -286,9 +288,20 @@ void		free_cmd_list(t_cmd_node **cmd_node);
 void		free_matrix(char **split);
 
 //	messsage/
+	//	is_a_directory.c
+void		msg_is_a_directory(t_data *data, int exit_code, char *name);
+	//	error.c
+void		msg_error(t_data *data, int exit_code, char *name);
+	//	not_a_directory.c
+void		msg_not_a_directory(t_data *data, int exit_code, char *name);
 	//	redir_in_message.c
 void		redir_in_message(char *filename, int err);
-void		env_no_path_msg(t_data *data, char *cmd);
+	//	msg_no_such_file_or_dir.c
+void		msg_no_such_file_or_directory(t_data *data,
+				int exit_code, char *cmd);
+	//	msg_permission_denied.c
+void		msg_permission_denied(t_data *data, int exit_code,
+				char *filename);
 
 //	signals/
 	//	init_signals.c

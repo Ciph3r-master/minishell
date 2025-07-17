@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bill <bill@student.42.fr>                  +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/16 22:02:12 by bill             ###   ########.fr        #
+#    Updated: 2025/07/17 19:42:36 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,19 +83,20 @@ SRCS_ENV_COPY	:=						\
 SRCS_ERROR	:=							\
 	$(DIR_ERROR)/free_and_exit.c
 
-SRCS_EXEC	:=							\
-	$(DIR_EXEC)/builtins.c				\
-	$(DIR_EXEC)/cmd_path.c				\
-	$(DIR_EXEC)/create_tmp_file.c		\
-	$(DIR_EXEC)/dfl_env_list.c			\
-	$(DIR_EXEC)/exec_pipe.c				\
-	$(DIR_EXEC)/exec.c					\
-	$(DIR_EXEC)/extern.c				\
+SRCS_EXEC	:=								\
+	$(DIR_EXEC)/builtins.c					\
+	$(DIR_EXEC)/cmd_path.c					\
+	$(DIR_EXEC)/create_tmp_file.c			\
+	$(DIR_EXEC)/dfl_env_list.c				\
+	$(DIR_EXEC)/exec_pipe.c					\
+	$(DIR_EXEC)/exec.c						\
+	$(DIR_EXEC)/extern.c					\
 	$(DIR_EXEC)/get_env.c					\
-	$(DIR_EXEC)/heredoc.c				\
-	$(DIR_EXEC)/redir_in_and_hd.c		\
-	$(DIR_EXEC)/redir_out_and_append.c	\
-	$(DIR_EXEC)/redirections.c			\
+	$(DIR_EXEC)/heredoc.c					\
+	$(DIR_EXEC)/read_heredoc_fd.c			\
+	$(DIR_EXEC)/redir_in_and_hd.c			\
+	$(DIR_EXEC)/redir_out_and_append.c		\
+	$(DIR_EXEC)/redirections.c				\
 	$(DIR_EXEC)/sh_level.c
 
 SRCS_MEMORY	:=							\
@@ -110,8 +111,12 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_utils.c			\
 
 SRCS_MESSAGE	:=							\
+	$(DIR_MESSAGE)/error.c					\
+	$(DIR_MESSAGE)/is_a_directory.c			\
+	$(DIR_MESSAGE)/no_such_file_or_dir.c	\
+	$(DIR_MESSAGE)/not_a_directory.c		\
+	$(DIR_MESSAGE)/permission_denied.c		\
 	$(DIR_MESSAGE)/redir_in_msg.c			\
-	$(DIR_MESSAGE)/cmd_path_msg.c			\
 
 SRCS_PARSING :=								\
 	$(DIR_PARSING)/token_utils.c			\

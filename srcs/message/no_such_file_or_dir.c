@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_saved_fds.c                                  :+:      :+:    :+:   */
+/*   no_such_file_or_dir.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 21:16:57 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/09 16:19:45 by vscode           ###   ########.fr       */
+/*   Created: 2025/07/10 02:52:12 by vscode            #+#    #+#             */
+/*   Updated: 2025/07/10 03:13:07 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "minishell.h"
+#include "libft.h"
 
-int	close_saved_fds(t_data *data)
+void	msg_no_such_file_or_directory(t_data *data, int exit_code, char *cmd)
 {
-	if (data->saved_stdin != -1)
-	{
-		if (close(data->saved_stdin) == -1)
-			free_and_exit(data, 1);
-		data->saved_stdin = -1;
-	}
-	if (data->saved_stdout != -1)
-	{
-		if (close(data->saved_stdout) == -1)
-			free_and_exit(data, 1);
-		data->saved_stdout = -1;
-	}
-	return (1);
+	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, ": No such file or directory\n", 28);
+	data->exit_status = exit_code;
 }
