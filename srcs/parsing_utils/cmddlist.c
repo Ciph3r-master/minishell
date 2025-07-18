@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmddlist.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:11:33 by bill              #+#    #+#             */
-/*   Updated: 2025/07/16 22:20:12 by bill             ###   ########.fr       */
+/*   Updated: 2025/07/18 19:18:11 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,35 +87,4 @@ t_cmd_node	*cmdlist_getlast(t_cmd_node *cmdlist)
 	while (current && current->next)
 		current = current->next;
 	return (current);
-}
-
-//TODO A SUPPRIMER EN PROD
-void	print_cmdlist(t_cmd_node *cmdlist)
-{
-	t_cmd_node	*current;
-
-	current = cmdlist;
-	while (current)
-	{
-		printf("\n\e[1;91mCommand\e[0m : [%s]\n", current->cmd->cmd);
-		printf("FD in [%d] FD out [%d]\n", current->fd_in, current->fd_out);
-		if (current->file_in)
-		{
-			printf("REDIRECT in :\n");
-			print_filelist(current->file_in, false);
-		}
-		if (current->file_out)
-		{
-			printf("REDIRECT out :\n");
-			print_filelist(current->file_out, false);
-		}
-		printf("Arguments :\n");
-		int i = 0;
-		while (current->cmd->args[i])
-		{
-			printf("[%s]\n", current->cmd->args[i]);
-			i++;
-		}
-		current = current->next;
-	}
 }

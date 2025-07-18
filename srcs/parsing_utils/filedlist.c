@@ -3,29 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   filedlist.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:09:42 by bill              #+#    #+#             */
-/*   Updated: 2025/07/16 22:11:00 by bill             ###   ########.fr       */
+/*   Updated: 2025/07/18 19:18:00 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
-
-//TODO A SUPPRIMER EN PROD
-static char	*get_filetype_name(t_filetype type)
-{
-	if (type == FILE_IN)
-		return ("\e[1;94mIN\e[0m");
-	if (type == FILE_OUT)
-		return ("\e[1;92mOUT\e[0m");
-	if (type == FILE_HD)
-		return ("\e[1;94mHEREDOC\e[0m");
-	if (type == FILE_APPEND)
-		return ("\e[1;92mAPPEND\e[0m");
-	return ("UNKNOWN");
-}
 
 t_filelist	*filelist_create_node(t_data *data, void *content, t_filetype type)
 {
@@ -103,33 +89,4 @@ t_filelist	*filelist_getlast(t_filelist *filelist)
 	while (current->next)
 		current = current->next;
 	return (current);
-}
-
-//TODO A SUPPRIMER EN PROD
-void	print_filelist(t_filelist *filelist, bool reverse)
-{
-	t_filelist	*current;
-
-	current = filelist;
-	if (!reverse)
-	{
-		while (current)
-		{
-			printf("[%s] {%s} [%s] -> ", current->filename, current->limiter,
-				get_filetype_name(current->type));
-			current = current->next;
-		}
-		printf("\n");
-		return ;
-	}
-	while (current->next)
-		current = current->next;
-	printf("REVERSE\n");
-	while (current)
-	{
-		printf("[%s] {%s} [%s] -> ", current->filename, current->limiter,
-			get_filetype_name(current->type));
-		current = current->prev;
-	}
-	printf("\n");
 }
