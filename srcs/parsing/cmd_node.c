@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:49:38 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/18 16:00:24 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 19:31:24 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	extract_cmd_node(t_data *data, t_cmd_node *node,
 	if (!node->cmd)
 	{
 		free_and_exit(data, 1);
-		return ;
 	}
 	if (!init_args(start, node->cmd))
 	{
