@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/18 21:35:21 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/18 22:20:54 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static void	print_export_env(t_data *data)
 	char	**envcpy;
 
 	envcpy = get_env_copy(data->env_list);
+	if (!envcpy)
+		free_and_exit(data, 1);
 	sort_env(data, envcpy);
 	i = 0;
 	while (envcpy[i])
