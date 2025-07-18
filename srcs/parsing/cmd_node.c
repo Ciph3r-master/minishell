@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:49:38 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/18 19:31:24 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 21:40:33 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	cmd_handle_redir_out(t_data *data, t_tokenlist *prev,
 		if (prev->type == TRD_OUT)
 		{
 			filelist_push_back(data, &node->file_out,
-				ft_strdup(current->token), FILE_OUT);
+				secure_strdup(data, current->token), FILE_OUT);
 			node->type |= REDIRECT_OUT;
 		}
 		else
 		{
 			filelist_push_back(data, &node->file_out,
-				ft_strdup(current->token), FILE_APPEND);
+				secure_strdup(data, current->token), FILE_APPEND);
 			node->type |= APPEND;
 		}
 	}
@@ -43,18 +43,19 @@ void	cmd_node_add_redir(t_data *data, t_cmd_node *node, t_tokenlist *current)
 	if (prev && prev->type == TRD_IN)
 	{
 		filelist_push_back(data, &node->file_in,
-			ft_strdup(current->token), FILE_IN);
+			secure_strdup(data, current->token), FILE_IN);
 		node->type |= REDIRECT_IN;
 	}
 	cmd_handle_redir_out(data, prev, node, current);
 }
 
-void	cmd_node_set_cmd(t_tokenlist *current, t_cmd_node *node, int *ac)
+void	cmd_node_set_cmd(t_data *data, t_tokenlist *current,
+		t_cmd_node *node, int *ac)
 {
 	if (current->type == TEXTERN || current->type == TBUILTIN)
 	{
-		node->cmd->args[0] = ft_strdup(current->token);
-		node->cmd->cmd = ft_strdup(current->token);
+		node->cmd->args[0] = secure_strdup(data, current->token);
+		node->cmd->cmd = secure_strdup(data, current->token);
 		if (current->type == TEXTERN)
 			node->type |= EXTERN;
 		else
@@ -62,15 +63,17 @@ void	cmd_node_set_cmd(t_tokenlist *current, t_cmd_node *node, int *ac)
 	}
 	if (current->type == TARG)
 	{
-		node->cmd->args[*ac] = ft_strdup(current->token);
+		node->cmd->args[*ac] = secure_strdup(data, current->token);
 		(*ac)++;
 	}
 }
 
 void	cmd_node_set_hd(t_data *data, t_cmd_node *node, t_tokenlist *current)
 {
-	filelist_push_back(data, &node->file_in, ft_strdup("heredoc_"), FILE_HD);
-	filelist_getlast(node->file_in)->limiter = ft_strdup(current->token);
+	filelist_push_back(data, &node->file_in,
+		secure_strdup(data, "heredoc_"), FILE_HD);
+	filelist_getlast(node->file_in)->limiter = secure_strdup(data,
+		current->token);
 	node->type |= HEREDOC;
 }
 
@@ -93,7 +96,7 @@ void	extract_cmd_node(t_data *data, t_cmd_node *node,
 	ac = 1;
 	while (current && current != end)
 	{
-		cmd_node_set_cmd(current, node, &ac);
+		cmd_node_set_cmd(data, current, node, &ac);
 		if (current->type == TLIMITER)
 			cmd_node_set_hd(data, node, current);
 		if (current->type == TFILE)

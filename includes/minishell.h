@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 21:25:26 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/18 21:35:00 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ char	*get_prefix(t_data *data, t_tokenlist *token, int *len);
 
 //	env_copy/
 	//	env_list.c
-t_env_list	*new_node_env_list(char *key, char *value);
+t_env_list	*new_node_env_list(t_data *data, char *key, char *value);
 void		push_back_env_list(t_env_list **env_list, t_env_list *new_node);
 void		print_env_list(t_env_list **env_list);
 int			get_env_list_size(t_env_list *env_list);
