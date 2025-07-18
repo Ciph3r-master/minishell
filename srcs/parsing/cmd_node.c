@@ -6,12 +6,32 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:49:38 by billcipher        #+#    #+#             */
-/*   Updated: 2025/06/30 21:15:01 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 19:31:24 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+
+void	cmd_handle_redir_out(t_data *data, t_tokenlist *prev,
+	t_cmd_node *node, t_tokenlist *current)
+{
+	if (prev && (prev->type == TRD_OUT || prev->type == TAPPEND))
+	{
+		if (prev->type == TRD_OUT)
+		{
+			filelist_push_back(data, &node->file_out,
+				ft_strdup(current->token), FILE_OUT);
+			node->type |= REDIRECT_OUT;
+		}
+		else
+		{
+			filelist_push_back(data, &node->file_out,
+				ft_strdup(current->token), FILE_APPEND);
+			node->type |= APPEND;
+		}
+	}
+}
 
 void	cmd_node_add_redir(t_data *data, t_cmd_node *node, t_tokenlist *current)
 {
@@ -22,22 +42,11 @@ void	cmd_node_add_redir(t_data *data, t_cmd_node *node, t_tokenlist *current)
 		prev = prev->prev;
 	if (prev && prev->type == TRD_IN)
 	{
-		filelist_push_back(data, &node->file_in, ft_strdup(current->token), FILE_IN);
+		filelist_push_back(data, &node->file_in,
+			ft_strdup(current->token), FILE_IN);
 		node->type |= REDIRECT_IN;
 	}
-	if (prev && (prev->type == TRD_OUT || prev->type == TAPPEND))
-	{
-		if (prev->type == TRD_OUT)
-		{
-			filelist_push_back(data, &node->file_out, ft_strdup(current->token), FILE_OUT);
-			node->type |= REDIRECT_OUT;
-		}
-		else
-		{
-			filelist_push_back(data, &node->file_out, ft_strdup(current->token), FILE_APPEND);
-			node->type |= APPEND;
-		}
-	}
+	cmd_handle_redir_out(data, prev, node, current);
 }
 
 void	cmd_node_set_cmd(t_tokenlist *current, t_cmd_node *node, int *ac)
@@ -65,7 +74,8 @@ void	cmd_node_set_hd(t_data *data, t_cmd_node *node, t_tokenlist *current)
 	node->type |= HEREDOC;
 }
 
-void	extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_tokenlist *end)
+void	extract_cmd_node(t_data *data, t_cmd_node *node,
+	t_tokenlist *start, t_tokenlist *end)
 {
 	t_tokenlist	*current;
 	int			ac;
@@ -74,7 +84,6 @@ void	extract_cmd_node(t_data *data, t_cmd_node *node, t_tokenlist *start, t_toke
 	if (!node->cmd)
 	{
 		free_and_exit(data, 1);
-		return ;
 	}
 	if (!init_args(start, node->cmd))
 	{

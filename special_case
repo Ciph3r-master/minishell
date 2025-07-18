@@ -17,3 +17,4 @@ msg = ft_strjoin_free(msg, ": command not found\n"); // "minishell: cmd: command
 write(STDERR_FILENO, msg, ft_strlen(msg));
 free(msg);
 -------------------------------------------------------------------------
+Gerez si les quotes ne sont pas fermés

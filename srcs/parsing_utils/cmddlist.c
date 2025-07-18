@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmddlist.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/16 22:11:33 by bill              #+#    #+#             */
+/*   Updated: 2025/07/16 22:20:12 by bill             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdlib.h>
 
-t_cmd_node *cmdlist_create_node(t_data *data)
+t_cmd_node	*cmdlist_create_node(t_data *data)
 {
-	t_cmd_node *node;
+	t_cmd_node	*node;
 
 	node = malloc(sizeof(t_cmd_node));
 	if (!node)
@@ -20,10 +32,10 @@ t_cmd_node *cmdlist_create_node(t_data *data)
 	return (node);
 }
 
-t_cmd_node *cmdlist_push_front(t_data *data, t_cmd_node **cmdlist)
+t_cmd_node	*cmdlist_push_front(t_data *data, t_cmd_node **cmdlist)
 {
-	t_cmd_node *tmp;
-	t_cmd_node *new_node;
+	t_cmd_node	*tmp;
+	t_cmd_node	*new_node;
 
 	if (!cmdlist)
 		return (NULL);
@@ -42,10 +54,10 @@ t_cmd_node *cmdlist_push_front(t_data *data, t_cmd_node **cmdlist)
 	return (*cmdlist);
 }
 
-t_cmd_node *cmdlist_push_back(t_data *data, t_cmd_node **cmdlist)
+t_cmd_node	*cmdlist_push_back(t_data *data, t_cmd_node **cmdlist)
 {
-	t_cmd_node *new_node;
-	t_cmd_node *current;
+	t_cmd_node	*new_node;
+	t_cmd_node	*current;
 
 	if (!cmdlist)
 		return (NULL);
@@ -65,9 +77,9 @@ t_cmd_node *cmdlist_push_back(t_data *data, t_cmd_node **cmdlist)
 	return (*cmdlist);
 }
 
-t_cmd_node *cmdlist_getlast(t_cmd_node *cmdlist)
+t_cmd_node	*cmdlist_getlast(t_cmd_node *cmdlist)
 {
-	t_cmd_node *current;
+	t_cmd_node	*current;
 
 	if (!cmdlist)
 		return (NULL);
@@ -77,9 +89,10 @@ t_cmd_node *cmdlist_getlast(t_cmd_node *cmdlist)
 	return (current);
 }
 
-void print_cmdlist(t_cmd_node *cmdlist)
+//TODO A SUPPRIMER EN PROD
+void	print_cmdlist(t_cmd_node *cmdlist)
 {
-	t_cmd_node *current;
+	t_cmd_node	*current;
 
 	current = cmdlist;
 	while (current)

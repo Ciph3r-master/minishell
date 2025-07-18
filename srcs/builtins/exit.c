@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/08 22:22:18 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/14 01:03:55 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	print_exit_err(char *arg, char *err_msg)
 	write(STDERR_FILENO, "\n", 1);
 }
 
-//TODO HANDLE OVERFLOW
 unsigned char	get_exit_code(char *arg, int *err)
 {
 	int					i;
@@ -47,7 +46,9 @@ unsigned char	get_exit_code(char *arg, int *err)
 	{
 		res *= 10;
 		res += arg[i++] - '0';
-		if ((res > LONG_MAX && sign == 1) || (-res < LONG_MIN && sign == -1))
+		if (((unsigned long int)res > LONG_MAX && sign == 1)
+			|| ((unsigned long int)res > ((unsigned long int)LONG_MAX) + 1
+				&& sign == -1))
 			*err = -1;
 	}
 	if (arg[i])
@@ -63,11 +64,9 @@ int	builtin_exit(t_data *data, t_cmd_node *cmd_node)
 
 	err = 0;
 	args = cmd_node->cmd->args;
+	printf("exit\n");
 	if (!args[1])
-	{
-		printf("exit\n");
 		free_and_exit(data, data->exit_status);
-	}
 	error_code = get_exit_code(args[1], &err);
 	if (err == -1)
 	{

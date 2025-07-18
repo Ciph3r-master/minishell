@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 20:37:51 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/18 21:25:26 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # include <signal.h>
 
-extern int	g_exit_status;
+extern sig_atomic_t g_exit_status;
 
 typedef enum e_cmdtype
 {
@@ -196,12 +196,24 @@ int			builtin_echo(t_cmd_node *cmd_node);
 int			builtin_env(t_data *data);
 int			builtin_unset(t_data *data, t_cmd_node *cmd_node);
 int			builtin_exit(t_data *data, t_cmd_node *cmd_node);
-	//	expand
-void		find_expand(t_data *data);
+int			builtin_export(t_data *data, t_cmd_node *cmd_node);
 
-//	data/
+//export_utils.c
+char		*get_key(t_data *data, char *arg);
+void		sort_env(t_data *data, char **env);
+t_env_list	*get_env_by_key(t_data *data, char *key);
+//	expand
+void find_expand(t_data *data);
+// expand_utils
+
+char	*ft_strjoin3(char *s1, char *s2, char *s3);
+int		varlen(char *var);
+char	*find_value(char *var, t_env_list *envlist);
+char	*get_prefix(t_data *data, t_tokenlist *token, int *len);
+
+	//	data/
 	//	init_data.c
-int			init_data(t_data *data, char **env);
+	int init_data(t_data *data, char **env);
 
 //	env_copy/
 	//	env_list.c

@@ -1,42 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokendlist.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/16 22:13:38 by bill              #+#    #+#             */
+/*   Updated: 2025/07/16 22:19:24 by bill             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdlib.h>
 
+//TODO REMOVE EN PROD
 static char	*get_tokentype_name(t_tokentype type)
 {
 	if (type == TARG)
-		return "\e[1;95mARG\e[0m";
+		return ("\e[1;95mARG\e[0m");
 	if (type == TBUILTIN)
-		return "\e[1;91mBUILTIN\e[0m";
+		return ("\e[1;91mBUILTIN\e[0m");
 	if (type == TDQUOTES)
-		return "\e[1;96mDQUOTES\e[0m";
+		return ("\e[1;96mDQUOTES\e[0m");
 	if (type == TQUOTES)
-		return "\e[1;96mQUOTES\e[0m";
+		return ("\e[1;96mQUOTES\e[0m");
 	if (type == TEXTERN)
-		return "\e[1;91mEXTERN\e[0m";
+		return ("\e[1;91mEXTERN\e[0m");
 	if (type == TWORD)
-		return "WORD";
+		return ("WORD");
 	if (type == TRD_IN)
-		return "\e[1;92mREDIRECT IN\e[0m";
+		return ("\e[1;92mREDIRECT IN\e[0m");
 	if (type == TRD_OUT)
-		return "\e[1;92mREDIRECT OUT\e[0m";
+		return ("\e[1;92mREDIRECT OUT\e[0m");
 	if (type == TOPERATOR)
-		return "\e[1;92mOPERATOR\e[0m";
+		return ("\e[1;92mOPERATOR\e[0m");
 	if (type == THD)
-		return "\e[1;92mHEREDOC\e[0m";
+		return ("\e[1;92mHEREDOC\e[0m");
 	if (type == TPIPE)
-		return "\e[1;92mPIPE\e[0m";
+		return ("\e[1;92mPIPE\e[0m");
 	if (type == TAPPEND)
-		return "\e[1;92mAPPEND\e[0m";
+		return ("\e[1;92mAPPEND\e[0m");
 	if (type == TFILE)
-		return "\e[1;93mFILE\e[0m";
+		return ("\e[1;93mFILE\e[0m");
 	if (type == TLIMITER)
-		return "\e[1;94mLIMITER\e[0m";
+		return ("\e[1;94mLIMITER\e[0m");
 	if (type == TSPACE)
-		return "\e[1;94mSPACE\e[0m";
-	return "UNKNOWN";
+		return ("\e[1;94mSPACE\e[0m");
+	return ("UNKNOWN");
 }
 
-t_tokenlist	*tokenlist_create_node(t_data *data, void *content, t_tokentype type)
+t_tokenlist	*tokenlist_create_node(t_data *data, void *content,
+	t_tokentype type)
 {
 	t_tokenlist	*node;
 
@@ -54,9 +68,10 @@ t_tokenlist	*tokenlist_create_node(t_data *data, void *content, t_tokentype type
 	return (node);
 }
 
-t_tokenlist *tokenlist_push_front(t_data *data, t_tokenlist **tokenlist, void *content, t_tokentype type)
+t_tokenlist	*tokenlist_push_front(t_data *data, t_tokenlist **tokenlist,
+	void *content, t_tokentype type)
 {
-	t_tokenlist *tmp;
+	t_tokenlist	*tmp;
 	t_tokenlist	*new_node;
 
 	if (!tokenlist)
@@ -76,7 +91,8 @@ t_tokenlist *tokenlist_push_front(t_data *data, t_tokenlist **tokenlist, void *c
 	return (*tokenlist);
 }
 
-t_tokenlist *tokenlist_push_back(t_data *data, t_tokenlist **tokenlist, void *content, t_tokentype type)
+t_tokenlist	*tokenlist_push_back(t_data *data, t_tokenlist **tokenlist,
+	void *content, t_tokentype type)
 {
 	t_tokenlist	*new_node;
 	t_tokenlist	*current;
@@ -99,16 +115,18 @@ t_tokenlist *tokenlist_push_back(t_data *data, t_tokenlist **tokenlist, void *co
 	return (*tokenlist);
 }
 
+//TODO REMOVE EN PROD
 void	print_tokenlist(t_tokenlist *tokenlist, bool reverse)
 {
 	t_tokenlist	*current;
-	
+
 	current = tokenlist;
 	if (!reverse)
 	{
 		while (current)
 		{
-			printf("[%s]-[%s] -> ", current->token, get_tokentype_name(current->type));
+			printf("[%s]-[%s] -> ", current->token,
+				get_tokentype_name(current->type));
 			current = current->next;
 		}
 		printf("\n");
@@ -119,15 +137,17 @@ void	print_tokenlist(t_tokenlist *tokenlist, bool reverse)
 	printf("REVERSE\n");
 	while (current)
 	{
-		printf("%s [%s] -> ", current->token, get_tokentype_name(current->type));
+		printf("%s [%s] -> ", current->token,
+			get_tokentype_name(current->type));
 		current = current->prev;
 	}
 	printf("\n");
 }
 
-t_tokenlist *tokenlist_insert_after(t_data *data, t_tokenlist *node, void *content, t_tokentype type)
+t_tokenlist	*tokenlist_insert_after(t_data *data, t_tokenlist *node,
+	void *content, t_tokentype type)
 {
-	t_tokenlist *new_node;
+	t_tokenlist	*new_node;
 
 	if (!node)
 		return (NULL);
@@ -142,10 +162,10 @@ t_tokenlist *tokenlist_insert_after(t_data *data, t_tokenlist *node, void *conte
 	return (new_node);
 }
 
-void tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node)
+void	tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node)
 {
 	if (!head || !*head || !node)
-		return;
+		return ;
 	if (node->prev)
 		node->prev->next = node->next;
 	else
