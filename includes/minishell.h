@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 18:30:34 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 19:07:23 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,9 @@ int			builtin_export(t_data *data, t_cmd_node *cmd_node);
 char		*get_key(t_data *data, char *arg);
 void		sort_env(t_data *data, char **env);
 t_env_list	*get_env_by_key(t_data *data, char *key);
-//	expand
-void find_expand(t_data *data);
+void 		update_env_cpy(t_data *data);
+	//	expand
+	void find_expand(t_data *data);
 // expand_utils
 char	*ft_strjoin3(char *s1, char *s2, char *s3);
 int		varlen(char *var);

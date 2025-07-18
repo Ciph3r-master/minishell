@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:00:07 by bill              #+#    #+#             */
-/*   Updated: 2025/07/16 22:00:33 by bill             ###   ########.fr       */
+/*   Updated: 2025/07/18 19:07:13 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+
+void	update_env_cpy(t_data *data)
+{
+	free_env_copy(data->env_copy);
+	data->env_copy = get_env_copy(data->env_list);
+}
 
 char	*get_key(t_data *data, char *arg)
 {

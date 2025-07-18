@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/17 22:29:49 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 19:07:00 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ int	builtin_export(t_data *data, t_cmd_node *cmd)
 			add_var_to_env(data, args[i]);
 		i++;
 	}
+	update_env_cpy(data);
 	return (exit_code);
 }
