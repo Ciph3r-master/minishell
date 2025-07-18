@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/17 23:57:53 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 20:19:50 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	main(int argc, char **argv, char **env)
 		if (g_exit_status != 0)
 			data.exit_status = g_exit_status;
 		init_tokens(&data);
+		data.prev_exit_status = data.exit_status;
 		data.exit_status = 0;
 		free(data.line);
 		printf("\n ---------- exec -------\n\n");

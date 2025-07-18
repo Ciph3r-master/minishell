@@ -6,7 +6,7 @@
 #    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/18 15:51:05 by billcipher       ###   ########.fr        #
+#    Updated: 2025/07/18 20:47:38 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS_BUILTINS	:=						\
 	$(DIR_BUILTINS)/exit.c				\
 	$(DIR_BUILTINS)/export.c			\
 	$(DIR_BUILTINS)/export_utils.c		\
+	$(DIR_BUILTINS)/cd.c		\
 
 SRCS_CORE	:=							\
 	$(DIR_CORE)/minishell.c
@@ -245,7 +246,7 @@ $(DIR_OBJS)/%.o: $(DIR_SIGNALS)/%.c
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) $(A_LIBFT)
+$(NAME): $(OBJS) $(A_LIBFT) Makefile
 	@echo "$(COLOR_BLUE)→ Linking $(NAME)$(COLOR_RESET)"
 	$(CC) $(OBJS) $(A_LIBFT) -o $(NAME) $(LDFLAGS)
 
@@ -270,6 +271,6 @@ valgrind: all
 	valgrind --show-leak-kinds=all --show-mismatched-frees=yes --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" ./minishell
 
 vallog: all
-	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="valgrind.log" ./minishell
+	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="/home/billcipher/Documents/newminishell/valgrind.log" ./minishell
 
 .PHONY: all clean fclean re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:44:17 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 05:36:48 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/18 20:21:14 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	init_data(t_data *data, char **env)
 		free_and_exit(data, 1);
 	data->exec_heredoc = 1;
 	data->exit_status = 0;
+	data->prev_exit_status = 0;
 	data->cmd_node = NULL;
 	data->tokenlist = NULL;
 	data->line = NULL;
