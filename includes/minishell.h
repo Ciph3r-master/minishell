@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/15 18:58:53 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/18 20:37:51 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,5 +302,9 @@ void		msg_permission_denied(t_data *data, int exit_code,
 void		init_signals(void);
 void		sigint_handler(int sig);
 void		heredoc_handler(int sig);
+
+//	parsing_utils/
+	//	secure_strdup.c
+char		*secure_strdup(t_data *data, const char *s);
 
 #endif

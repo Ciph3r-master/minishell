@@ -6,6 +6,9 @@
 *.exe
 minishell
 
+# tester
+minishell_tester/
+
 # heredoc temp files
 *.tmp
 

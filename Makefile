@@ -6,7 +6,7 @@
 #    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/15 19:14:41 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/18 21:14:49 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,10 +127,11 @@ SRCS_PARSING :=								\
 	$(DIR_PARSING)/syntax_error.c			\
 	$(DIR_PARSING)/set_token_type_cmds.c	\
 
-SRCS_PARSING_UTILS :=				  \
-	$(DIR_PARSING_UTILS)/tokendlist.c \
-	$(DIR_PARSING_UTILS)/filedlist.c  \
-	$(DIR_PARSING_UTILS)/cmddlist.c  \
+SRCS_PARSING_UTILS :=				  		\
+	$(DIR_PARSING_UTILS)/tokendlist.c 		\
+	$(DIR_PARSING_UTILS)/filedlist.c  		\
+	$(DIR_PARSING_UTILS)/secure_strdup.c 	\
+	$(DIR_PARSING_UTILS)/cmddlist.c 		\
 
 SRCS_SIGNALS :=				  			\
 	$(DIR_SIGNALS)/init_signals.c
