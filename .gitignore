@@ -5,6 +5,7 @@
 *.so
 *.exe
 minishell
+minishell_tester/
 
 # minishell tester
 minishell_tester/

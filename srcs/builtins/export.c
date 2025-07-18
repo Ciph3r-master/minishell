@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/14 04:40:11 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/17 22:29:49 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-static void print_export_err(char *arg, char *err_msg)
+static void	print_export_err(char *arg, char *err_msg)
 {
-	const char *prefix = "minishell: export: `";
+	const char	*prefix = "minishell: export: `";
 
 	write(STDERR_FILENO, prefix, ft_strlen(prefix));
 	write(STDERR_FILENO, arg, ft_strlen(arg));
@@ -24,31 +24,33 @@ static void print_export_err(char *arg, char *err_msg)
 	write(STDERR_FILENO, "\n", 1);
 }
 
-static void add_var_to_env(t_data *data, char *arg)
+static void	add_var_to_env(t_data *data, char *arg)
 {
 	char		*value;
-	char		*key;
-	int			len;
 	t_env_list	*new_node;
+	t_env_list	*node_to_replace;
+	char		*key;
 
-	value = ft_strchr(arg, '=') + 1;
+	value = ft_strchr(arg, '=');
 	if (!value)
 		return ;
-	len = 0;
-	while (value[len] && value[len] != '=')
-		len++;
-	key = ft_substr(arg, 0, len);
-	if (!key)
-		free_and_exit(data, 1);
-	//SI NODE EXISTE DEJA JUSTE SET LA NOUVELLE KEY
+	value += 1;
+	key = get_key(data, arg);
+	node_to_replace = get_env_by_key(data, key);
+	if (node_to_replace)
+	{
+		free(node_to_replace->value);
+		node_to_replace->value = ft_strdup(value);
+		free(key);
+		return ;
+	}
 	new_node = new_node_env_list(key, ft_strdup(value));
 	if (!new_node)
 	{
 		free(key);
 		free_and_exit(data, 1);
 	}
-	push_back_env_list(&data->env_list, new_node);
-	return ;
+	return (push_back_env_list(&data->env_list, new_node));
 }
 
 static bool	is_valid(char *arg)
@@ -67,17 +69,46 @@ static bool	is_valid(char *arg)
 	return (true);
 }
 
-int builtin_export(t_data *data, t_cmd_node *cmd)
+static void	print_export_env(t_data *data)
 {
-	char **args;
+	int		i;
+	char	**envcpy;
+
+	envcpy = get_env_copy(data->env_list);
+	sort_env(data, envcpy);
+	i = 0;
+	while (envcpy[i])
+	{
+		printf("export %s\n", envcpy[i]);
+		i++;
+	}
+	free_env_copy(envcpy);
+}
+
+int	builtin_export(t_data *data, t_cmd_node *cmd)
+{
+	char	**args;
+	int		i;
+	int		exit_code;
 
 	args = cmd->cmd->args;
-	//GERER MULTIARG
-	if (!is_valid(args[1]))
+	i = 1;
+	exit_code = 0;
+	if (!args[i])
 	{
-		print_export_err(args[1], "not a valid identifier");
-		return (1);
+		print_export_env(data);
+		return (0);
 	}
-	add_var_to_env(data, args[1]);
-	return (0);
+	while (args[i])
+	{
+		if (!is_valid(args[i]))
+		{
+			print_export_err(args[i], "not a valid identifier");
+			exit_code = 1;
+		}
+		else
+			add_var_to_env(data, args[i]);
+		i++;
+	}
+	return (exit_code);
 }

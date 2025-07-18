@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:17:18 by qutruche          #+#    #+#             */
-/*   Updated: 2025/07/02 18:42:18 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/16 22:28:43 by bill             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,15 @@ t_tokenlist	*extract_space(t_data *data, t_tokenlist *tl, char *line, int *pos)
 	return (tl);
 }
 
-t_tokenlist	*extract_operator(t_data *data, t_tokenlist *tl, char *line, int *pos)
+t_tokenlist	*extract_operator(t_data *data, t_tokenlist *tl,
+	char *line, int *pos)
 {
 	int			len;
 	t_tokenlist	*ntl;
 
 	len = is_operator(&line[*pos]);
-	ntl = tokenlist_push_back(data, &tl, ft_strndup(&line[*pos], len), TOPERATOR);
+	ntl = tokenlist_push_back(data, &tl, ft_strndup(&line[*pos], len),
+			TOPERATOR);
 	*pos += len;
 	return (ntl);
 }
@@ -78,9 +80,11 @@ t_tokenlist	*extract_quotes(t_data *data, t_tokenlist *tl, char *line, int *pos)
 		len++;
 	*pos = start + len + 1;
 	if (in_quote == '"')
-		return (tokenlist_push_back(data, &tl, ft_strndup(&line[start], len), TDQUOTES));
+		return (tokenlist_push_back(data, &tl,
+				ft_strndup(&line[start], len), TDQUOTES));
 	else
-		return (tokenlist_push_back(data, &tl, ft_strndup(&line[start], len), TQUOTES));
+		return (tokenlist_push_back(data, &tl,
+				ft_strndup(&line[start], len), TQUOTES));
 }
 
 t_tokenlist	*extract_word(t_data *data, t_tokenlist *tl, char *line, int *pos)
@@ -99,5 +103,6 @@ t_tokenlist	*extract_word(t_data *data, t_tokenlist *tl, char *line, int *pos)
 		len++;
 	}
 	*pos = start + len;
-	return (tokenlist_push_back(data, &tl, ft_strndup(&line[start], len), TWORD));
+	return (tokenlist_push_back(data, &tl,
+			ft_strndup(&line[start], len), TWORD));
 }

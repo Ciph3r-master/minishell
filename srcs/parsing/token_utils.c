@@ -46,7 +46,7 @@ int	is_builtin(char *word)
 	int			i;
 
 	i = 0;
-	builtin[0] = "echo"; //DISABLE ECHO
+	builtin[0] = "echo";
 	builtin[1] = "cd";
 	builtin[2] = "pwd";
 	builtin[3] = "export";

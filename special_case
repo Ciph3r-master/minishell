@@ -19,3 +19,4 @@ free(msg);
 -------------------------------------------------------------------------
 echo test > t : free exit
 PAS DE REDIRECT DANS LES builtins
+Gerez si les quotes ne sont pas fermés

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/15 21:22:14 by thibaud          ###   ########.fr        #
+#    Updated: 2025/07/18 18:29:57 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ else
 	READLINE_LIB :=
 endif
 
-CFLAGS       := -g3 -Wall -Wextra -Werror -fdiagnostics-color=always -MMD -MP -I./includes -I./libft $(READLINE_INC)
+CFLAGS       := -g -gdwarf-4 -Wall -Wextra -Werror -fdiagnostics-color=always -MMD -MP -I./includes -I./libft $(READLINE_INC)
 LDFLAGS      := $(READLINE_LIB) -lreadline
 
 # === Libraries ===
@@ -66,7 +66,8 @@ SRCS_BUILTINS	:=						\
 	$(DIR_BUILTINS)/env.c				\
 	$(DIR_BUILTINS)/unset.c				\
 	$(DIR_BUILTINS)/exit.c				\
-	$(DIR_BUILTINS)/export.c				\
+	$(DIR_BUILTINS)/export.c			\
+	$(DIR_BUILTINS)/export_utils.c		\
 
 SRCS_CORE	:=							\
 	$(DIR_CORE)/minishell.c
@@ -123,6 +124,7 @@ SRCS_PARSING :=								\
 	$(DIR_PARSING)/token_init.c				\
 	$(DIR_PARSING)/cmd_node.c				\
 	$(DIR_PARSING)/expand.c					\
+	$(DIR_PARSING)/expand_utils.c			\
 	$(DIR_PARSING)/extract_token.c			\
 	$(DIR_PARSING)/set_token_type.c			\
 	$(DIR_PARSING)/syntax_error.c			\
