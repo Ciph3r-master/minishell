@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:38:08 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/17 19:43:05 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 00:04:17 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ void	free_and_exit_debug(t_data *data, int exit_code,
 	(void)line;
 	printf("exit_code : %d at %s:%d\n", exit_code, file, line);
 	free_all(data, exit_code);
+	exit(exit_code);
 	return ;
 }

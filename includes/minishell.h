@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/17 19:43:25 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 15:50:38 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # include <signal.h>
 
-extern int	g_exit_status;
+extern sig_atomic_t g_exit_status;
 
 typedef enum e_cmdtype
 {
@@ -204,10 +204,16 @@ void		sort_env(t_data *data, char **env);
 t_env_list	*get_env_by_key(t_data *data, char *key);
 //	expand
 void find_expand(t_data *data);
+// expand_utils
 
-//	data/
+char	*ft_strjoin3(char *s1, char *s2, char *s3);
+int		varlen(char *var);
+char	*find_value(char *var, t_env_list *envlist);
+char	*get_prefix(t_data *data, t_tokenlist *token, int *len);
+
+	//	data/
 	//	init_data.c
-int			init_data(t_data *data, char **env);
+	int init_data(t_data *data, char **env);
 
 //	env_copy/
 	//	env_list.c

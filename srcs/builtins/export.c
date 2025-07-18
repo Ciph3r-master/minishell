@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/17 19:40:35 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/17 22:29:49 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	print_export_env(t_data *data)
 	i = 0;
 	while (envcpy[i])
 	{
-		printf("declare -x %s\n", envcpy[i]);
+		printf("export %s\n", envcpy[i]);
 		i++;
 	}
 	free_env_copy(envcpy);
