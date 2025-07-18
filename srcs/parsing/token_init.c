@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:11 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/18 16:08:57 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 19:34:14 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	extract_cmds(t_data *data)
 			extract_cmd_node(data, new_node, cmd_start, cmd_end);
 			if (current->type == TPIPE)
 				current = current->next;
-			else if (current->next == NULL)
-				current = NULL;
+			current = current->next;
 			cmd_start = current;
 		}
 		else
