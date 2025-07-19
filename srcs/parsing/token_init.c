@@ -6,17 +6,33 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:11 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/18 19:36:09 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 04:56:02 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	create_cmd(t_data *data, t_tokenlist **current,
+	t_tokenlist **cmd_start, t_tokenlist **cmd_end)
+{
+	t_cmd_node	*new_node;
+
+	cmdlist_push_back(data, &data->cmd_node);
+	new_node = cmdlist_getlast(data->cmd_node);
+	if ((*current)->type == TPIPE)
+		*cmd_end = *current;
+	extract_cmd_node(data, new_node, *cmd_start, *cmd_end);
+	if ((*current)->type == TPIPE)
+		*current = (*current)->next;
+	else if ((*current)->next == NULL)
+		*current = NULL;
+	*cmd_start = *current;
+}
+
 void	extract_cmds(t_data *data)
 {
 	t_tokenlist	*current;
 	t_tokenlist	*cmd_start;
-	t_cmd_node	*new_node;
 	t_tokenlist	*cmd_end;
 
 	current = data->tokenlist;
@@ -25,17 +41,7 @@ void	extract_cmds(t_data *data)
 	{
 		cmd_end = NULL;
 		if (current->type == TPIPE || current->next == NULL)
-		{
-			cmdlist_push_back(data, &data->cmd_node);
-			new_node = cmdlist_getlast(data->cmd_node);
-			if (current->type == TPIPE)
-				cmd_end = current;
-			extract_cmd_node(data, new_node, cmd_start, cmd_end);
-			if (current->type == TPIPE)
-				current = current->next;
-			current = current->next;
-			cmd_start = current;
-		}
+			create_cmd(data, &current, &cmd_start, &cmd_end);
 		else
 			current = current->next;
 	}

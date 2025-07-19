@@ -3,20 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 21:29:56 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/19 02:16:26 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 05:17:59 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "minishell.h"
+#include "libft.h"
 
 void	print_syntax_error(char *token)
 {
-	//syntax error: mettre sur stderr
-	printf("minishell: syntax error near unexpected token `%s'\n", token);
+	const char	*prefix = "minishell: syntax error near unexpected token `";
+
+	write(STDERR_FILENO, prefix, ft_strlen(prefix));
+	write(STDERR_FILENO, token, ft_strlen(token));
+	write(STDERR_FILENO, "'\n", 2);
 }
 
 bool	is_invalid_redir(t_tokenlist *tl)

@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:25:26 by thibaud           #+#    #+#             */
-/*   Updated: 2025/07/19 04:31:59 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 05:14:02 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 #include "minishell.h"
 #include "libft.h"
 #include <errno.h>
+
+static void	print_cd_err(char *err_msg)
+{
+	const char	*prefix = "minishell: cd: ";
+
+	write(STDERR_FILENO, prefix, ft_strlen(prefix));
+	write(STDERR_FILENO, err_msg, ft_strlen(err_msg));
+	write(STDERR_FILENO, "\n", 1);
+}
 
 int	goto_path(t_data *data, char *path)
 {
@@ -32,7 +41,7 @@ int	goto_path(t_data *data, char *path)
 	return (0);
 }
 
-int goto_dir(t_data *data, char *path)
+int	goto_dir(t_data *data, char *path)
 {
 	char		*old_pwd;
 	t_env_list	*env_old_pwd;
@@ -40,7 +49,7 @@ int goto_dir(t_data *data, char *path)
 	env_old_pwd = get_env_by_key(data, "OLDPWD");
 	if (!env_old_pwd)
 	{
-		printf("minishell: cd: OLDPWD not set\n");
+		print_cd_err("OLDPWD not set");
 		return (1);
 	}
 	old_pwd = getcwd(NULL, 0);
@@ -58,8 +67,6 @@ int goto_dir(t_data *data, char *path)
 	return (0);
 }
 
-// cd sans arg : bash: cd: HOME not set ERROR CODE 1
-// cd - : 
 int	builtin_cd(t_data *data, t_cmd_node *cmd_node)
 {
 	char		**args;
@@ -71,8 +78,7 @@ int	builtin_cd(t_data *data, t_cmd_node *cmd_node)
 		home = get_env_by_key(data, "HOME");
 		if (!home || !home->value)
 		{
-			//TODO UTILISER SORTIE ERR
-			printf("minishell: cd: HOME not set\n");
+			print_cd_err("HOME not set");
 			data->exit_status = 1;
 			return (1);
 		}
@@ -81,11 +87,10 @@ int	builtin_cd(t_data *data, t_cmd_node *cmd_node)
 	}
 	if (args[2])
 	{
-		printf("minishell: cd: too many arguments\n");
+		print_cd_err("too many arguments");
 		data->exit_status = 1;
 		return (1);
 	}
 	data->exit_status = goto_dir(data, args[1]);
 	return (0);
 }
-

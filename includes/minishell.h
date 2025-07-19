@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 04:34:43 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 05:07:08 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void		handle_user_input(t_data *data);
 
 //	builtins/
 	// pwd.c
-int			builtin_pwd(void);
+int			builtin_pwd(t_data *data);
 int			builtin_echo(t_cmd_node *cmd_node);
 int			builtin_env(t_data *data);
 int			builtin_unset(t_data *data, t_cmd_node *cmd_node);
