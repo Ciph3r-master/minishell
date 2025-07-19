@@ -12,9 +12,9 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 #include "minishell.h"
 #include "libft.h"
-#include <errno.h>
 
 static void	print_cd_err(char *err_msg)
 {

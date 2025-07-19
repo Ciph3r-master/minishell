@@ -13,10 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <limits.h>
 # include <stdbool.h>
-# include <string.h>
 # include <signal.h>
 
 extern sig_atomic_t	g_exit_status;
@@ -282,8 +279,6 @@ void		free_all(t_data *data, int exit_code);
 void		free_env_copy(char **env_copy);
 	//	free_env_list.c
 void		free_env_list(t_env_list *env_list);
-	//	free_pathname.c
-void		free_pathname(t_filelist *cur_file_in);
 	//	free_tokens.c
 void		free_tokenlist(t_tokenlist **tl);
 	//	free_cmd_node.c

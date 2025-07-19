@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "minishell.h"
 
 void	cmd_handle_redir_out(t_data *data, t_tokenlist *prev,

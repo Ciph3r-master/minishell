@@ -107,7 +107,6 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_all.c			\
 	$(DIR_MEMORY)/free_env_list.c		\
 	$(DIR_MEMORY)/free_env_copy.c		\
-	$(DIR_MEMORY)/free_pathname.c		\
 	$(DIR_MEMORY)/free_tokens.c			\
 	$(DIR_MEMORY)/free_cmds_node.c		\
 	$(DIR_MEMORY)/free_utils.c			\
