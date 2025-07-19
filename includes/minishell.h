@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 19:18:47 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 00:07:13 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,11 @@ t_cmd_node	*cmdlist_push_back(t_data *data, t_cmd_node **cmdlist);
 t_cmd_node	*cmdlist_getlast(t_cmd_node *cmdlist);
 void		print_cmdlist(t_cmd_node *cmdlist);
 
+//	core/
+	// core_loop.c
+void		init_minishell(t_data *data, char **env);
+void		handle_user_input(t_data *data);
+
 //	builtins/
 	// pwd.c
 int			builtin_pwd(void);
@@ -204,12 +209,19 @@ void		sort_env(t_data *data, char **env);
 t_env_list	*get_env_by_key(t_data *data, char *key);
 void 		update_env_cpy(t_data *data);
 //	expand
-void find_expand(t_data *data);
+void		find_expand(t_data *data);
 // expand_utils
+<<<<<<< HEAD
 char	*ft_strjoin3(char *s1, char *s2, char *s3);
 int		varlen(char *var);
 char	*find_value(char *var, t_env_list *envlist);
 char	*get_prefix(t_data *data, t_tokenlist *token, int *len);
+=======
+char		*ft_strjoin3(char *s1, char *s2, char *s3);
+int			varlen(char *var);
+char		*find_value(char *var, t_env_list *envlist);
+char		*get_prefix(t_data *data, t_tokenlist *token, int *len);
+>>>>>>> exec
 
 	//	data/
 	//	init_data.c
@@ -217,7 +229,7 @@ char	*get_prefix(t_data *data, t_tokenlist *token, int *len);
 
 //	env_copy/
 	//	env_list.c
-t_env_list	*new_node_env_list(char *key, char *value);
+t_env_list	*new_node_env_list(t_data *data, char *key, char *value);
 void		push_back_env_list(t_env_list **env_list, t_env_list *new_node);
 void		print_env_list(t_env_list **env_list);
 int			get_env_list_size(t_env_list *env_list);
@@ -314,5 +326,11 @@ void		msg_permission_denied(t_data *data, int exit_code,
 void		init_signals(void);
 void		sigint_handler(int sig);
 void		heredoc_handler(int sig);
+
+//	parsing_utils/
+	//	check_quotes.c
+bool		check_quotes(char *line);
+	//	secure_strdup.c
+char		*secure_strdup(t_data *data, const char *s);
 
 #endif

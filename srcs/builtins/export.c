@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/18 19:07:00 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 00:07:12 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ static void	add_var_to_env(t_data *data, char *arg)
 	if (node_to_replace)
 	{
 		free(node_to_replace->value);
-		node_to_replace->value = ft_strdup(value);
+		node_to_replace->value = secure_strdup(data, value);
 		free(key);
 		return ;
 	}
-	new_node = new_node_env_list(key, ft_strdup(value));
+	new_node = new_node_env_list(data, key, ft_strdup(value));
 	if (!new_node)
 	{
 		free(key);
@@ -75,6 +75,8 @@ static void	print_export_env(t_data *data)
 	char	**envcpy;
 
 	envcpy = get_env_copy(data->env_list);
+	if (!envcpy)
+		free_and_exit(data, 1);
 	sort_env(data, envcpy);
 	i = 0;
 	while (envcpy[i])

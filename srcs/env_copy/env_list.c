@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmaitre <thmaitre@student.42lyon.fr>      #+#  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-10 15:58:16 by thmaitre          #+#    #+#             */
-/*   Updated: 2025-06-10 15:58:16 by thmaitre         ###   ########.fr       */
+/*   Created: 2025/06/10 15:58:16 by thmaitre          #+#    #+#             */
+/*   Updated: 2025/07/18 21:34:28 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "minishell.h"
 
-t_env_list	*new_node_env_list(char *key, char *value)
+t_env_list	*new_node_env_list(t_data *data, char *key, char *value)
 {
 	t_env_list	*new_node;
 
+	if (!value)
+	{
+		free(key);
+		free_and_exit(data, 1);
+	}
 	new_node = malloc(sizeof(t_env_list));
 	if (!new_node)
 		return (NULL);

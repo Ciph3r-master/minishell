@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env_copy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:17:18 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/06/18 17:16:15 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:35:31 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_partial_env_copy(char **env_copy, int count)
 		free(env_copy[i]);
 		i++;
 	}
+	free(env_copy);
 }
 
 char	**strdup_keys(char **env_copy, t_env_list *env_list)
@@ -58,7 +59,12 @@ char	**join_values(char **env_copy, t_env_list *env_list)
 	{
 		new_str = ft_strjoin(env_copy[i], current->value);
 		if (!new_str)
+		{
+			while (i-- > 0)
+				free(env_copy[i]);
+			free(env_copy);
 			return (NULL);
+		}
 		free(env_copy[i]);
 		env_copy[i] = new_str;
 		current = current->next;

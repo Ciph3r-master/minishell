@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:46:37 by qutruche          #+#    #+#             */
-/*   Updated: 2025/07/18 15:53:30 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/18 21:47:49 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ static void	split_token(t_data *data, t_tokenlist *current)
 		i++;
 	while (i - 1 >= 0)
 	{
-		tokenlist_insert_after(data, current, ft_strdup(split[i - 1]), TARG);
+		tokenlist_insert_after(data, current, secure_strdup(data,
+				split[i - 1]), TARG);
 		if (i - 1 > 0)
 			tokenlist_insert_after(data, current, NULL, TSPACE);
 		i--;

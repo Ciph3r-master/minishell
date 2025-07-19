@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_string_to_strings.c                         :+:      :+:    :+:   */
+/*   secure_strdup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 13:56:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 22:29:19 by vscode           ###   ########.fr       */
+/*   Created: 2025/07/18 20:31:00 by vscode            #+#    #+#             */
+/*   Updated: 2025/07/18 21:15:18 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
+#include <stdlib.h>
 
-char	**ft_add_string_to_strings(char **strings, char *string)
+char	*secure_strdup(t_data *data, const char *s)
 {
+	char	*dup;
 	int		i;
-	char	*new_str;
 
-	if (!strings || !string)
-		return (NULL);
+	dup = NULL;
 	i = 0;
-	while (strings[i])
+	while (s[i])
+		i++;
+	dup = malloc(sizeof (*s) * i + 1);
+	if (!dup)
+		free_and_exit(data, 1);
+	i = 0;
+	while (s[i])
 	{
-		new_str = ft_strjoin(strings[i], string);
-		if (!new_str)
-		{
-			while (i-- > 0)
-				free(strings[i]);
-			free(strings);
-			return (NULL);
-		}
-		free(strings[i]);
-		strings[i] = new_str;
+		dup[i] = s[i];
 		i++;
 	}
-	return (strings);
+	dup[i] = '\0';
+	return (dup);
 }

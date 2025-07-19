@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:12:35 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 05:24:08 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/18 21:35:48 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_env_list	*get_env_list(t_data *data, char **env)
 		value = get_env_value(env[i]);
 		if (!value)
 			free_and_exit(data, 1);
-		new_node = new_node_env_list(key, value);
+		new_node = new_node_env_list(data, key, value);
 		if (!new_node)
 			free_and_exit(data, 1);
 		push_back_env_list(&data->env_list, new_node);

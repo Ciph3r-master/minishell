@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_string_to_strings.c                         :+:      :+:    :+:   */
+/*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 13:56:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 22:29:19 by vscode           ###   ########.fr       */
+/*   Created: 2025/07/18 23:35:08 by vscode            #+#    #+#             */
+/*   Updated: 2025/07/18 23:36:34 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	**ft_add_string_to_strings(char **strings, char *string)
+bool	check_quotes(char *line)
 {
-	int		i;
-	char	*new_str;
+	int	i;
+	int	dquotes;
+	int	quotes;
 
-	if (!strings || !string)
-		return (NULL);
+	dquotes = 0;
+	quotes = 0;
 	i = 0;
-	while (strings[i])
+	while (line[i])
 	{
-		new_str = ft_strjoin(strings[i], string);
-		if (!new_str)
-		{
-			while (i-- > 0)
-				free(strings[i]);
-			free(strings);
-			return (NULL);
-		}
-		free(strings[i]);
-		strings[i] = new_str;
+		if (line[i] == '"')
+			dquotes++;
+		if (line[i] == '\'')
+			quotes++;
 		i++;
 	}
-	return (strings);
+	if (dquotes % 2 != 0 || quotes % 2 != 0)
+		return (false);
+	return (true);
 }
