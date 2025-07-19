@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 21:27:33 by thibaud           #+#    #+#             */
-/*   Updated: 2025/07/03 21:16:57 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/19 02:14:16 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "minishell.h"
 
 int	builtin_env(t_data *data)

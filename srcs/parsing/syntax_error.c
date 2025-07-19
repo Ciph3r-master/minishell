@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 21:29:56 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/01 18:28:37 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 02:16:26 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "minishell.h"
 
 void	print_syntax_error(char *token)
 {
+	//syntax error: mettre sur stderr
 	printf("minishell: syntax error near unexpected token `%s'\n", token);
 }
 

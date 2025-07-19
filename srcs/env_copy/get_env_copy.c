@@ -6,10 +6,11 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:17:18 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 22:35:31 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 02:15:03 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "minishell.h"
 #include "libft.h"
 

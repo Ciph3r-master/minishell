@@ -6,17 +6,14 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 00:13:35 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 02:18:18 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <limits.h>
 # include <stdbool.h>
-# include <string.h>
 # include <signal.h>
 
 extern sig_atomic_t g_exit_status;
