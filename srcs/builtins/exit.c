@@ -6,10 +6,12 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/18 20:22:52 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 04:32:14 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <limits.h>
 #include "minishell.h"
 #include "libft.h"
 
