@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 00:07:13 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 00:13:35 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,25 +207,18 @@ int			builtin_export(t_data *data, t_cmd_node *cmd_node);
 char		*get_key(t_data *data, char *arg);
 void		sort_env(t_data *data, char **env);
 t_env_list	*get_env_by_key(t_data *data, char *key);
-void 		update_env_cpy(t_data *data);
+void		update_env_cpy(t_data *data);
 //	expand
 void		find_expand(t_data *data);
 // expand_utils
-<<<<<<< HEAD
-char	*ft_strjoin3(char *s1, char *s2, char *s3);
-int		varlen(char *var);
-char	*find_value(char *var, t_env_list *envlist);
-char	*get_prefix(t_data *data, t_tokenlist *token, int *len);
-=======
 char		*ft_strjoin3(char *s1, char *s2, char *s3);
 int			varlen(char *var);
 char		*find_value(char *var, t_env_list *envlist);
 char		*get_prefix(t_data *data, t_tokenlist *token, int *len);
->>>>>>> exec
 
-	//	data/
+//	data/
 	//	init_data.c
-	int init_data(t_data *data, char **env);
+int			init_data(t_data *data, char **env);
 
 //	env_copy/
 	//	env_list.c
@@ -243,9 +236,7 @@ void		print_env_copy(char **env_copy);
 
 //	error/
 	//	free_and_exit.c
-void		free_and_exit_debug(t_data *data, int exit_code, const char *file, int line);
-
-# define free_and_exit(data, exit_code) free_and_exit_debug(data, exit_code, __FILE__, __LINE__)
+void		free_and_exit(t_data *data, int exit_code);
 
 //	exec/
 	//	builtins.c

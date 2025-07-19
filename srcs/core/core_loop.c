@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:51:04 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/19 00:02:20 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 00:10:33 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	handle_user_input(t_data *data)
 		init_tokens(data);
 		data->exit_status = 0;
 		free(data->line);
-		printf("\n ---------- exec -------\n\n");
 		exec(data);
 	}
 }
