@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/19 02:14:49 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 06:32:23 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,9 @@ int	builtin_export(t_data *data, t_cmd_node *cmd)
 {
 	char	**args;
 	int		i;
-	int		exit_code;
 
 	args = cmd->cmd->args;
 	i = 1;
-	exit_code = 0;
 	if (!args[i])
 	{
 		print_export_env(data);
@@ -107,12 +105,12 @@ int	builtin_export(t_data *data, t_cmd_node *cmd)
 		if (!is_valid(args[i]))
 		{
 			print_export_err(args[i], "not a valid identifier");
-			exit_code = 1;
+			data->exit_status = 1;
 		}
 		else
 			add_var_to_env(data, args[i]);
 		i++;
 	}
 	update_env_cpy(data);
-	return (exit_code);
+	return (data->exit_status);
 }
