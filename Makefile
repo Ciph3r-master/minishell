@@ -273,6 +273,6 @@ valgrind: all
 	valgrind --show-leak-kinds=all --show-mismatched-frees=yes --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" ./minishell
 
 vallog: all
-	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="/home/billcipher/Documents/newminishell/valgrind.log" ./minishell
+	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="valgrind.log" ./minishell
 
 .PHONY: all clean fclean re
