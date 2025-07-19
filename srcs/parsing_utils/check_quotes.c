@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/19 00:02:06 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/19 00:02:14 by vscode           ###   ########.fr       */
+/*   Created: 2025/07/18 23:35:08 by vscode            #+#    #+#             */
+/*   Updated: 2025/07/18 23:36:34 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-sig_atomic_t	g_exit_status = 0;
-
-int	main(int argc, char **argv, char **env)
+bool	check_quotes(char *line)
 {
-	t_data	data;
+	int	i;
+	int	dquotes;
+	int	quotes;
 
-	(void)argc;
-	(void)argv;
-	init_minishell(&data, env);
-	handle_user_input(&data);
-	return (0);
+	dquotes = 0;
+	quotes = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '"')
+			dquotes++;
+		if (line[i] == '\'')
+			quotes++;
+		i++;
+	}
+	if (dquotes % 2 != 0 || quotes % 2 != 0)
+		return (false);
+	return (true);
 }

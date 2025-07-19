@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 21:35:00 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/18 23:56:36 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,11 @@ t_cmd_node	*cmdlist_push_back(t_data *data, t_cmd_node **cmdlist);
 t_cmd_node	*cmdlist_getlast(t_cmd_node *cmdlist);
 void		print_cmdlist(t_cmd_node *cmdlist);
 
+//	core/
+	// core_loop.c
+void		init_minishell(t_data *data, char **env);
+void		handle_user_input(t_data *data);
+
 //	builtins/
 	// pwd.c
 int			builtin_pwd(void);
@@ -203,13 +208,12 @@ char		*get_key(t_data *data, char *arg);
 void		sort_env(t_data *data, char **env);
 t_env_list	*get_env_by_key(t_data *data, char *key);
 //	expand
-void find_expand(t_data *data);
+void		find_expand(t_data *data);
 // expand_utils
-
-char	*ft_strjoin3(char *s1, char *s2, char *s3);
-int		varlen(char *var);
-char	*find_value(char *var, t_env_list *envlist);
-char	*get_prefix(t_data *data, t_tokenlist *token, int *len);
+char		*ft_strjoin3(char *s1, char *s2, char *s3);
+int			varlen(char *var);
+char		*find_value(char *var, t_env_list *envlist);
+char		*get_prefix(t_data *data, t_tokenlist *token, int *len);
 
 	//	data/
 	//	init_data.c
@@ -316,6 +320,8 @@ void		sigint_handler(int sig);
 void		heredoc_handler(int sig);
 
 //	parsing_utils/
+	//	check_quotes.c
+bool		check_quotes(char *line);
 	//	secure_strdup.c
 char		*secure_strdup(t_data *data, const char *s);
 

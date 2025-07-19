@@ -6,7 +6,7 @@
 #    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/18 21:25:24 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/18 23:57:16 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,8 @@ SRCS_BUILTINS	:=						\
 	$(DIR_BUILTINS)/export_utils.c		\
 
 SRCS_CORE	:=							\
-	$(DIR_CORE)/minishell.c
+	$(DIR_CORE)/core_loop.c				\
+	$(DIR_CORE)/minishell.c				\
 
 SRCS_DATA	:=							\
 	$(DIR_DATA)/init_data.c
@@ -131,6 +132,7 @@ SRCS_PARSING :=								\
 	$(DIR_PARSING)/set_token_type_cmds.c	\
 
 SRCS_PARSING_UTILS :=				  		\
+	$(DIR_PARSING_UTILS)/check_quotes.c 	\
 	$(DIR_PARSING_UTILS)/tokendlist.c 		\
 	$(DIR_PARSING_UTILS)/filedlist.c  		\
 	$(DIR_PARSING_UTILS)/secure_strdup.c 	\
