@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//gere un seul signe + ou - return 0 sinon
-//saute les espace jusqua des chiffre return 0 sinon
-//ignore ce qu'il y a apres
 int	ft_atoi(const char *nptr)
 {
 	int	nb;

@@ -12,7 +12,6 @@
 
 #include "libft.h"
 
-//crée une copie d'une liste en lui apliquant une fonction
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*begin_map;

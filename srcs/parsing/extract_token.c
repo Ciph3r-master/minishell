@@ -13,9 +13,8 @@
 #include "minishell.h"
 #include "libft.h"
 
-void	merge_token(t_tokenlist **tl)
+void	merge_token(t_data *data, t_tokenlist **tl)
 {
-//TODO GERER LES FREE
 	t_tokenlist	*current;
 	char		*tmp;
 
@@ -27,6 +26,8 @@ void	merge_token(t_tokenlist **tl)
 		{
 			tmp = current->token;
 			current->token = ft_strjoin(current->token, current->next->token);
+			if (!current->token)
+				free_and_exit(data, 1);
 			tokenlist_remove_node(tl, current->next);
 			free(tmp);
 		}

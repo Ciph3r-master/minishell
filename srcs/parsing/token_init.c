@@ -85,7 +85,7 @@ int	init_tokens(t_data *data)
 		data->tokenlist = tmp;
 	}
 	find_expand(data);
-	merge_token(&data->tokenlist);
+	merge_token(data, &data->tokenlist);
 	set_operator(data->tokenlist);
 	if (is_invalid_redir(data->tokenlist))
 		return (-1);

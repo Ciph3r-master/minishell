@@ -137,7 +137,7 @@ t_tokenlist	*extract_space(t_data *data, t_tokenlist *tl,
 				char *line, int *pos);
 void		extract_cmd_node(t_data *data, t_cmd_node *node,
 				t_tokenlist *start, t_tokenlist *end);
-void		merge_token(t_tokenlist **tl);
+void		merge_token(t_data *data, t_tokenlist **tl);
 
 // set_token_type.c
 void		set_operator(t_tokenlist *tl);
