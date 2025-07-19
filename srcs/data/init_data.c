@@ -6,12 +6,11 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:44:17 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/08 05:36:48 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 02:29:17 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
 #include "minishell.h"
 
 int	init_data(t_data *data, char **env)

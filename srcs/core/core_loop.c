@@ -6,16 +6,14 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:51:04 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/19 00:10:33 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 02:26:23 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <signal.h>
 #include "minishell.h"
 
 void	init_minishell(t_data *data, char **env)
