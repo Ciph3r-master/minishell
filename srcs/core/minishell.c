@@ -20,6 +20,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	if (!valid_minishell(argc))
+		return (1);
 	init_minishell(&data, env);
 	handle_user_input(&data);
 	return (0);

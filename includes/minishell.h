@@ -161,7 +161,6 @@ t_tokenlist	*tokenlist_create_node(t_data *data,
 				void *content, t_tokentype type);
 t_tokenlist	*tokenlist_push_front(t_data *data, t_tokenlist **tokenlist,
 				void *content, t_tokentype type);
-void		print_tokenlist(t_tokenlist *tokenlist, bool reverse);
 t_tokenlist	*tokenlist_push_back(t_data *data, t_tokenlist **tokenlist,
 				void *content, t_tokentype type);
 t_tokenlist	*tokenlist_insert_after(t_data *data, t_tokenlist *node,
@@ -170,7 +169,6 @@ void		tokenlist_remove_node(t_tokenlist **head, t_tokenlist *node);
 t_filelist	*filelist_create_node(t_data *data, void *content, t_filetype type);
 t_filelist	*filelist_push_front(t_data *data, t_filelist **filelist,
 				void *content, t_filetype type);
-void		print_filelist(t_filelist *filelist, bool reverse);
 t_filelist	*filelist_push_back(t_data *data, t_filelist **filelist,
 				void *content, t_filetype type);
 t_filelist	*filelist_getlast(t_filelist *filelist);
@@ -178,10 +176,10 @@ t_cmd_node	*cmdlist_create_node(t_data *data);
 t_cmd_node	*cmdlist_push_front(t_data *data, t_cmd_node **cmdlist);
 t_cmd_node	*cmdlist_push_back(t_data *data, t_cmd_node **cmdlist);
 t_cmd_node	*cmdlist_getlast(t_cmd_node *cmdlist);
-void		print_cmdlist(t_cmd_node *cmdlist);
 
 //	core/
 	// core_loop.c
+int			valid_minishell(int ac);
 void		init_minishell(t_data *data, char **env);
 void		handle_user_input(t_data *data);
 

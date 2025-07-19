@@ -16,6 +16,26 @@
 #include <readline/readline.h>
 #include "minishell.h"
 
+int	valid_minishell(int ac)
+{
+	if (ac != 1)
+	{
+		printf("Error: minishell does not take any arguments\n");
+		return (0);
+	}
+	if (!isatty(STDIN_FILENO))
+	{
+		printf("Error: minishell must be run in an interactive terminal\n");
+		return (0);
+	}
+	if (!isatty(STDOUT_FILENO))
+	{
+		printf("Error: stdout is not a terminal\n");
+		return (0);
+	}
+	return (1);
+}
+
 void	init_minishell(t_data *data, char **env)
 {
 	init_signals();
