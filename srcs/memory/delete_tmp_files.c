@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   delete_tmp_files.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 01:55:53 by thibaud           #+#    #+#             */
-/*   Updated: 2025/06/13 19:55:51 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/19 03:13:52 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "minishell.h"
-#include "libft.h"
 
 void	delete_tmps(t_filelist *cur_file_in)
 {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:44:17 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 20:21:14 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 03:28:22 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
 #include "minishell.h"
 
 int	init_data(t_data *data, char **env)

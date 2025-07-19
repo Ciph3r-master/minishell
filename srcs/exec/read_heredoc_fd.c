@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   read_heredoc_fd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:45:48 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/15 21:17:32 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/19 03:03:20 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
 #include <sys/wait.h>
-#include <sys/types.h>
 #include <readline/readline.h>
-#include <readline/history.h>
 #include "minishell.h"
 #include "libft.h"
 

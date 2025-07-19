@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include <unistd.h>
 #include "minishell.h"
 #include "libft.h"
 

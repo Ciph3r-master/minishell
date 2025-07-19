@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   core_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:51:04 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/19 05:25:10 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 03:28:21 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <signal.h>
 #include "minishell.h"
 
 void	init_minishell(t_data *data, char **env)

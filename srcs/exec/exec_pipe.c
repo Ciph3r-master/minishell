@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:39:46 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/01 18:38:35 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 02:51:00 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include "minishell.h"
 

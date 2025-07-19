@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   free_cmds_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bill <bill@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:32:10 by bill              #+#    #+#             */
-/*   Updated: 2025/07/16 22:33:13 by bill             ###   ########.fr       */
+/*   Updated: 2025/07/19 03:14:20 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include <stdlib.h>
+#include "minishell.h"
 
 void	free_filelist(t_filelist **fl)
 {

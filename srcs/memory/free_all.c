@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:03:29 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/18 00:04:32 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 03:14:05 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
 #include "minishell.h"
 
 void	free_all(t_data *data, int exit_code)
