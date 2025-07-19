@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/14 01:03:55 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/18 20:22:52 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	builtin_exit(t_data *data, t_cmd_node *cmd_node)
 	args = cmd_node->cmd->args;
 	printf("exit\n");
 	if (!args[1])
-		free_and_exit(data, data->exit_status);
+		free_and_exit(data, data->prev_exit_status);
 	error_code = get_exit_code(args[1], &err);
 	if (err == -1)
 	{

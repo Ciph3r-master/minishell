@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:55:25 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/05/28 01:01:01 by thibaud          ###   ########.fr       */
+/*   Updated: 2025/07/19 03:30:44 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	builtin_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 	{
-		perror("pwd");
+		perror("pwd: error retrieving current directory: getcwd: cannot access parent directories");
 		return (1);
 	}
 	printf("%s\n", cwd);

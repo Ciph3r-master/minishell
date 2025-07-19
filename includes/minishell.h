@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 00:13:35 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 02:50:25 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # include <signal.h>
 
-extern sig_atomic_t g_exit_status;
+extern sig_atomic_t	g_exit_status;
 
 typedef enum e_cmdtype
 {
@@ -74,8 +74,6 @@ typedef struct s_cmd
 	char	*pathname;
 }	t_cmd;
 
-typedef struct s_filelist	t_filelist;
-
 typedef struct s_filelist
 {
 	int					fd;
@@ -83,32 +81,28 @@ typedef struct s_filelist
 	char				*pathname;
 	char				*limiter;
 	t_filetype			type;
-	t_filelist			*next;
-	t_filelist			*prev;
+	struct s_filelist	*next;
+	struct s_filelist	*prev;
 }	t_filelist;
-
-typedef struct s_env_list	t_env_list;
 
 typedef struct s_env_list
 {
-	char		*key;
-	char		*value;
-	t_env_list	*next;
+	char				*key;
+	char				*value;
+	struct s_env_list	*next;
 }	t_env_list;
-
-typedef struct s_cmd_node	t_cmd_node;
 
 typedef struct s_cmd_node
 {
-	int			type;
-	int			fd_in;
-	int			fd_out;
-	int			cmd_exit_status;
-	t_filelist	*file_in;
-	t_filelist	*file_out;
-	t_cmd		*cmd;
-	t_cmd_node	*prev;
-	t_cmd_node	*next;
+	int					type;
+	int					fd_in;
+	int					fd_out;
+	int					cmd_exit_status;
+	t_filelist			*file_in;
+	t_filelist			*file_out;
+	t_cmd				*cmd;
+	struct s_cmd_node	*prev;
+	struct s_cmd_node	*next;
 }	t_cmd_node;
 
 typedef struct s_data
@@ -118,6 +112,7 @@ typedef struct s_data
 	int			saved_stdin;
 	int			saved_stdout;
 	int			exit_status;
+	int			prev_exit_status;
 	int			exec_heredoc;
 	char		*pwd;
 	char		*line;
@@ -129,7 +124,6 @@ typedef struct s_data
 }	t_data;
 
 //	srcs/parsing/quotes.c
-int			is_open_quotes(char *line, char quote);
 t_tokenlist	*get_token(t_data *data, char *line, int *pos, t_tokenlist *tl);
 int			init_tokens(t_data *data);
 
@@ -202,8 +196,9 @@ int			builtin_env(t_data *data);
 int			builtin_unset(t_data *data, t_cmd_node *cmd_node);
 int			builtin_exit(t_data *data, t_cmd_node *cmd_node);
 int			builtin_export(t_data *data, t_cmd_node *cmd_node);
+int			builtin_cd(t_data *data, t_cmd_node *cmd_node);
 
-//export_utils.c
+// export_utils.c
 char		*get_key(t_data *data, char *arg);
 void		sort_env(t_data *data, char **env);
 t_env_list	*get_env_by_key(t_data *data, char *key);

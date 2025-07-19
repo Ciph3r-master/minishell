@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/19 00:09:08 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/19 02:40:16 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS_BUILTINS	:=						\
 	$(DIR_BUILTINS)/exit.c				\
 	$(DIR_BUILTINS)/export.c			\
 	$(DIR_BUILTINS)/export_utils.c		\
+	$(DIR_BUILTINS)/cd.c		\
 
 SRCS_CORE	:=							\
 	$(DIR_CORE)/core_loop.c				\
@@ -248,7 +249,7 @@ $(DIR_OBJS)/%.o: $(DIR_SIGNALS)/%.c
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) $(A_LIBFT)
+$(NAME): $(OBJS) $(A_LIBFT) Makefile
 	@echo "$(COLOR_BLUE)→ Linking $(NAME)$(COLOR_RESET)"
 	$(CC) $(OBJS) $(A_LIBFT) -o $(NAME) $(LDFLAGS)
 
@@ -273,6 +274,6 @@ valgrind: all
 	valgrind --show-leak-kinds=all --show-mismatched-frees=yes --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" ./minishell
 
 vallog: all
-	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="valgrind.log" ./minishell
+	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="/home/billcipher/Documents/newminishell/valgrind.log" ./minishell
 
 .PHONY: all clean fclean re

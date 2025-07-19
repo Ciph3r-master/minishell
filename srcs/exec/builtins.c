@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:41:52 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/14 04:37:02 by qutruche         ###   ########.fr       */
+/*   Updated: 2025/07/18 20:41:14 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	exec_builtins(t_cmd_node *cmd_node, t_data *data)
 		builtin_exit(data, cmd_node);
 	if (ft_strcmp("export", cmd) == 0)
 		builtin_export(data, cmd_node);
+	if (ft_strcmp("cd", cmd) == 0)
+		builtin_cd(data, cmd_node);
 	return (1);
 }
 
