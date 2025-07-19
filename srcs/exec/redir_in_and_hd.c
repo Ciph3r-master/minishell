@@ -6,14 +6,12 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:27:53 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/10 00:14:54 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 03:04:00 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
 #include "minishell.h"
 #include "libft.h"
 

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   filedlist.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:09:42 by bill              #+#    #+#             */
-/*   Updated: 2025/07/18 19:18:00 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 03:20:07 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include <stdlib.h>
+#include "minishell.h"
 
 t_filelist	*filelist_create_node(t_data *data, void *content, t_filetype type)
 {

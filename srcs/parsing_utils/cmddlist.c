@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cmddlist.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:11:33 by bill              #+#    #+#             */
-/*   Updated: 2025/07/18 19:18:11 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 03:20:26 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include <stdlib.h>
+#include "minishell.h"
 
 t_cmd_node	*cmdlist_create_node(t_data *data)
 {

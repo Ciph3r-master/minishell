@@ -6,12 +6,11 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:49:38 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/18 21:40:33 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 03:16:58 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 void	cmd_handle_redir_out(t_data *data, t_tokenlist *prev,
 	t_cmd_node *node, t_tokenlist *current)

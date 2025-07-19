@@ -6,18 +6,11 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:05:13 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/10 01:51:49 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 02:54:02 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <signal.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include "minishell.h"
-#include "libft.h"
 
 int	run_heredoc(t_filelist *cur_file_in, t_data *data)
 {
