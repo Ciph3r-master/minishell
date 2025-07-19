@@ -13,9 +13,9 @@
 #include "minishell.h"
 #include "libft.h"
 
-//TODO GERER LES FREE
 void	merge_token(t_tokenlist **tl)
 {
+//TODO GERER LES FREE
 	t_tokenlist	*current;
 	char		*tmp;
 
