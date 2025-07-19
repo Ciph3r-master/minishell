@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:11 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/19 04:56:02 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/19 05:25:49 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ int	init_tokens(t_data *data)
 	merge_token(&data->tokenlist);
 	set_operator(data->tokenlist);
 	if (is_invalid_redir(data->tokenlist))
-		return (1);
+		return (-1);
 	if (is_invalid_pipe(data->tokenlist))
-		return (1);
+		return (-1);
 	set_token_type(data);
 	extract_cmds(data);
 	return (0);

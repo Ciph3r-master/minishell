@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:51:04 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/19 00:10:33 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/19 05:25:10 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	handle_user_input(t_data *data)
 		}
 		if (g_exit_status != 0)
 			data->exit_status = g_exit_status;
-		init_tokens(data);
+		if (init_tokens(data) == -1)
+			close_saved_fds(data);
 		data->exit_status = 0;
 		free(data->line);
 		exec(data);
