@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 17:28:27 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 03:28:26 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/20 18:06:55 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	get_child_exit_status(t_data *data)
 		data->exit_status = 128 + sig;
 		if (sig == SIGINT)
 			write(STDOUT_FILENO, "\n", 1);
+		else if (sig == SIGQUIT)
+			write(STDERR_FILENO, " : Quit (core dumped)\n", 23);
 	}
 	else if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 05:07:08 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/20 17:55:21 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,6 +304,7 @@ void		msg_permission_denied(t_data *data, int exit_code,
 	//	init_signals.c
 void		init_signals(void);
 void		sigint_handler(int sig);
+void		sigquit_handler(int sig);
 void		heredoc_handler(int sig);
 
 //	parsing_utils/
