@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 21:29:56 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/21 01:32:13 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/21 01:51:01 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 #include "minishell.h"
 #include "libft.h"
 
-static t_tokentype get_operator_type(t_tokenlist *current)
+static t_tokentype	get_operator_type(t_tokenlist *current)
 {
-	if (!current || !current->token)
+	if (!current || current->type == TDQUOTES
+		|| current->type == TQUOTES || !current->token)
 		return (TUNKNOWN);
 	if (current->token[0] == '|')
 		return (TPIPE);
@@ -37,19 +38,19 @@ static t_tokentype get_operator_type(t_tokenlist *current)
 	return (TUNKNOWN);
 }
 
-void print_syntax_error(char *token)
+void	print_syntax_error(char *token)
 {
-	const char *prefix = "minishell: syntax error near unexpected token `";
+	const char	*prefix = "minishell: syntax error near unexpected token `";
 
 	write(STDERR_FILENO, prefix, ft_strlen(prefix));
 	write(STDERR_FILENO, token, ft_strlen(token));
 	write(STDERR_FILENO, "'\n", 2);
 }
 
-bool is_invalid_redir(t_tokenlist *tl)
+bool	is_invalid_redir(t_tokenlist *tl)
 {
-	t_tokenlist *current;
-	t_tokenlist *next;
+	t_tokenlist	*current;
+	t_tokenlist	*next;
 
 	current = tl;
 	while (current)
@@ -59,7 +60,8 @@ bool is_invalid_redir(t_tokenlist *tl)
 			next = current->next;
 			if (next && next->type == TSPACE)
 				next = next->next;
-			if (!next || is_redirection(get_operator_type(next)) || get_operator_type(next) == TPIPE)
+			if (!next || is_redirection(get_operator_type(next))
+				|| get_operator_type(next) == TPIPE)
 			{
 				if (!next)
 					print_syntax_error(current->token);
@@ -73,7 +75,7 @@ bool is_invalid_redir(t_tokenlist *tl)
 	return (false);
 }
 
-bool check_pipe_error(t_tokenlist *next)
+bool	check_pipe_error(t_tokenlist *next)
 {
 	if (!next)
 	{
@@ -88,10 +90,10 @@ bool check_pipe_error(t_tokenlist *next)
 	return (false);
 }
 
-bool is_invalid_pipe(t_tokenlist *tl)
+bool	is_invalid_pipe(t_tokenlist *tl)
 {
-	t_tokenlist *current;
-	t_tokenlist *next;
+	t_tokenlist	*current;
+	t_tokenlist	*next;
 
 	current = tl;
 	if (current && get_operator_type(current) == TPIPE)
