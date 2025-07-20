@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:44:25 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/19 02:39:57 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/21 01:16:32 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	if (!valid_minishell(argc))
-		return (1);
+	//if (!valid_minishell(argc))
+	//	return (1);
 	init_minishell(&data, env);
 	handle_user_input(&data);
 	return (0);

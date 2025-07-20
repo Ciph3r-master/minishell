@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/20 17:55:21 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/21 01:16:56 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef enum e_tokentype
 	TARG,
 	TEXTERN,
 	TLIMITER,
-	TBUILTIN
+	TBUILTIN,
+	TUNKNOWN
 }	t_tokentype;
 
 typedef enum e_filetype
