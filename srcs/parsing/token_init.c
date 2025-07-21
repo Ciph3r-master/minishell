@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:11 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/19 05:25:49 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/22 00:50:25 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "minishell.h"
+#include "libft.h"
 
 void	create_cmd(t_data *data, t_tokenlist **current,
 	t_tokenlist **cmd_start, t_tokenlist **cmd_end)
@@ -77,6 +78,8 @@ int	init_tokens(t_data *data)
 
 	pos = 0;
 	data->tokenlist = NULL;
+	while (data->line[pos] && ft_is_white_space(data->line[pos]))
+		pos++;
 	while (data->line[pos])
 	{
 		tmp = get_token(data, data->line, &pos, data->tokenlist);
