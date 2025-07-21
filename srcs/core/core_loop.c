@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:51:04 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/21 04:16:50 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/21 06:16:14 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	exit_minishell(t_data *data)
 {
 	write(1, "exit\n", 5);
 	rl_clear_history();
-	free_and_exit(data, data->prev_exit_status);
+	free_and_exit(data, data->exit_status);
 }
 
 void	handle_user_input(t_data *data)
@@ -72,6 +72,8 @@ void	handle_user_input(t_data *data)
 		g_exit_status = 0;
 		data->exec_heredoc = 1;
 		data->line = readline("minishell> ");
+		if (g_exit_status != 0)
+			data->exit_status = g_exit_status;
 		if (!data->line)
 			exit_minishell(data);
 		free_cmd_list(&data->cmd_node);
@@ -82,12 +84,10 @@ void	handle_user_input(t_data *data)
 			close_saved_fds(data);
 			continue ;
 		}
-		if (g_exit_status != 0)
-			data->exit_status = g_exit_status;
 		data->prev_exit_status = data->exit_status;
 		init_tokens(data);
-		data->exit_status = 0;
 		free(data->line);
+		data->exit_status = 0;
 		exec(data);
 		close_saved_fds(data);
 	}
