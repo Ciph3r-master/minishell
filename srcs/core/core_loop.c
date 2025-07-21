@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:51:04 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/21 02:45:07 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/21 03:19:56 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	handle_user_input(t_data *data)
 		}
 		if (g_exit_status != 0)
 			data->exit_status = g_exit_status;
+		data->prev_exit_status = data->exit_status;
 		init_tokens(data);
 		data->exit_status = 0;
 		free(data->line);
