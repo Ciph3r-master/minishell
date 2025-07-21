@@ -6,7 +6,7 @@
 #    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/21 02:09:46 by billcipher       ###   ########.fr        #
+#    Updated: 2025/07/21 02:14:21 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,17 +24,7 @@ NAME         := minishell
 # === Compiler & Flags ===
 
 CC           := cc
-UNAME        := $(shell uname)
-
-ifeq ($(UNAME), Darwin)
-	READLINE_INC := -I/opt/homebrew/opt/readline/include
-	READLINE_LIB := -L/opt/homebrew/opt/readline/lib
-else
-	READLINE_INC :=
-	READLINE_LIB :=
-endif
-
-CFLAGS       := -g -gdwarf-4 -Wall -Wextra -Werror -fdiagnostics-color=always -MMD -MP -I./includes -I./libft $(READLINE_INC)
+CFLAGS       := -g -Wall -Wextra -Werror -fdiagnostics-color=always -MMD -MP -I./includes -I./libft $(READLINE_INC)
 LDFLAGS      := $(READLINE_LIB) -lreadline
 
 # === Libraries ===
