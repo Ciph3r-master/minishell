@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env_copy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:17:18 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 02:44:46 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/21 17:57:35 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,6 @@ char	**join_values(char **env_copy, t_env_list *env_list)
 		i++;
 	}
 	return (env_copy);
-}
-
-void	print_env_copy(char **env_copy)
-{
-	int	i;
-
-	i = 0;
-	while (env_copy[i])
-	{
-		printf("%s\n", env_copy[i]);
-		i++;
-	}
-	return ;
 }
 
 char	**get_env_copy(t_env_list *env_list)

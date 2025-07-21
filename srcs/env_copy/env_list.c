@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:58:16 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 02:45:13 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/21 17:56:32 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,6 @@ void	push_back_env_list(t_env_list **env_list, t_env_list *new_node)
 	while (current->next)
 		current = current->next;
 	current->next = new_node;
-	return ;
-}
-
-void	print_env_list(t_env_list **env_list)
-{
-	t_env_list	*cur;
-	int			i;
-
-	if (*env_list == NULL)
-	{
-		printf("NULL - empty_list\n");
-		return ;
-	}
-	cur = *env_list;
-	i = 0;
-	while (cur)
-	{
-		printf("env_list[%d]->key : %s, value : %s\n", i, cur->key, cur->value);
-		cur = cur->next;
-		i++;
-	}
 	return ;
 }
 

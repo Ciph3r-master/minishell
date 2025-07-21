@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/21 01:16:56 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/21 18:02:07 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,6 @@ int			init_data(t_data *data, char **env);
 	//	env_list.c
 t_env_list	*new_node_env_list(t_data *data, char *key, char *value);
 void		push_back_env_list(t_env_list **env_list, t_env_list *new_node);
-void		print_env_list(t_env_list **env_list);
 int			get_env_list_size(t_env_list *env_list);
 	//	get_env_list.c
 char		*get_env_key(char *env_line);
@@ -223,7 +222,6 @@ char		*get_env_value(char *env_line);
 t_env_list	*get_env_list(t_data *data, char **env);
 	//	get_env_copy.c
 char		**get_env_copy(t_env_list *env_list);
-void		print_env_copy(char **env_copy);
 
 //	error/
 	//	free_and_exit.c
@@ -305,7 +303,6 @@ void		msg_permission_denied(t_data *data, int exit_code,
 	//	init_signals.c
 void		init_signals(void);
 void		sigint_handler(int sig);
-void		sigquit_handler(int sig);
 void		heredoc_handler(int sig);
 
 //	parsing_utils/
