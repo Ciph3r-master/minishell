@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:51:04 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/19 03:28:21 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/21 02:45:07 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,21 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include "minishell.h"
+#include "libft.h"
+
+static bool	is_only_whitespace(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (!ft_is_white_space(line[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 int	valid_minishell(int ac)
 {
@@ -62,17 +77,17 @@ void	handle_user_input(t_data *data)
 		free_cmd_list(&data->cmd_node);
 		free_tokenlist(&data->tokenlist);
 		add_history(data->line);
-		if (!check_quotes(data->line))
+		if (!check_quotes(data->line) || is_only_whitespace(data->line))
 		{
 			close_saved_fds(data);
 			continue ;
 		}
 		if (g_exit_status != 0)
 			data->exit_status = g_exit_status;
-		if (init_tokens(data) == -1)
-			close_saved_fds(data);
+		init_tokens(data);
 		data->exit_status = 0;
 		free(data->line);
 		exec(data);
+		close_saved_fds(data);
 	}
 }
