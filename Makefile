@@ -6,7 +6,7 @@
 #    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/19 02:40:16 by billcipher       ###   ########.fr        #
+#    Updated: 2025/07/21 02:09:46 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -185,7 +185,7 @@ OBJS := $(OBJS_BUILTINS)		\
 DEPS         := $(OBJS:.o=.d)
 
 # === Rules ===
-all: lib Makefile
+all: lib
 	@echo "$(COLOR_GREEN)==> Compilation de $(NAME)...$(COLOR_RESET)"
 	$(MAKE) $(NAME)
 
@@ -193,57 +193,57 @@ lib:
 	@echo "$(COLOR_GREEN)==> Compilation de libft...$(COLOR_RESET)"
 	$(MAKE) -C $(DIR_LIBFT)
 
-$(DIR_OBJS)/%.o: $(DIR_BUILTINS)/%.c
+$(DIR_OBJS)/%.o: $(DIR_BUILTINS)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_CORE)/%.c
+$(DIR_OBJS)/%.o: $(DIR_CORE)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_DATA)/%.c
+$(DIR_OBJS)/%.o: $(DIR_DATA)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_ENV_COPY)/%.c
+$(DIR_OBJS)/%.o: $(DIR_ENV_COPY)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_ERROR)/%.c
+$(DIR_OBJS)/%.o: $(DIR_ERROR)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_EXEC)/%.c
+$(DIR_OBJS)/%.o: $(DIR_EXEC)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_MEMORY)/%.c
+$(DIR_OBJS)/%.o: $(DIR_MEMORY)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_MESSAGE)/%.c
+$(DIR_OBJS)/%.o: $(DIR_MESSAGE)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_PARSING)/%.c
+$(DIR_OBJS)/%.o: $(DIR_PARSING)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_PARSING_UTILS)/%.c
+$(DIR_OBJS)/%.o: $(DIR_PARSING_UTILS)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(DIR_OBJS)/%.o: $(DIR_SIGNALS)/%.c
+$(DIR_OBJS)/%.o: $(DIR_SIGNALS)/%.c Makefile
 	@mkdir -p $(dir $@)
 	@echo "$(COLOR_YELLOW)→ Compiling $<$(COLOR_RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@

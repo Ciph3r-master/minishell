@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thibaud <thibaud@student.42.fr>            +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 22:04:08 by thibaud           #+#    #+#              #
-#    Updated: 2025/06/16 21:39:42 by thibaud          ###   ########.fr        #
+#    Updated: 2025/07/21 02:09:17 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
-%.o: %.c $(HDRS)
+%.o: %.c $(HDRS) Makefile
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 bonus: $(OBJS) $(OBJS_BONUS)
