@@ -308,6 +308,8 @@ void		heredoc_handler(int sig);
 //	parsing_utils/
 	//	check_quotes.c
 bool		check_quotes(char *line);
+	//	is_only_whitespace.c
+bool		is_only_whitespace(char *line);
 	//	secure_strdup.c
 char		*secure_strdup(t_data *data, const char *s);
 

@@ -121,12 +121,13 @@ SRCS_PARSING :=								\
 	$(DIR_PARSING)/syntax_error.c			\
 	$(DIR_PARSING)/set_token_type_cmds.c	\
 
-SRCS_PARSING_UTILS :=				  		\
-	$(DIR_PARSING_UTILS)/check_quotes.c 	\
-	$(DIR_PARSING_UTILS)/tokendlist.c 		\
-	$(DIR_PARSING_UTILS)/filedlist.c  		\
-	$(DIR_PARSING_UTILS)/secure_strdup.c 	\
-	$(DIR_PARSING_UTILS)/cmddlist.c 		\
+SRCS_PARSING_UTILS :=				  			\
+	$(DIR_PARSING_UTILS)/check_quotes.c 		\
+	$(DIR_PARSING_UTILS)/tokendlist.c 			\
+	$(DIR_PARSING_UTILS)/filedlist.c  			\
+	$(DIR_PARSING_UTILS)/is_only_whitespace.c	\
+	$(DIR_PARSING_UTILS)/secure_strdup.c 		\
+	$(DIR_PARSING_UTILS)/cmddlist.c 			\
 
 SRCS_SIGNALS :=				  			\
 	$(DIR_SIGNALS)/init_signals.c

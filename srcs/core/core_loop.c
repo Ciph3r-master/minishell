@@ -17,20 +17,6 @@
 #include "minishell.h"
 #include "libft.h"
 
-static bool	is_only_whitespace(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (!ft_is_white_space(line[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
 int	valid_minishell(int ac)
 {
 	if (ac != 1)
@@ -64,6 +50,16 @@ static void	exit_minishell(t_data *data)
 	free_and_exit(data, data->exit_status);
 }
 
+static	int	check_syntax_error(t_data *data)
+{
+	if (!check_quotes(data->line) || is_only_whitespace(data->line))
+	{
+		close_saved_fds(data);
+		return (1);
+	}
+	return (0);
+}
+
 void	handle_user_input(t_data *data)
 {
 	while (1)
@@ -79,16 +75,14 @@ void	handle_user_input(t_data *data)
 		free_cmd_list(&data->cmd_node);
 		free_tokenlist(&data->tokenlist);
 		add_history(data->line);
-		if (!check_quotes(data->line) || is_only_whitespace(data->line))
-		{
-			close_saved_fds(data);
+		if (check_syntax_error(data))
 			continue ;
-		}
 		data->prev_exit_status = data->exit_status;
 		init_tokens(data);
 		free(data->line);
 		data->exit_status = 0;
 		exec(data);
+		delete_tmp_files(data);
 		close_saved_fds(data);
 	}
 }
