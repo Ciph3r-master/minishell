@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 23:25:26 by thibaud           #+#    #+#             */
-/*   Updated: 2025/07/21 03:49:31 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/21 20:37:07 by qutruche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,18 @@ static void	print_cd_err(char *err_msg)
 	write(STDERR_FILENO, "\n", 1);
 }
 
-int	goto_path(t_data *data, char *path)
+static void	regenerate_oldpwd(t_data *data)
+{
+	t_env_list	*new_node;
+
+	new_node = new_node_env_list(data,
+			secure_strdup(data, "OLDPWD"), ft_strdup(""));
+	if (!new_node)
+		free_and_exit(data, 1);
+	push_back_env_list(&data->env_list, new_node);
+}
+
+static int	goto_path(t_data *data, char *path)
 {
 	char	*err_prefix;
 
@@ -41,7 +52,7 @@ int	goto_path(t_data *data, char *path)
 	return (0);
 }
 
-int	goto_dir(t_data *data, char *path)
+static int	goto_dir(t_data *data, char *path)
 {
 	char		*old_pwd;
 	t_env_list	*env_old_pwd;
@@ -49,8 +60,8 @@ int	goto_dir(t_data *data, char *path)
 	env_old_pwd = get_env_by_key(data, "OLDPWD");
 	if (!env_old_pwd)
 	{
-		print_cd_err("OLDPWD not set");
-		return (1);
+		regenerate_oldpwd(data);
+		env_old_pwd = get_env_by_key(data, "OLDPWD");
 	}
 	old_pwd = getcwd(NULL, 0);
 	if (goto_path(data, path) == -1)
@@ -64,6 +75,7 @@ int	goto_dir(t_data *data, char *path)
 	get_env_by_key(data, "PWD")->value = getcwd(NULL, 0);
 	free_env_copy(data->env_copy);
 	data->env_copy = get_env_copy(data->env_list);
+	update_env_cpy(data);
 	return (0);
 }
 
