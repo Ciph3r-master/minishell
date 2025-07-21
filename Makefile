@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
+#    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/21 04:00:56 by billcipher       ###   ########.fr        #
+#    Updated: 2025/07/21 20:02:22 by qutruche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ NAME         := minishell
 # === Compiler & Flags ===
 
 CC           := cc
-CFLAGS       := -g -Wall -Wextra -Werror -fdiagnostics-color=always -MMD -MP -I./includes -I./libft $(READLINE_INC)
+CFLAGS       := -g -Wall -Wextra -Werror -MMD -MP -I./includes -I./libft $(READLINE_INC)
 LDFLAGS      := $(READLINE_LIB) -lreadline
 
 # === Libraries ===
@@ -258,11 +258,5 @@ re:
 	@echo "$(COLOR_GREEN)==> Rebuilding $(NAME)...$(COLOR_RESET)"
 	$(MAKE) fclean
 	$(MAKE) all
-
-valgrind: all
-	valgrind --show-leak-kinds=all --show-mismatched-frees=yes --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" ./minishell
-
-vallog: all
-	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="valgrind.log" ./minishell
 
 .PHONY: all clean fclean re
