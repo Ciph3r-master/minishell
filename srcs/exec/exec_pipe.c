@@ -57,7 +57,8 @@ int	exec_pipe_loop_cmd(t_data *data, t_cmd_node *cur_cmd, int *pids, int *i)
 	pid_t		pid;
 
 	if (cur_cmd->next)
-		pipe(data->new_pipe);
+		if (pipe(data->new_pipe) == -1)
+			free_and_exit(data, 1);
 	pid = fork();
 	if (pid == -1)
 		free_and_exit(data, 1);

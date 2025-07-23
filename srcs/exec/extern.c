@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <sys/wait.h>
+#include <readline/readline.h>
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -23,6 +24,8 @@ int	get_child_exit_status(t_data *data)
 
 	signal(SIGINT, SIG_IGN);
 	wait(&status);
+	if (dup2(data->saved_stdout, STDOUT_FILENO) == -1)
+		free_and_exit(data, 1);
 	if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
@@ -30,7 +33,7 @@ int	get_child_exit_status(t_data *data)
 		if (sig == SIGINT)
 			write(STDOUT_FILENO, "\n", 1);
 		else if (sig == SIGQUIT)
-			write(STDERR_FILENO, "Quit (core dumped)\n", 20);
+			write(STDERR_FILENO, "Quit  minishell(core dumped)\n", 29);
 	}
 	else if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
