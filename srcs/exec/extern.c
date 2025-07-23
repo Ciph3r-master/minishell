@@ -30,10 +30,10 @@ int	get_child_exit_status(t_data *data)
 	{
 		sig = WTERMSIG(status);
 		data->exit_status = 128 + sig;
-		if (sig == SIGINT)
-			write(STDOUT_FILENO, "\n", 1);
-		else if (sig == SIGQUIT)
-			write(STDERR_FILENO, "Quit  minishell(core dumped)\n", 29);
+		// if (sig == SIGINT)
+		// 	write(STDOUT_FILENO, "\n", 1);
+		// else if (sig == SIGQUIT)
+		// 	write(STDERR_FILENO, "Quit  minishell(core dumped)\n", 29);
 	}
 	else if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);

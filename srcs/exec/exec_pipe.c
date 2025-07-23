@@ -74,20 +74,50 @@ int	exec_pipe_loop_cmd(t_data *data, t_cmd_node *cur_cmd, int *pids, int *i)
 	return (1);
 }
 
+// void	exec_pipe_get_exit_status(t_data *data, pid_t *pids, int i)
+// {
+// 	int	status;
+// 	int	j;
+
+// 	j = 0;
+// 	data->exit_status = 0;
+// 	while (j < i)
+// 	{
+// 		waitpid(pids[j], &status, 0);
+// 		if (WIFEXITED(status) && j == i - 1)
+// 			data->exit_status = WEXITSTATUS(status);
+// 		j++;
+// 	}
+// }
+
+	#include <stdio.h>
+
 void	exec_pipe_get_exit_status(t_data *data, pid_t *pids, int i)
 {
 	int	status;
 	int	j;
+	int	sig;
 
 	j = 0;
 	data->exit_status = 0;
+	signal(SIGINT, SIG_IGN);
 	while (j < i)
 	{
 		waitpid(pids[j], &status, 0);
+		if (WIFSIGNALED(status))
+		{
+			sig = WTERMSIG(status);
+			data->exit_status = 128 + sig;
+			if (sig == SIGINT)
+				write(STDOUT_FILENO, "\n", 1);
+			else if (sig == SIGQUIT)
+				write(STDERR_FILENO, "Quit minishell(core dumped)\n", 28);
+		}
 		if (WIFEXITED(status) && j == i - 1)
 			data->exit_status = WEXITSTATUS(status);
 		j++;
 	}
+	signal(SIGINT, sigint_handler);
 }
 
 int	exec_pipe(t_cmd_node *cmd_node, t_data *data)
