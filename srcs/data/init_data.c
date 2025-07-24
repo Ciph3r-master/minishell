@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:44:17 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/19 03:28:22 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/24 01:56:25 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	init_data(t_data *data, char **env)
 	if (!data->env_copy)
 		free_and_exit(data, 1);
 	data->exec_heredoc = 1;
+	data->pipe_signal = 0;
 	data->exit_status = 0;
 	data->prev_exit_status = 0;
 	data->cmd_node = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 23:51:04 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/21 06:16:14 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/24 02:42:39 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	handle_user_input(t_data *data)
 		save_stdin_stdout(data);
 		g_exit_status = 0;
 		data->exec_heredoc = 1;
+		data->pipe_signal = 0;
 		data->line = readline("minishell> ");
 		if (g_exit_status != 0)
 			data->exit_status = g_exit_status;

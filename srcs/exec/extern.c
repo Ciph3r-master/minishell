@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 17:28:27 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/20 18:13:43 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/24 02:43:14 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,13 @@ int	get_child_exit_status(t_data *data)
 	{
 		sig = WTERMSIG(status);
 		data->exit_status = 128 + sig;
-		// if (sig == SIGINT)
-		// 	write(STDOUT_FILENO, "\n", 1);
-		// else if (sig == SIGQUIT)
-		// 	write(STDERR_FILENO, "Quit  minishell(core dumped)\n", 29);
+		if (!data->cmd_node->next)
+		{
+			if (sig == SIGINT)
+				write(STDOUT_FILENO, "\n", 1);
+			else if (sig == SIGQUIT)
+				write(STDERR_FILENO, "Quit minishell(core dumped)\n", 28);
+		}
 	}
 	else if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
