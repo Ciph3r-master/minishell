@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 03:57:40 by billcipher        #+#    #+#             */
-/*   Updated: 2025/07/19 06:32:23 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/25 22:54:47 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,20 @@ static void	print_export_err(char *arg, char *err_msg)
 static void	add_var_to_env(t_data *data, char *arg)
 {
 	char		*value;
-	t_env_list	*new_node;
 	t_env_list	*node_to_replace;
 	char		*key;
 
 	value = ft_strchr(arg, '=');
-	if (!value)
-		return ;
-	value += 1;
 	key = get_key(data, arg);
+	if (!value)
+	{
+		if (!get_env_by_key(data, key))
+			add_new_var(data, key, NULL, true);
+		else
+			free(key);
+		return ;
+	}
+	value += 1;
 	node_to_replace = get_env_by_key(data, key);
 	if (node_to_replace)
 	{
@@ -45,13 +50,8 @@ static void	add_var_to_env(t_data *data, char *arg)
 		free(key);
 		return ;
 	}
-	new_node = new_node_env_list(data, key, ft_strdup(value));
-	if (!new_node)
-	{
-		free(key);
-		free_and_exit(data, 1);
-	}
-	return (push_back_env_list(&data->env_list, new_node));
+	add_new_var(data, key, ft_strdup(value), false);
+	return ;
 }
 
 static bool	is_valid(char *arg)
@@ -74,6 +74,7 @@ static void	print_export_env(t_data *data)
 {
 	int		i;
 	char	**envcpy;
+	char	*key;
 
 	envcpy = get_env_copy(data->env_list);
 	if (!envcpy)
@@ -82,7 +83,14 @@ static void	print_export_env(t_data *data)
 	i = 0;
 	while (envcpy[i])
 	{
-		printf("export %s\n", envcpy[i]);
+		key = get_key(data, envcpy[i]);
+		if (!key)
+		{
+			free_env_copy(envcpy);
+			free_and_exit(data, 1);
+		}
+		printf("export %s=\"%s\"\n", key, ft_strchr(envcpy[i], '=') + 1);
+		free(key);
 		i++;
 	}
 	free_env_copy(envcpy);

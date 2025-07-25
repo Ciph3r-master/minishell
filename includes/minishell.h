@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/24 01:55:53 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/25 22:30:33 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ char		*get_key(t_data *data, char *arg);
 void		sort_env(t_data *data, char **env);
 t_env_list	*get_env_by_key(t_data *data, char *key);
 void		update_env_cpy(t_data *data);
+void		add_new_var(t_data *data, char *key, char *value, bool is_null);
 //	expand
 void		find_expand(t_data *data);
 // expand_utils
@@ -228,7 +229,8 @@ char		**get_env_copy(t_env_list *env_list);
 	//	free_and_exit.c
 // void		free_and_exit(t_data *data, int exit_code);
 
-void		free_and_exit_debug(t_data *data, int exit_code, const char *file, int line);
+void		free_and_exit_debug(t_data *data, int exit_code,
+				const char *file, int line);
 
 # define free_and_exit(data, exit_code) free_and_exit_debug(data, exit_code, __FILE__, __LINE__)
 

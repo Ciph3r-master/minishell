@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:58:16 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/21 17:56:32 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/25 22:34:35 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ t_env_list	*new_node_env_list(t_data *data, char *key, char *value)
 {
 	t_env_list	*new_node;
 
-	if (!value)
-	{
-		free(key);
-		free_and_exit(data, 1);
-	}
+	//if (!value)
+	//{
+	//	free(key);
+	//	free_and_exit(data, 1);
+	//}
+	(void) data;
 	new_node = malloc(sizeof(t_env_list));
 	if (!new_node)
 		return (NULL);
