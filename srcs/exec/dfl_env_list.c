@@ -70,10 +70,5 @@ t_env_list	*create_dfl_env_list(t_data *data)
 	if (!new_node)
 		free_and_exit(data, 1);
 	push_back_env_list(&data->env_list, new_node);
-	get_path_key_value(data, &key, &value);
-	new_node = new_node_env_list(data, key, value);
-	if (!new_node)
-		free_and_exit(data, 1);
-	push_back_env_list(&data->env_list, new_node);
 	return (data->env_list);
 }
