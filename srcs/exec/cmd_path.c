@@ -50,10 +50,10 @@ int	path_access_loop(char **paths, char **pathname,
 		}
 		else if (errno == EACCES)
 		{
-			write(STDERR_FILENO, "minishell : ", 12);
+			write(STDERR_FILENO, "minishell: ", 11);
 			perror(cmd);
 			data->exit_status = 126;
-			return (0);
+			return (1);
 		}
 		i++;
 	}
@@ -66,7 +66,7 @@ int	find_path_with_access(char **paths, char **pathname,
 	char	*cmd;
 
 	cmd = cmd_node->cmd->cmd;
-	if (!path_acces_loop(paths, pathname, data, cmd_node))
+	if (!path_access_loop(paths, pathname, data, cmd_node))
 	{
 		write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
 		write(STDERR_FILENO, cmd, ft_strlen(cmd));

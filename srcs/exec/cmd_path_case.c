@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <sys/stat.h>
 #include "minishell.h"
+#include "libft.h"
 
 int	special_case_directory(t_cmd_node *cmd_node, t_data *data)
 {
@@ -47,7 +50,7 @@ int	cmd_is_directory(t_cmd_node *cmd_node, t_data *data)
 	if (S_ISDIR(info.st_mode))
 	{
 		write(STDERR_FILENO, "minishell: ", 11);
-		write(STDERR_FILENO, cmd, strlen(cmd));
+		write(STDERR_FILENO, cmd, ft_strlen(cmd));
 		write(STDERR_FILENO, ": Is a directory\n", 17);
 		data->exit_status = 126;
 	}
