@@ -28,14 +28,11 @@ int	is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data)
 }
 
 int	path_access_loop(char **paths, char **pathname,
-	t_data *data, t_cmd_node *cmd_node)
+	t_data *data, char *cmd)
 {
-	char	*cmd;
 	int		i;
 
 	i = 0;
-	cmd = cmd_node->cmd->cmd;
-	errno = 0;
 	while (paths[i] && cmd[0])
 	{
 		if (0 == access(paths[i], X_OK))
@@ -66,7 +63,7 @@ int	find_path_with_access(char **paths, char **pathname,
 	char	*cmd;
 
 	cmd = cmd_node->cmd->cmd;
-	if (!path_access_loop(paths, pathname, data, cmd_node))
+	if (!path_access_loop(paths, pathname, data, cmd))
 	{
 		write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
 		write(STDERR_FILENO, cmd, ft_strlen(cmd));
