@@ -47,7 +47,7 @@ int	path_access_loop(char **paths, char **pathname,
 		}
 		else if (errno == EACCES)
 		{
-			write(STDERR_FILENO, "minishell: ", 11);
+			write(STDERR_FILENO, "minishell : ", 12);
 			perror(cmd);
 			data->exit_status = 126;
 			return (1);

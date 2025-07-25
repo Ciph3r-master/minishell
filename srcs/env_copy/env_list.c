@@ -18,11 +18,11 @@ t_env_list	*new_node_env_list(t_data *data, char *key, char *value)
 {
 	t_env_list	*new_node;
 
-	//if (!value)
-	//{
-	//	free(key);
-	//	free_and_exit(data, 1);
-	//}
+	if (!value)
+	{
+		free(key);
+		free_and_exit(data, 1);
+	}
 	(void) data;
 	new_node = malloc(sizeof(t_env_list));
 	if (!new_node)
