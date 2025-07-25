@@ -77,6 +77,7 @@ SRCS_ERROR	:=							\
 
 SRCS_EXEC	:=								\
 	$(DIR_EXEC)/builtins.c					\
+	$(DIR_EXEC)/cmd_path_case.c				\
 	$(DIR_EXEC)/cmd_path.c					\
 	$(DIR_EXEC)/create_tmp_file.c			\
 	$(DIR_EXEC)/dfl_env_list.c				\

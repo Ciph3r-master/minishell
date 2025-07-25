@@ -33,7 +33,7 @@ int	open_redir_out(t_data *data, t_filelist *cur_file_out, int type)
 			free_and_exit(data, 1);
 		else
 		{
-			write(STDERR_FILENO, "minishell : ", 12);
+			write(STDERR_FILENO, "minishell: ", 11);
 			perror(filename);
 			data->exit_status = 1;
 		}
