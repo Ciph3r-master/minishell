@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
+#include <stdio.h>
 #include "minishell.h"
 
 int	open_redir_out(t_data *data, t_filelist *cur_file_out, int type)
@@ -30,16 +31,12 @@ int	open_redir_out(t_data *data, t_filelist *cur_file_out, int type)
 	{
 		if (errno == 0)
 			free_and_exit(data, 1);
-		else if (errno == EISDIR)
-			msg_is_a_directory(data, 1, filename);
-		else if (errno == ENOTDIR)
-			msg_not_a_directory(data, 1, filename);
-		else if (errno == EACCES)
-			msg_permission_denied(data, 1, filename);
-		else if (errno == ENOENT)
-			msg_no_such_file_or_directory(data, 1, filename);
 		else
-			msg_error(data, 1, filename);
+		{
+			write(STDERR_FILENO, "minishell: ", 11);
+			perror(filename);
+			data->exit_status = 1;
+		}
 	}
 	return (1);
 }

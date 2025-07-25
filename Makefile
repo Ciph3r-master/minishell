@@ -77,6 +77,7 @@ SRCS_ERROR	:=							\
 
 SRCS_EXEC	:=								\
 	$(DIR_EXEC)/builtins.c					\
+	$(DIR_EXEC)/cmd_path_case.c				\
 	$(DIR_EXEC)/cmd_path.c					\
 	$(DIR_EXEC)/create_tmp_file.c			\
 	$(DIR_EXEC)/dfl_env_list.c				\
@@ -102,12 +103,7 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_utils.c			\
 
 SRCS_MESSAGE	:=							\
-	$(DIR_MESSAGE)/error.c					\
-	$(DIR_MESSAGE)/is_a_directory.c			\
 	$(DIR_MESSAGE)/no_such_file_or_dir.c	\
-	$(DIR_MESSAGE)/not_a_directory.c		\
-	$(DIR_MESSAGE)/permission_denied.c		\
-	$(DIR_MESSAGE)/redir_in_msg.c			\
 
 SRCS_PARSING :=								\
 	$(DIR_PARSING)/token_utils.c			\

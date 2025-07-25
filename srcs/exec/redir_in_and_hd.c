@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
 #include "minishell.h"
@@ -24,7 +25,8 @@ int	exec_redir_in(t_filelist *cur_file_in, t_data *data)
 	filename = cur_file_in->filename;
 	if (access(filename, R_OK) == -1)
 	{
-		redir_in_message(filename, errno);
+		write(STDERR_FILENO, "minishell: ", 11);
+		perror(filename);
 		data->exit_status = 1;
 		return (0);
 	}

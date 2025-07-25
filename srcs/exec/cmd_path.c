@@ -11,52 +11,12 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
+#include <errno.h>
 #include <string.h>
 #include <sys/stat.h>
 #include "minishell.h"
 #include "libft.h"
-
-int	special_case_directory(t_cmd_node *cmd_node, t_data *data)
-{
-	char		*cmd;
-
-	if (!cmd_node || !cmd_node->cmd->cmd)
-		free_and_exit(data, 1);
-	cmd = cmd_node->cmd->cmd;
-	if (ft_strcmp(".", cmd) == 0)
-	{
-		write(STDERR_FILENO, "minishell: .: filename argument required\n", 41);
-		write(STDERR_FILENO, ".: usage: . filename [arguments]\n", 33);
-		data->exit_status = 2;
-	}
-	if (ft_strcmp("..", cmd) == 0)
-	{
-		write(STDERR_FILENO, "..: command not found\n", 22);
-		data->exit_status = 127;
-	}
-	return (1);
-}
-
-int	cmd_is_directory(t_cmd_node *cmd_node, t_data *data)
-{
-	struct stat	info;
-	char		*cmd;
-
-	if (!cmd_node || !cmd_node->cmd->cmd)
-		free_and_exit(data, 1);
-	cmd = cmd_node->cmd->cmd;
-	special_case_directory(cmd_node, data);
-	if (stat(cmd, &info) != 0 || data->exit_status != 0)
-		return (0);
-	if (S_ISDIR(info.st_mode))
-	{
-		write(STDERR_FILENO, "minishell: ", 11);
-		write(STDERR_FILENO, cmd, strlen(cmd));
-		write(STDERR_FILENO, ": Is a directory\n", 17);
-		data->exit_status = 126;
-	}
-	return (1);
-}
 
 int	is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data)
 {
@@ -67,13 +27,11 @@ int	is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data)
 	return (1);
 }
 
-int	find_path_with_access(char **paths, char **pathname,
-	t_data *data, t_cmd_node *cmd_node)
+int	path_access_loop(char **paths, char **pathname,
+	t_data *data, char *cmd)
 {
-	char	*cmd;
 	int		i;
 
-	cmd = cmd_node->cmd->cmd;
 	i = 0;
 	while (paths[i] && cmd[0])
 	{
@@ -87,12 +45,31 @@ int	find_path_with_access(char **paths, char **pathname,
 			}
 			return (1);
 		}
+		else if (errno == EACCES)
+		{
+			write(STDERR_FILENO, "minishell: ", 11);
+			perror(cmd);
+			data->exit_status = 126;
+			return (1);
+		}
 		i++;
 	}
-	write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
-	write(STDERR_FILENO, cmd, ft_strlen(cmd));
-	write(STDERR_FILENO, ": command not found\n", 20);
-	data->exit_status = 127;
+	return (0);
+}
+
+int	find_path_with_access(char **paths, char **pathname,
+	t_data *data, t_cmd_node *cmd_node)
+{
+	char	*cmd;
+
+	cmd = cmd_node->cmd->cmd;
+	if (!path_access_loop(paths, pathname, data, cmd))
+	{
+		write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
+		write(STDERR_FILENO, cmd, ft_strlen(cmd));
+		write(STDERR_FILENO, ": command not found\n", 20);
+		data->exit_status = 127;
+	}
 	return (0);
 }
 

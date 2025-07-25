@@ -237,6 +237,9 @@ void		free_and_exit_debug(t_data *data, int exit_code,
 //	exec/
 	//	builtins.c
 int			exec_simple_cmd_builtins(t_cmd_node *cmd_node, t_data *data);
+	//	cmd_path_case.c
+int			cmd_is_directory(t_cmd_node *cmd_node, t_data *data);
+
 	//	cmd_path.c
 int			cmd_is_directory(t_cmd_node *cmd_node, t_data *data);
 int			is_cmd_name_executable(t_cmd_node *cmd_node, t_data *data);
