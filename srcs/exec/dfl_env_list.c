@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 05:10:20 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/19 02:49:24 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/25 00:31:24 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ void	get_shlvl_key_value(t_data *data, char **key, char **value)
 	if (!*key)
 		free_and_exit(data, 1);
 	*value = ft_strdup("0");
+	if (*value == NULL)
+	{
+		free(key);
+		free_and_exit(data, 1);
+	}
+}
+
+void	get_path_key_value(t_data *data, char **key, char **value)
+{
+	*key = ft_strdup("PATH");
+	if (!*key)
+		free_and_exit(data, 1);
+	*value = ft_strdup("/usr/local/bin:/usr/bin:/bin");
 	if (*value == NULL)
 	{
 		free(key);

@@ -6,11 +6,12 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 17:28:27 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/20 18:13:43 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/24 02:43:14 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
+#include <readline/readline.h>
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -23,14 +24,19 @@ int	get_child_exit_status(t_data *data)
 
 	signal(SIGINT, SIG_IGN);
 	wait(&status);
+	if (dup2(data->saved_stdout, STDOUT_FILENO) == -1)
+		free_and_exit(data, 1);
 	if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
 		data->exit_status = 128 + sig;
-		if (sig == SIGINT)
-			write(STDOUT_FILENO, "\n", 1);
-		else if (sig == SIGQUIT)
-			write(STDERR_FILENO, "Quit (core dumped)\n", 20);
+		if (!data->cmd_node->next)
+		{
+			if (sig == SIGINT)
+				write(STDOUT_FILENO, "\n", 1);
+			else if (sig == SIGQUIT)
+				write(STDERR_FILENO, "Quit minishell(core dumped)\n", 28);
+		}
 	}
 	else if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
+/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:20:45 by thmaitre          #+#    #+#             */
-/*   Updated: 2025/07/21 18:02:07 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/24 01:55:53 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_data
 	int			exit_status;
 	int			prev_exit_status;
 	int			exec_heredoc;
+	int			pipe_signal;
 	char		*pwd;
 	char		*line;
 	char		*old_pwd;
@@ -225,7 +226,11 @@ char		**get_env_copy(t_env_list *env_list);
 
 //	error/
 	//	free_and_exit.c
-void		free_and_exit(t_data *data, int exit_code);
+// void		free_and_exit(t_data *data, int exit_code);
+
+void		free_and_exit_debug(t_data *data, int exit_code, const char *file, int line);
+
+# define free_and_exit(data, exit_code) free_and_exit_debug(data, exit_code, __FILE__, __LINE__)
 
 //	exec/
 	//	builtins.c

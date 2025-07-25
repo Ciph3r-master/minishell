@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: qutruche <qutruche@student.42.fr>          +#+  +:+       +#+         #
+#    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/21 20:42:17 by qutruche         ###   ########.fr        #
+#    Updated: 2025/07/22 02:50:05 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -261,3 +261,6 @@ re:
 	$(MAKE) all
 
 .PHONY: all clean fclean re
+
+vallog: all
+	valgrind --show-leak-kinds=all --leak-check=full --trace-children=yes --track-fds=yes --suppressions="readline.supp" --log-file="valgrind.log" ./minishell
