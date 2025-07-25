@@ -13,12 +13,8 @@
 #include <stdlib.h>
 #include "minishell.h"
 
-	#include <stdio.h>
-void	free_and_exit_debug(t_data *data, int exit_code, const char *file, int line)
+void	free_and_exit(t_data *data, int exit_code)
 {
-	(void)file;
-	(void)line;
-	// printf("exit_code : %d at %s:%d\n", exit_code, file, line);
 	free_all(data, exit_code);
 	exit(exit_code);
 	return ;
