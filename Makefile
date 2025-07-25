@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
+#    By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/26 19:23:55 by thibaud           #+#    #+#              #
-#    Updated: 2025/07/22 02:50:05 by vscode           ###   ########.fr        #
+#    Updated: 2025/07/25 22:47:48 by billcipher       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,12 +102,7 @@ SRCS_MEMORY	:=							\
 	$(DIR_MEMORY)/free_utils.c			\
 
 SRCS_MESSAGE	:=							\
-	$(DIR_MESSAGE)/error.c					\
-	$(DIR_MESSAGE)/is_a_directory.c			\
 	$(DIR_MESSAGE)/no_such_file_or_dir.c	\
-	$(DIR_MESSAGE)/not_a_directory.c		\
-	$(DIR_MESSAGE)/permission_denied.c		\
-	$(DIR_MESSAGE)/redir_in_msg.c			\
 
 SRCS_PARSING :=								\
 	$(DIR_PARSING)/token_utils.c			\

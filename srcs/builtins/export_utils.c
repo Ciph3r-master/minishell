@@ -6,7 +6,7 @@
 /*   By: billcipher <billcipher@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:00:07 by bill              #+#    #+#             */
-/*   Updated: 2025/07/18 19:07:13 by billcipher       ###   ########.fr       */
+/*   Updated: 2025/07/25 22:28:18 by billcipher       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,22 @@ t_env_list	*get_env_by_key(t_data *data, char *key)
 		current = current->next;
 	}
 	return (NULL);
+}
+
+void	add_new_var(t_data *data, char *key, char *value, bool is_null)
+{
+	t_env_list	*new_node;
+
+	if (is_null == false && value == NULL)
+	{
+		free(key);
+		free_and_exit(data, 1);
+	}
+	new_node = new_node_env_list(data, key, value);
+	if (!new_node)
+	{
+		free(key);
+		free_and_exit(data, 1);
+	}
+	push_back_env_list(&data->env_list, new_node);
 }

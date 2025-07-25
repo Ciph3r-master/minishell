@@ -91,7 +91,8 @@ int	exec_simple_cmd_extern(t_cmd_node *cmd_node, t_data *data)
 		return (0);
 	}
 	cmd_is_directory(cmd_node, data);
-	exec_extern(cmd_node, data);
+	if (!data->exit_status)
+		exec_extern(cmd_node, data);
 	reset_stdin_stdout(data);
 	return (1);
 }
