@@ -6,7 +6,7 @@
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 05:10:20 by vscode            #+#    #+#             */
-/*   Updated: 2025/07/19 02:49:24 by vscode           ###   ########.fr       */
+/*   Updated: 2025/07/25 00:31:24 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ void	get_shlvl_key_value(t_data *data, char **key, char **value)
 	}
 }
 
+void	get_path_key_value(t_data *data, char **key, char **value)
+{
+	*key = ft_strdup("PATH");
+	if (!*key)
+		free_and_exit(data, 1);
+	*value = ft_strdup("/usr/local/bin:/usr/bin:/bin");
+	if (*value == NULL)
+	{
+		free(key);
+		free_and_exit(data, 1);
+	}
+}
+
 t_env_list	*create_dfl_env_list(t_data *data)
 {
 	t_env_list	*new_node;
@@ -53,6 +66,11 @@ t_env_list	*create_dfl_env_list(t_data *data)
 		free_and_exit(data, 1);
 	push_back_env_list(&data->env_list, new_node);
 	get_shlvl_key_value(data, &key, &value);
+	new_node = new_node_env_list(data, key, value);
+	if (!new_node)
+		free_and_exit(data, 1);
+	push_back_env_list(&data->env_list, new_node);
+	get_path_key_value(data, &key, &value);
 	new_node = new_node_env_list(data, key, value);
 	if (!new_node)
 		free_and_exit(data, 1);
