@@ -215,7 +215,7 @@ int			init_data(t_data *data, char **env);
 
 //	env_copy/
 	//	env_list.c
-t_env_list	*new_node_env_list_export(t_data *data, char *key, char *value);
+t_env_list	*new_node_env_list_export(char *key, char *value);
 t_env_list	*new_node_env_list(t_data *data, char *key, char *value);
 void		push_back_env_list(t_env_list **env_list, t_env_list *new_node);
 int			get_env_list_size(t_env_list *env_list);

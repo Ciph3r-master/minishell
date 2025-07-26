@@ -89,7 +89,10 @@ static void	print_export_env(t_data *data)
 			free_env_copy(envcpy);
 			free_and_exit(data, 1);
 		}
-		printf("export %s=\"%s\"\n", key, ft_strchr(envcpy[i], '=') + 1);
+		if (get_env_by_key(data, key)->value == NULL)
+			printf("export %s\n", key);
+		else
+			printf("export %s=\"%s\"\n", key, ft_strchr(envcpy[i], '=') + 1);
 		free(key);
 		i++;
 	}

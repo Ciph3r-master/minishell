@@ -14,11 +14,10 @@
 #include <stdlib.h>
 #include "minishell.h"
 
-t_env_list	*new_node_env_list_export(t_data *data, char *key, char *value)
+t_env_list	*new_node_env_list_export(char *key, char *value)
 {
 	t_env_list	*new_node;
 
-	(void) data;
 	new_node = malloc(sizeof(t_env_list));
 	if (!new_node)
 		return (NULL);
