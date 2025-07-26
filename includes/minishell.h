@@ -290,20 +290,9 @@ void		free_cmd_list(t_cmd_node **cmd_node);
 void		free_matrix(char **split);
 
 //	messsage/
-	//	is_a_directory.c
-void		msg_is_a_directory(t_data *data, int exit_code, char *name);
-	//	error.c
-void		msg_error(t_data *data, int exit_code, char *name);
-	//	not_a_directory.c
-void		msg_not_a_directory(t_data *data, int exit_code, char *name);
-	//	redir_in_message.c
-void		redir_in_message(char *filename, int err);
 	//	msg_no_such_file_or_dir.c
 void		msg_no_such_file_or_directory(t_data *data,
 				int exit_code, char *cmd);
-	//	msg_permission_denied.c
-void		msg_permission_denied(t_data *data, int exit_code,
-				char *filename);
 
 //	signals/
 	//	init_signals.c
