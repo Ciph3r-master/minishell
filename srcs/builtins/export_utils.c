@@ -82,7 +82,7 @@ void	add_new_var(t_data *data, char *key, char *value, bool is_null)
 		free(key);
 		free_and_exit(data, 1);
 	}
-	new_node = new_node_env_list(data, key, value);
+	new_node = new_node_env_list_export(data, key, value);
 	if (!new_node)
 	{
 		free(key);
